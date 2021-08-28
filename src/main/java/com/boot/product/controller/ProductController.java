@@ -54,9 +54,9 @@ public class ProductController {
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
 
-	@GetMapping("/getByProductCategory")
+	@GetMapping("/getByProductCategory/{productCategory}")
 	@ResponseBody
-	public ResponseEntity<List<ProductDTO>> findByProductCategory(@RequestParam String productCategory) {
+	public ResponseEntity<List<ProductDTO>> findByProductCategory(@PathVariable("productCategory") String productCategory) {
 		List<ProductDTO> productList = productService.findByProductCategory(productCategory);
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
