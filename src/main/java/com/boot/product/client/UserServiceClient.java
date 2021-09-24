@@ -23,7 +23,7 @@ public class UserServiceClient {
 		return Arrays.asList(userArray);
 	}
 
-	public void callUpdateUser(String userName, UserDTO user) {
-		restTemplate.exchange(Constants.UPDATE_USER + userName, HttpMethod.PUT, new HttpEntity<>(user), String.class);
+	public void callUpdateUser(String email, UserDTO user) {
+		restTemplate.exchange(Constants.UPDATE_USER + email, HttpMethod.PUT, new HttpEntity<>(user), String.class);
 	}
 }

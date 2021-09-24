@@ -82,9 +82,9 @@ public class ProductService {
 
 					if (p.getProductName().matches(productName)) {
 						iter.remove();
-						userServiceClient.callUpdateUser(user.getUserName(), user);
+						userServiceClient.callUpdateUser(user.getEmail(), user);
 						log.info(
-								productName + " - succesfully deleted from User with User Name: " + user.getUserName());
+								productName + " - succesfully deleted from User with Email: " + user.getEmail());
 					}
 				}
 			}
