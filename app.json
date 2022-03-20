@@ -2,7 +2,7 @@
   "name": "Eureka Product Service",
   "description": "Eureka Product Service project.",
   "website": "https://github.com/GeorgeT88/com-boot-product-service",
-  "success_url": "/health",
+  "success_url": "/",
   "env": {
     "EUREKA_URL": {
       "description": "URL of the Eureka Server in the form http://<user>:<password>@<host>"
