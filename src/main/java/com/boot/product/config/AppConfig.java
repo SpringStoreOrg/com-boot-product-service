@@ -1,5 +1,7 @@
 package com.boot.product.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -8,10 +10,13 @@ import com.boot.product.client.UserServiceClient;
 
 @Configuration
 public class AppConfig {
-	
-	@Bean
-	public RestTemplate template() {
-		return new RestTemplate();
+
+	@Value("${user.service.url}")
+	private String userServiceUrl;
+
+	@Bean(name="userServiceRestTemplate")
+	public RestTemplate userServiceRestTemplateUrl() {
+		return new RestTemplateBuilder().rootUri(userServiceUrl).build();
 	}
 
 	@Bean

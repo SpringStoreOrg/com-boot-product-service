@@ -14,16 +14,16 @@ import com.boot.services.dto.UserDTO;
 public class UserServiceClient {
 	
 	@Autowired
-	private RestTemplate restTemplate;
+	private RestTemplate userServiceRestTemplate;
 
 	public List<UserDTO> callGetAllUsers() {
 
-		UserDTO[] userArray = restTemplate.getForEntity(Constants.GET_ALL_USERS, UserDTO[].class).getBody();
+		UserDTO[] userArray = userServiceRestTemplate.getForEntity(Constants.GET_ALL_USERS, UserDTO[].class).getBody();
 
 		return Arrays.asList(userArray);
 	}
 
 	public void callUpdateUser(String email, UserDTO user) {
-		restTemplate.exchange(Constants.UPDATE_USER + email, HttpMethod.PUT, new HttpEntity<>(user), String.class);
+		userServiceRestTemplate.exchange(Constants.UPDATE_USER + email, HttpMethod.PUT, new HttpEntity<>(user), String.class);
 	}
 }
