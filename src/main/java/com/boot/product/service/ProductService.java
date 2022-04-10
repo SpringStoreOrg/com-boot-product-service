@@ -62,6 +62,7 @@ public class ProductService {
 			throw new EntityNotFoundException("Product with Id : " + id + " not found in the Database!");
 		}
 		productRepository.deleteById(id);
+		//shouldn't the logic with deletion from user favorite list apply also here?
 	}
 
 	public void deleteProductByProductName(String productName) throws EntityNotFoundException {
@@ -97,6 +98,7 @@ public class ProductService {
 
 	public List<ProductDTO> findAllProducts() throws EntityNotFoundException {
 
+		//TODO you could easily transform this into one liner:productRepository.findAll().stream().map(p -> ProductMapper.ProductEntityToDto(p)).collect(Collectors.toList())
 		List<Product> productList = productRepository.findAll();
 
 		List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
@@ -118,7 +120,7 @@ public class ProductService {
 	}
 
 	public ProductDTO getProductById(long id) throws EntityNotFoundException {
-
+                //TODO you could drop this validation and check the returned result and if it's a null you could throw an exception. by this you reduce the amount of queries.
 		if (!productValidator.isIdPresent(id)) {
 			throw new EntityNotFoundException("Could not find any product in the database");
 		}
@@ -138,10 +140,11 @@ public class ProductService {
 	}
 
 	public Set<String> findAllProductCategories() throws EntityNotFoundException {
+		//TODO if you want to return just the categories, you could create a repository method that returns all distinct product categories. you could add some kind of sorting to the way they are displayed. 
 		List<Product> products = productRepository.findAll();
 
 		Set<String> categories = new HashSet<>();
-
+                
 		products.stream().forEach(p -> categories.add(p.getProductCategory()));
 
 		if (categories.isEmpty()) {
@@ -157,6 +160,7 @@ public class ProductService {
 
 		ProductDTO newProductDto = ProductMapper.ProductEntityToDto(product);
 
+		//TODO you could move these validations at the DTO level using @Size(min = 3, max = 30) and  @Size(min = 3, max =600). to enable dto validation you will need @Valid in the controller method arguments list.
 		if (!productValidator.isProductDataSizeCorrect(productDTO.getProductName(), 3, 30)) {
 			throw new InvalidInputDataException("Product Name has to be between 3 and 30 characters long!");
 		}
