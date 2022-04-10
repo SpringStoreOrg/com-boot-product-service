@@ -17,6 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	public List<Product> findByProductCategory(String productCategory);
 
+	//Observation - Usually transactions are applied at the service layer. in this way you ensure that multiple operations acts as a whole.
 	@Transactional
 	public void deleteByProductName(String productName);
 }
