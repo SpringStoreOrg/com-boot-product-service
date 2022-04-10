@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.boot.product.util.Constants;
 import com.boot.services.dto.UserDTO;
-
+//TODO if you annotate this with @Component, you will let spring create an instance of it for you
 public class UserServiceClient {
 	
 	@Autowired
