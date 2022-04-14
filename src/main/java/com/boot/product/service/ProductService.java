@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -92,16 +93,8 @@ public class ProductService {
 
 	}
 
-	public List<ProductDTO> findAllProducts() throws EntityNotFoundException {
-
-		//TODO you could easily transform this into one liner:productRepository.findAll().stream().map(p -> ProductMapper.ProductEntityToDto(p)).collect(Collectors.toList())
-		List<Product> productList = productRepository.findAll();
-
-		List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
-
-		productList.stream().forEach(p -> productDTOList.add(ProductMapper.ProductEntityToDto(p)));
-
-		return productDTOList;
+	public List<ProductDTO> findAllProducts() {
+		return productRepository.findAll().stream().map(p -> ProductMapper.ProductEntityToDto(p)).collect(Collectors.toList());
 	}
 
 	public List<ProductDTO> findByProductCategory(String productCategory) {
@@ -116,14 +109,15 @@ public class ProductService {
 	}
 
 	public ProductDTO getProductById(long id) throws EntityNotFoundException {
-                //TODO you could drop this validation and check the returned result and if it's a null you could throw an exception. by this you reduce the amount of queries.
-		if (!productValidator.isIdPresent(id)) {
+
+		Product product = productRepository.getProductById(id);
+		if (product == null){
 			throw new EntityNotFoundException("Could not find any product in the database");
 		}
-		Product product = productRepository.getProductById(id);
-
 		return ProductMapper.ProductEntityToDto(product);
 	}
+
+
 
 	public ProductDTO getProductByProductName(String productName) throws EntityNotFoundException {
 		log.info("getProductByProductName - process started");
