@@ -129,20 +129,6 @@ public class ProductService {
 		return ProductMapper.ProductEntityToDto(product);
 	}
 
-	public Set<String> findAllProductCategories() throws EntityNotFoundException {
-		//TODO if you want to return just the categories, you could create a repository method that returns all distinct product categories. you could add some kind of sorting to the way they are displayed. 
-		List<Product> products = productRepository.findAll();
-
-		Set<String> categories = new HashSet<>();
-                
-		products.stream().forEach(p -> categories.add(p.getProductCategory()));
-
-		if (categories.isEmpty()) {
-			throw new EntityNotFoundException("Could not find any product categories in the database");
-		}
-		return categories;
-	}
-
 	public ProductDTO updateProductByProductName(String productName, ProductDTO productDTO)
 			throws InvalidInputDataException {
 

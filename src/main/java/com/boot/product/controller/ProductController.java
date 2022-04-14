@@ -70,13 +70,6 @@ public class ProductController {
 		return new ResponseEntity<>(product, HttpStatus.OK);
 	}
 
-	@GetMapping("/getAllCategories")
-	public ResponseEntity<Set<String>> findAllCategories() throws EntityNotFoundException {
-
-		Set<String> categoryList = productService.findAllProductCategories();
-		return new ResponseEntity<>(categoryList, HttpStatus.OK);
-	}
-
 	@PutMapping("/updateProductByProductName/{productName}")
 	public ResponseEntity<ProductDTO> updateProductByProductName(@RequestBody ProductDTO product,
 			@PathVariable("productName") String productName) throws EntityNotFoundException, InvalidInputDataException {
