@@ -57,14 +57,6 @@ public class ProductService {
 		return ProductMapper.ProductEntityToDto(product);
 	}
 
-	public void deleteProductById(long id) throws EntityNotFoundException {
-		if (!productValidator.isIdPresent(id)) {
-			throw new EntityNotFoundException("Product with Id : " + id + " not found in the Database!");
-		}
-		productRepository.deleteById(id);
-		//shouldn't the logic with deletion from user favorite list apply also here?
-	}
-
 	public void deleteProductByProductName(String productName) throws EntityNotFoundException {
 		if (!productValidator.isProductNamePresent(productName)) {
 			throw new EntityNotFoundException(

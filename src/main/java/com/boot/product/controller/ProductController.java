@@ -35,12 +35,6 @@ public class ProductController {
 		return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("/deleteProductById/{id}")
-	public ResponseEntity<ProductDTO> deleteProductById(@PathVariable("id") long id) throws EntityNotFoundException {
-		productService.deleteProductById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
 	@DeleteMapping("/deleteProductByProductName/{productName}")
 	public ResponseEntity<ProductDTO> deleteProductByProductName(@PathVariable("productName") String productName)
 			throws EntityNotFoundException {
