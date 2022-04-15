@@ -11,17 +11,17 @@ import com.boot.product.client.UserServiceClient;
 @Configuration
 public class AppConfig {
 
-	@Value("${user.service.url}")
-	private String userServiceUrl;
+    @Value("${user.service.url}")
+    private String userServiceUrl;
 
-	@Bean(name="userServiceRestTemplate")
-	public RestTemplate userServiceRestTemplateUrl() {
-		return new RestTemplateBuilder().rootUri(userServiceUrl).build();
-	}
+    @Bean(name = "userServiceRestTemplate")
+    public RestTemplate userServiceRestTemplateUrl() {
+        return new RestTemplateBuilder().rootUri(userServiceUrl).build();
+    }
 
-	@Bean
-	public UserServiceClient userServiceClient() {
-		return new UserServiceClient();
-	}
+    @Bean
+    public UserServiceClient userServiceClient() {
+        return new UserServiceClient();
+    }
 
 }

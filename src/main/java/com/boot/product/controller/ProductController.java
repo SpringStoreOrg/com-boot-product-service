@@ -28,47 +28,47 @@ import javax.validation.Valid;
 @RequestMapping("/")
 public class ProductController {
 
-	@Autowired
-	private ProductService productService;
+    @Autowired
+    private ProductService productService;
 
-	@PostMapping("/addProduct")
-	public ResponseEntity<ProductDTO> addProduct(@Valid @RequestBody ProductDTO product) throws InvalidInputDataException {
-		ProductDTO newProduct = productService.addProduct(product);
-		return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
-	}
+    @PostMapping("/addProduct")
+    public ResponseEntity<ProductDTO> addProduct(@Valid @RequestBody ProductDTO product) throws InvalidInputDataException {
+        ProductDTO newProduct = productService.addProduct(product);
+        return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
+    }
 
-	@DeleteMapping("/deleteProductByProductName/{productName}")
-	public ResponseEntity<ProductDTO> deleteProductByProductName(@PathVariable("productName") String productName)
-			throws EntityNotFoundException {
-		productService.deleteProductByProductName(productName);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+    @DeleteMapping("/deleteProductByProductName/{productName}")
+    public ResponseEntity<ProductDTO> deleteProductByProductName(@PathVariable("productName") String productName)
+            throws EntityNotFoundException {
+        productService.deleteProductByProductName(productName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-	@GetMapping("/getAllProducts")
-	public ResponseEntity<List<ProductDTO>> findAllProducts() {
-		List<ProductDTO> productList = productService.findAllProducts();
-		return new ResponseEntity<>(productList, HttpStatus.OK);
-	}
+    @GetMapping("/getAllProducts")
+    public ResponseEntity<List<ProductDTO>> findAllProducts() {
+        List<ProductDTO> productList = productService.findAllProducts();
+        return new ResponseEntity<>(productList, HttpStatus.OK);
+    }
 
-	@GetMapping("/getByProductCategory/{productCategory}")
-	@ResponseBody
-	public ResponseEntity<List<ProductDTO>> findByProductCategory(@PathVariable("productCategory") String productCategory) {
-		List<ProductDTO> productList = productService.findByProductCategory(productCategory);
-		return new ResponseEntity<>(productList, HttpStatus.OK);
-	}
+    @GetMapping("/getByProductCategory/{productCategory}")
+    @ResponseBody
+    public ResponseEntity<List<ProductDTO>> findByProductCategory(@PathVariable("productCategory") String productCategory) {
+        List<ProductDTO> productList = productService.findByProductCategory(productCategory);
+        return new ResponseEntity<>(productList, HttpStatus.OK);
+    }
 
-	@GetMapping("/getProductByProductName")
-	@ResponseBody
-	public ResponseEntity<ProductDTO> findProductByProductName(@RequestParam String productName)
-			throws EntityNotFoundException {
-		ProductDTO product = productService.getProductByProductName(productName);
-		return new ResponseEntity<>(product, HttpStatus.OK);
-	}
+    @GetMapping("/getProductByProductName")
+    @ResponseBody
+    public ResponseEntity<ProductDTO> findProductByProductName(@RequestParam String productName)
+            throws EntityNotFoundException {
+        ProductDTO product = productService.getProductByProductName(productName);
+        return new ResponseEntity<>(product, HttpStatus.OK);
+    }
 
-	@PutMapping("/updateProductByProductName/{productName}")
-	public ResponseEntity<ProductDTO> updateProductByProductName(@Valid @RequestBody ProductDTO product,
-			@PathVariable("productName") String productName) throws InvalidInputDataException {
-		ProductDTO productDTO = productService.updateProductByProductName(productName, product);
-		return new ResponseEntity<>(productDTO, HttpStatus.OK);
-	}
+    @PutMapping("/updateProductByProductName/{productName}")
+    public ResponseEntity<ProductDTO> updateProductByProductName(@Valid @RequestBody ProductDTO product,
+                                                                 @PathVariable("productName") String productName) throws InvalidInputDataException {
+        ProductDTO productDTO = productService.updateProductByProductName(productName, product);
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
 }

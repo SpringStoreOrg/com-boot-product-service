@@ -10,11 +10,11 @@ import com.boot.services.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-	public Product getProductById(long id);
+    Product getProductById(long id);
 
-	public Product findByProductName(String productName);
+    Product findByProductName(String productName);
 
-	public List<Product> findByProductCategory(String productCategory);
+    List<Product> findByProductCategory(String productCategory);
 
-	public void deleteByProductName(String productName);
+    void deleteByProductName(String productName);
 }

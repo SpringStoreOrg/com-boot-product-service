@@ -96,7 +96,7 @@ public class ProductService {
 
 		return productDTOList;
 	}
-	
+
 	public ProductDTO getProductByProductName(String productName) throws EntityNotFoundException {
 		log.info("getProductByProductName - process started");
 		if (!productValidator.isProductNamePresent(productName)) {
