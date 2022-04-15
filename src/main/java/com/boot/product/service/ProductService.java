@@ -41,20 +41,9 @@ public class ProductService {
 
 	public ProductDTO addProduct(ProductDTO productDTO) throws InvalidInputDataException {
 		log.info("addProduct - process started");
-		if (!productValidator.isProductDataSizeCorrect(productDTO.getProductName(), 3, 30)) {
-			throw new InvalidInputDataException("Product Name has to be between 3 and 30 characters long!");
-		}
 
 		if (productValidator.isProductNamePresent(productDTO.getProductName())) {
 			throw new InvalidInputDataException("The Selected Product name is already used!");
-		}
-
-		if (!productValidator.isProductDataSizeCorrect(productDTO.getProductDescription(), 3, 600)) {
-			throw new InvalidInputDataException("Product Description has to be between 3 and 600 characters long!");
-		}
-
-		if (!productValidator.isProductDataSizeCorrect(productDTO.getProductCategory(), 3, 30)) {
-			throw new InvalidInputDataException("Product Category has to be between 3 and 30 characters long!");
 		}
 
 		Product product = productRepository.save(ProductMapper.DtoToProductEntity(productDTO));
@@ -136,25 +125,12 @@ public class ProductService {
 
 		ProductDTO newProductDto = ProductMapper.ProductEntityToDto(product);
 
-		//TODO you could move these validations at the DTO level using @Size(min = 3, max = 30) and  @Size(min = 3, max =600). to enable dto validation you will need @Valid in the controller method arguments list.
-		if (!productValidator.isProductDataSizeCorrect(productDTO.getProductName(), 3, 30)) {
-			throw new InvalidInputDataException("Product Name has to be between 3 and 30 characters long!");
-		}
-
 		if (product.getProductName().matches(productName)) {
 			newProductDto.setProductName(productDTO.getProductName());
 		} else if (productValidator.isProductNamePresent(productDTO.getProductName())) {
 			throw new InvalidInputDataException("The Selected Product name is already used!");
 		}
 
-		if (!productValidator.isProductDataSizeCorrect(productDTO.getProductDescription(), 3, 600)) {
-			throw new InvalidInputDataException("Product Description has to be between 3 and 600 characters long!");
-		}
-		newProductDto.setProductDescription(productDTO.getProductDescription());
-
-		if (!productValidator.isProductDataSizeCorrect(productDTO.getProductCategory(), 3, 30)) {
-			throw new InvalidInputDataException("Product Category has to be between 3 and 30 characters long!");
-		}
 		newProductDto.setProductCategory(productDTO.getProductCategory());
 
 		newProductDto.setProductStock(productDTO.getProductStock());

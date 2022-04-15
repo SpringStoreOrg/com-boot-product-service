@@ -22,6 +22,8 @@ import com.boot.product.exception.InvalidInputDataException;
 import com.boot.product.service.ProductService;
 import com.boot.services.dto.ProductDTO;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/")
 public class ProductController {
@@ -30,7 +32,7 @@ public class ProductController {
 	private ProductService productService;
 
 	@PostMapping("/addProduct")
-	public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO product) throws InvalidInputDataException {
+	public ResponseEntity<ProductDTO> addProduct(@Valid @RequestBody ProductDTO product) throws InvalidInputDataException {
 		ProductDTO newProduct = productService.addProduct(product);
 		return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
 	}
@@ -43,7 +45,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/getAllProducts")
-	public ResponseEntity<List<ProductDTO>> findAllProducts() throws EntityNotFoundException {
+	public ResponseEntity<List<ProductDTO>> findAllProducts() {
 		List<ProductDTO> productList = productService.findAllProducts();
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
@@ -71,8 +73,8 @@ public class ProductController {
 	}
 
 	@PutMapping("/updateProductByProductName/{productName}")
-	public ResponseEntity<ProductDTO> updateProductByProductName(@RequestBody ProductDTO product,
-			@PathVariable("productName") String productName) throws EntityNotFoundException, InvalidInputDataException {
+	public ResponseEntity<ProductDTO> updateProductByProductName(@Valid @RequestBody ProductDTO product,
+			@PathVariable("productName") String productName) throws InvalidInputDataException {
 		ProductDTO productDTO = productService.updateProductByProductName(productName, product);
 		return new ResponseEntity<>(productDTO, HttpStatus.OK);
 	}
