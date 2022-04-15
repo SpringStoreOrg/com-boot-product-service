@@ -96,18 +96,7 @@ public class ProductService {
 
 		return productDTOList;
 	}
-
-	public ProductDTO getProductById(long id) throws EntityNotFoundException {
-
-		Product product = productRepository.getProductById(id);
-		if (product == null){
-			throw new EntityNotFoundException("Could not find any product in the database");
-		}
-		return ProductMapper.ProductEntityToDto(product);
-	}
-
-
-
+	
 	public ProductDTO getProductByProductName(String productName) throws EntityNotFoundException {
 		log.info("getProductByProductName - process started");
 		if (!productValidator.isProductNamePresent(productName)) {

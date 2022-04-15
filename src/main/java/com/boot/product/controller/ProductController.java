@@ -57,13 +57,6 @@ public class ProductController {
 		return new ResponseEntity<>(productList, HttpStatus.OK);
 	}
 
-	@GetMapping("/getProductById")
-	@ResponseBody
-	public ResponseEntity<ProductDTO> findProductById(@RequestParam long id) throws EntityNotFoundException {
-		ProductDTO product = productService.getProductById(id);
-		return new ResponseEntity<>(product, HttpStatus.OK);
-	}
-
 	@GetMapping("/getProductByProductName")
 	@ResponseBody
 	public ResponseEntity<ProductDTO> findProductByProductName(@RequestParam String productName)
