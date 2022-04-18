@@ -26,7 +26,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 @Controller
-@RequestMapping("/")
 public class ProductController {
 
     @Autowired
