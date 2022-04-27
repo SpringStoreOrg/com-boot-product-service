@@ -18,10 +18,4 @@ public class AppConfig {
     public RestTemplate userServiceRestTemplateUrl() {
         return new RestTemplateBuilder().rootUri(userServiceUrl).build();
     }
-
-    @Bean
-    public UserServiceClient userServiceClient() {
-        return new UserServiceClient();
-    }
-
 }
