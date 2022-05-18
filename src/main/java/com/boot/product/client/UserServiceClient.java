@@ -26,6 +26,6 @@ public class UserServiceClient {
     }
 
     public void callUpdateUser(String email, UserDTO user) {
-        userServiceRestTemplate.exchange(Constants.UPDATE_USER + email, HttpMethod.PUT, new HttpEntity<>(user), String.class);
+        userServiceRestTemplate.exchange(Constants.UPDATE_USER, HttpMethod.PUT, new HttpEntity<>(user), String.class, email);
     }
 }
