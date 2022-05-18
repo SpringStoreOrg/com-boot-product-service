@@ -31,33 +31,34 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/addProduct")
+    @PostMapping
+    @ResponseBody
     public ResponseEntity<ProductDTO> addProduct(@Valid @RequestBody ProductDTO product) throws InvalidInputDataException {
         ProductDTO newProduct = productService.addProduct(product);
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/deleteProductByProductName/{productName}")
+    @DeleteMapping("/{productName}")
     public ResponseEntity<ProductDTO> deleteProductByProductName(@Size(min = 2, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName)
             throws EntityNotFoundException {
         productService.deleteProductByProductName(productName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/getAllProducts")
+    @GetMapping("/products")
     public ResponseEntity<List<ProductDTO>> findAllProducts() {
         List<ProductDTO> productList = productService.findAllProducts();
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
-    @GetMapping("/getByProductCategory/{productCategory}")
+    @GetMapping("/productCategory/{productCategory}")
     @ResponseBody
     public ResponseEntity<List<ProductDTO>> findByProductCategory(@Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @PathVariable("productCategory") String productCategory) {
         List<ProductDTO> productList = productService.findByProductCategory(productCategory);
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
-    @GetMapping("/getProductByProductName")
+    @GetMapping
     @ResponseBody
     public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!")  @RequestParam String productName)
             throws EntityNotFoundException {
@@ -65,7 +66,7 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @PutMapping("/updateProductByProductName/{productName}")
+    @PutMapping("/{productName}")
     public ResponseEntity<ProductDTO> updateProductByProductName(@Valid @RequestBody ProductDTO product,
                                                                  @Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName) throws InvalidInputDataException {
         ProductDTO productDTO = productService.updateProductByProductName(productName, product);
