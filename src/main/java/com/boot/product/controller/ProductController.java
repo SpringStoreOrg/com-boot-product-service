@@ -45,22 +45,16 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/products")
+    @GetMapping
+    @ResponseBody
     public ResponseEntity<List<ProductDTO>> findAllProducts() {
         List<ProductDTO> productList = productService.findAllProducts();
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
-    @GetMapping("/productCategory/{productCategory}")
+    @GetMapping("/{productName}")
     @ResponseBody
-    public ResponseEntity<List<ProductDTO>> findByProductCategory(@Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @PathVariable("productCategory") String productCategory) {
-        List<ProductDTO> productList = productService.findByProductCategory(productCategory);
-        return new ResponseEntity<>(productList, HttpStatus.OK);
-    }
-
-    @GetMapping
-    @ResponseBody
-    public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!")  @RequestParam String productName)
+    public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!")  @PathVariable("productName") String productName)
             throws EntityNotFoundException {
         ProductDTO product = productService.getProductByProductName(productName);
         return new ResponseEntity<>(product, HttpStatus.OK);
