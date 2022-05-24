@@ -1,5 +1,6 @@
 package com.boot.product.service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,7 @@ public class ProductService {
 	
 	@Autowired
 	private UserServiceClient userServiceClient;
+	private Object p;
 
 	public ProductDTO addProduct(ProductDTO productDTO) throws InvalidInputDataException {
 		log.info("addProduct - process started");
@@ -82,8 +85,16 @@ public class ProductService {
 
 	}
 
-	public List<ProductDTO> findAllProducts() {
-		return productRepository.findAll().stream().map(p -> ProductMapper.ProductEntityToDto(p)).collect(Collectors.toList());
+	public List<ProductDTO> findAllProducts(@NotNull List<String> products) throws EntityNotFoundException {
+
+		log.info("findAllProducts - process started");
+		List<ProductDTO> productDTOList = new ArrayList<>();
+
+		for (String product : products) {
+
+			productDTOList.add(getProductByProductName(product.replaceAll("(^\\[|\\]$)", "")));
+		}
+		return productDTOList;
 	}
 
 	public List<ProductDTO> findByProductCategory(String productCategory) {
@@ -98,7 +109,7 @@ public class ProductService {
 	}
 
 	public ProductDTO getProductByProductName(String productName) throws EntityNotFoundException {
-		log.info("getProductByProductName - process started");
+
 		if (!productValidator.isProductNamePresent(productName)) {
 			throw new EntityNotFoundException("Could not find any product in the database");
 		}

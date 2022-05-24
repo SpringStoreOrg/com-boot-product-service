@@ -47,8 +47,8 @@ public class ProductController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<ProductDTO>> findAllProducts() {
-        List<ProductDTO> productList = productService.findAllProducts();
+    public ResponseEntity<List<ProductDTO>> findAllProducts(@RequestParam List<String> products) throws EntityNotFoundException {
+        List<ProductDTO> productList = productService.findAllProducts(products);
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
