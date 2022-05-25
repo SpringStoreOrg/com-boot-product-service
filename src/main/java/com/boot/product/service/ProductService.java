@@ -1,46 +1,38 @@
 package com.boot.product.service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
+
+import com.boot.product.dto.ProductDTO;
+import com.boot.product.enums.ProductStatus;
+import com.boot.product.model.Product;
+import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.boot.product.client.UserServiceClient;
 import com.boot.product.exception.EntityNotFoundException;
 import com.boot.product.exception.InvalidInputDataException;
 import com.boot.product.repository.ProductRepository;
 import com.boot.product.validator.ProductValidator;
-import com.boot.services.dto.ProductDTO;
-import com.boot.services.dto.UserDTO;
-import com.boot.services.mapper.ProductMapper;
-import com.boot.services.model.Product;
+
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.boot.product.model.Product.*;
+
 
 @Slf4j
 @Service
 @Transactional
+@AllArgsConstructor
 public class ProductService {
 
-	@Autowired
 	private ProductValidator productValidator;
 
-	@Autowired
 	private ProductRepository productRepository;
-	
-	@Autowired
-	private UserServiceClient userServiceClient;
-	private Object p;
 
 	public ProductDTO addProduct(ProductDTO productDTO) throws InvalidInputDataException {
 		log.info("addProduct - process started");
@@ -48,41 +40,24 @@ public class ProductService {
 		if (productValidator.isProductNamePresent(productDTO.getProductName())) {
 			throw new InvalidInputDataException("The Selected Product name is already used!");
 		}
+		productDTO.setStatus(ProductStatus.ACTIVE);
 
-		Product product = productRepository.save(ProductMapper.DtoToProductEntity(productDTO));
+		Product product = productRepository.save(dtoToProductEntity(productDTO));
 
-		return ProductMapper.ProductEntityToDto(product);
+		return productEntityToDto(product);
 	}
 
-	public void deleteProductByProductName(String productName) throws EntityNotFoundException {
+	public ProductDTO deleteProductByProductName(String productName) throws EntityNotFoundException {
 		if (!productValidator.isProductNamePresent(productName)) {
 			throw new EntityNotFoundException(
 					"Product with Product Name: " + productName + " not found in the Database!");
 		}
+		Product product = productRepository.findByProductNameAndStatus(productName,ProductStatus.ACTIVE);
+		product.setStatus(ProductStatus.INACTIVE);
+		productRepository.save(product);
 
-		for (UserDTO user : userServiceClient.callGetAllUsers()) {
-
-			Set<ProductDTO> prodList = user.getFavoriteProductList();
-
-			if (prodList != null) {
-				Iterator<ProductDTO> iter = prodList.iterator();
-
-				while (iter.hasNext()) {
-					ProductDTO p = iter.next();
-
-					if (p.getProductName().matches(productName)) {
-						iter.remove();
-						userServiceClient.callUpdateUser(user.getEmail(), user);
-						log.info(
-								productName + " - succesfully deleted from User with Email: " + user.getEmail());
-					}
-				}
-			}
-		}
-
-		productRepository.deleteByProductName(productName);
-		log.info(productName + " - succesfully deleted from the Database");
-
+		log.info("{} - succesfully set as INACTIVE", productName);
+		return productEntityToDto(product);
 	}
 
 	public List<ProductDTO> findAllProducts(@NotNull List<String> products) throws EntityNotFoundException {
@@ -97,25 +72,24 @@ public class ProductService {
 		return productDTOList;
 	}
 
-	public List<ProductDTO> findByProductCategory(String productCategory) {
-
-		List<Product> productList = productRepository.findByProductCategory(productCategory);
-
-		List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
-
-		productList.stream().forEach(p -> productDTOList.add(ProductMapper.ProductEntityToDto(p)));
-
-		return productDTOList;
-	}
-
 	public ProductDTO getProductByProductName(String productName) throws EntityNotFoundException {
 
 		if (!productValidator.isProductNamePresent(productName)) {
 			throw new EntityNotFoundException("Could not find any product in the database");
 		}
-		Product product = productRepository.findByProductName(productName);
+		Product product = productRepository.findByProductNameAndStatus(productName, ProductStatus.ACTIVE);
 
-		return ProductMapper.ProductEntityToDto(product);
+		return productEntityToDto(product);
+	}
+
+	public ProductDTO getProductByProductNameInactive(String productName) throws EntityNotFoundException {
+
+		if (!productValidator.isProductNamePresent(productName)) {
+			throw new EntityNotFoundException("Could not find any product in the database");
+		}
+		Product product = productRepository.findByProductNameAndStatus(productName, ProductStatus.INACTIVE);
+
+		return productEntityToDto(product);
 	}
 
 	public ProductDTO updateProductByProductName(String productName, ProductDTO productDTO)
@@ -123,20 +97,23 @@ public class ProductService {
 
 		Product product = productRepository.findByProductName(productName);
 
-		ProductDTO newProductDto = ProductMapper.ProductEntityToDto(product);
+		ProductDTO newProductDto = productEntityToDto(product);
 
 		if (product.getProductName().matches(productName)) {
 			newProductDto.setProductName(productDTO.getProductName());
 		} else if (productValidator.isProductNamePresent(productDTO.getProductName())) {
 			throw new InvalidInputDataException("The Selected Product name is already used!");
 		}
+		newProductDto.setProductPhotoLink(productDTO.getProductPhotoLink());
+
+		newProductDto.setProductPrice(productDTO.getProductPrice());
 
 		newProductDto.setProductCategory(productDTO.getProductCategory());
 
 		newProductDto.setProductStock(productDTO.getProductStock());
 
-		productRepository.save(ProductMapper.updateDtoToProductEntity(product, newProductDto));
+		productRepository.save(updateDtoToProductEntity(product, newProductDto));
 
-		return ProductMapper.ProductEntityToDto(product);
+		return productEntityToDto(product);
 	}
 }

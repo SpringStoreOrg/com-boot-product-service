@@ -1,7 +1,7 @@
 package com.boot.product.controller;
 
+import com.boot.product.dto.ProductDTO;
 import com.boot.product.service.ProductCategoryService;
-import com.boot.services.dto.ProductDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
