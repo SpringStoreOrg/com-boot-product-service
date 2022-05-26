@@ -22,13 +22,11 @@ import static com.boot.product.model.Product.productEntityToDto;
 @AllArgsConstructor
 public class ProductCategoryService {
 
-
-
 	private ProductRepository productRepository;
 
 	public List<ProductDTO> findByProductCategory(String productCategory) {
 
-		List<Product> productList = productRepository.findByProductCategory(productCategory);
+		List<Product> productList = productRepository.findByCategory(productCategory);
 
 		List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
 

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Product findByProductNameAndStatus(String productName, ProductStatus status);
+    Product findByNameAndStatus(String name, ProductStatus status);
 
-    Product findByProductName(String productName);
+    Product findByName(String name);
 
-    List<Product> findByProductCategory(String productCategory);
+    List<Product> findByCategory(String category);
 }

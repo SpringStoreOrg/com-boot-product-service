@@ -13,9 +13,9 @@ public class ProductValidator {
 
     private ProductRepository productRepository;
 
-    public boolean isProductNamePresent(String productName) {
+    public boolean isNamePresent(String name) {
 
-        return productRepository.findByProductName(productName) != null;
+        return productRepository.findByName(name) != null;
     }
 
 }

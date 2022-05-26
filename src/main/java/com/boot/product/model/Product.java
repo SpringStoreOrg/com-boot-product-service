@@ -31,24 +31,24 @@ public class Product implements Serializable {
 
 	@Column(unique = true)
 	@Size(min = 3, max = 30)
-	private String productName;
+	private String name;
 
 	@Column
 	@Size(min = 3, max = 600)
-	private String productDescription;
+	private String description;
 
 	@Column
-	private long productPrice;
+	private long price;
 
 	@Column
-	private String productPhotoLink;
+	private String photoLink;
 
 	@Column
 	@Size(min = 3, max = 30)
-	private String productCategory;
+	private String category;
 
 	@Column
-	private int productStock;
+	private int stock;
 
 	@Enumerated(EnumType.STRING)
 	@Column
@@ -58,34 +58,34 @@ public class Product implements Serializable {
 	public static ProductDTO productEntityToDto(Product product) {
 		return new ProductDTO()
 				.setId(product.getId())
-				.setProductName(product.getProductName())
-				.setProductDescription(product.getProductDescription())
-				.setProductPrice(product.getProductPrice())
-				.setProductPhotoLink(product.getProductPhotoLink())
-				.setProductCategory(product.getProductCategory())
-				.setProductStock(product.getProductStock())
+				.setName(product.getName())
+				.setDescription(product.getDescription())
+				.setPrice(product.getPrice())
+				.setPhotoLink(product.getPhotoLink())
+				.setCategory(product.getCategory())
+				.setStock(product.getStock())
 				.setStatus(product.getStatus());
 	}
 
 	public static Product dtoToProductEntity(ProductDTO productDto) {
 		return new Product().setId(productDto.getId())
-				.setProductName(productDto.getProductName())
-				.setProductDescription(productDto.getProductDescription())
-				.setProductPrice(productDto.getProductPrice())
-				.setProductPhotoLink(productDto.getProductPhotoLink())
-				.setProductCategory(productDto.getProductCategory())
-				.setProductStock(productDto.getProductStock())
+				.setName(productDto.getName())
+				.setDescription(productDto.getDescription())
+				.setPrice(productDto.getPrice())
+				.setPhotoLink(productDto.getPhotoLink())
+				.setCategory(productDto.getCategory())
+				.setStock(productDto.getStock())
 				.setStatus(productDto.getStatus());
 	}
 
 	public static Product updateDtoToProductEntity(Product product, ProductDTO productDto) {
 		return product.setId(productDto.getId())
-				.setProductName(productDto.getProductName())
-				.setProductDescription(productDto.getProductDescription())
-				.setProductPrice(productDto.getProductPrice())
-				.setProductPhotoLink(productDto.getProductPhotoLink())
-				.setProductCategory(productDto.getProductCategory())
-				.setProductStock(productDto.getProductStock())
+				.setName(productDto.getName())
+				.setDescription(productDto.getDescription())
+				.setPrice(productDto.getPrice())
+				.setPhotoLink(productDto.getPhotoLink())
+				.setCategory(productDto.getCategory())
+				.setStock(productDto.getStock())
 				.setStatus(productDto.getStatus());
 	}
 
@@ -111,20 +111,20 @@ public class Product implements Serializable {
 					.setProductDto(new ProductDTO()
 							.setStatus(k.getStatus())
 							.setId(k.getId())
-							.setProductName(k.getProductName())
-							.setProductDescription(k.getProductDescription())
-							.setProductPrice(k.getProductPrice())
-							.setProductPhotoLink(k.getProductPhotoLink())
-							.setProductCategory(k.getProductCategory())
-							.setProductStock(k.getProductStock()))
+							.setName(k.getName())
+							.setDescription(k.getDescription())
+							.setPrice(k.getPrice())
+							.setPhotoLink(k.getPhotoLink())
+							.setCategory(k.getCategory())
+							.setStock(k.getStock()))
 					.setQuantity(v)
-					.setProductTotalPrice(k.getProductPrice() * v));
+					.setTotalPrice(k.getPrice() * v));
 		});
 
 		Collections.sort(productsInCartList, new Comparator<ProductInCartDTO>() {
 			@Override
 			public int compare(ProductInCartDTO o1, ProductInCartDTO o2) {
-				return o1.getProductDto().getProductName().compareTo(o2.getProductDto().getProductName());
+				return o1.getProductDto().getName().compareTo(o2.getProductDto().getName());
 			}
 		});
 

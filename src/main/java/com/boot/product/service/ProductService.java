@@ -2,7 +2,8 @@ package com.boot.product.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
@@ -37,7 +38,7 @@ public class ProductService {
 	public ProductDTO addProduct(ProductDTO productDTO) throws InvalidInputDataException {
 		log.info("addProduct - process started");
 
-		if (productValidator.isProductNamePresent(productDTO.getProductName())) {
+		if (productValidator.isNamePresent(productDTO.getName())) {
 			throw new InvalidInputDataException("The Selected Product name is already used!");
 		}
 		productDTO.setStatus(ProductStatus.ACTIVE);
@@ -48,46 +49,49 @@ public class ProductService {
 	}
 
 	public ProductDTO deleteProductByProductName(String productName) throws EntityNotFoundException {
-		if (!productValidator.isProductNamePresent(productName)) {
+		if (!productValidator.isNamePresent(productName)) {
 			throw new EntityNotFoundException(
 					"Product with Product Name: " + productName + " not found in the Database!");
 		}
-		Product product = productRepository.findByProductNameAndStatus(productName,ProductStatus.ACTIVE);
+		Product product = productRepository.findByNameAndStatus(productName,ProductStatus.ACTIVE);
 		product.setStatus(ProductStatus.INACTIVE);
 		productRepository.save(product);
 
-		log.info("{} - succesfully set as INACTIVE", productName);
+		log.info("{} - successfully set as INACTIVE", productName);
 		return productEntityToDto(product);
 	}
 
-	public List<ProductDTO> findAllProducts(@NotNull List<String> products) throws EntityNotFoundException {
+	public List<ProductDTO> findAllProducts(@NotNull String productParam) throws EntityNotFoundException {
 
 		log.info("findAllProducts - process started");
+
+		List<String> prodList = Stream.of(productParam.split(",", -1)).collect(Collectors.toList());
+
 		List<ProductDTO> productDTOList = new ArrayList<>();
 
-		for (String product : products) {
+		for (String product : prodList) {
 
-			productDTOList.add(getProductByProductName(product.replaceAll("(^\\[|\\]$)", "")));
+			productDTOList.add(getProductByProductName(product));
 		}
 		return productDTOList;
 	}
 
 	public ProductDTO getProductByProductName(String productName) throws EntityNotFoundException {
 
-		if (!productValidator.isProductNamePresent(productName)) {
+		if (!productValidator.isNamePresent(productName)) {
 			throw new EntityNotFoundException("Could not find any product in the database");
 		}
-		Product product = productRepository.findByProductNameAndStatus(productName, ProductStatus.ACTIVE);
+		Product product = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
 
 		return productEntityToDto(product);
 	}
 
 	public ProductDTO getProductByProductNameInactive(String productName) throws EntityNotFoundException {
 
-		if (!productValidator.isProductNamePresent(productName)) {
+		if (!productValidator.isNamePresent(productName)) {
 			throw new EntityNotFoundException("Could not find any product in the database");
 		}
-		Product product = productRepository.findByProductNameAndStatus(productName, ProductStatus.INACTIVE);
+		Product product = productRepository.findByNameAndStatus(productName, ProductStatus.INACTIVE);
 
 		return productEntityToDto(product);
 	}
@@ -95,22 +99,22 @@ public class ProductService {
 	public ProductDTO updateProductByProductName(String productName, ProductDTO productDTO)
 			throws InvalidInputDataException {
 
-		Product product = productRepository.findByProductName(productName);
+		Product product = productRepository.findByName(productName);
 
 		ProductDTO newProductDto = productEntityToDto(product);
 
-		if (product.getProductName().matches(productName)) {
-			newProductDto.setProductName(productDTO.getProductName());
-		} else if (productValidator.isProductNamePresent(productDTO.getProductName())) {
+		if (product.getName().matches(productName)) {
+			newProductDto.setName(productDTO.getName());
+		} else if (productValidator.isNamePresent(productDTO.getName())) {
 			throw new InvalidInputDataException("The Selected Product name is already used!");
 		}
-		newProductDto.setProductPhotoLink(productDTO.getProductPhotoLink());
+		newProductDto.setPhotoLink(productDTO.getPhotoLink());
 
-		newProductDto.setProductPrice(productDTO.getProductPrice());
+		newProductDto.setPrice(productDTO.getPrice());
 
-		newProductDto.setProductCategory(productDTO.getProductCategory());
+		newProductDto.setCategory(productDTO.getCategory());
 
-		newProductDto.setProductStock(productDTO.getProductStock());
+		newProductDto.setStock(productDTO.getStock());
 
 		productRepository.save(updateDtoToProductEntity(product, newProductDto));
 
