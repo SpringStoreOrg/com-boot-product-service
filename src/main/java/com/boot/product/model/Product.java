@@ -141,6 +141,14 @@ public class Product implements Serializable {
 		return productList;
 	}
 
+	public static List<ProductDTO> productEntityToDtoList(List<Product> productList) {
+
+		List<ProductDTO> productDTOList = new ArrayList<>();
+
+		productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
+
+		return productDTOList;
+	}
 
 }
 

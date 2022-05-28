@@ -1,12 +1,14 @@
 package com.boot.product.service;
 
 import com.boot.product.model.Product;
+import com.boot.product.repository.ProductCategoryRepository;
 import com.boot.product.repository.ProductRepository;
 import com.boot.product.dto.ProductDTO;
 
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +24,11 @@ import static com.boot.product.model.Product.productEntityToDto;
 @AllArgsConstructor
 public class ProductCategoryService {
 
-	private ProductRepository productRepository;
+	private ProductCategoryRepository productCategoryRepository;
 
 	public List<ProductDTO> findByProductCategory(String productCategory) {
 
-		List<Product> productList = productRepository.findByCategory(productCategory);
+		List<Product> productList = productCategoryRepository.findByCategory(productCategory);
 
 		List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
 

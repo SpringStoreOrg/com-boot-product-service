@@ -45,8 +45,11 @@ public class ProductController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<ProductDTO>> findAllProducts(@RequestParam String products) throws EntityNotFoundException {
-        List<ProductDTO> productList = productService.findAllProducts(products);
+    public ResponseEntity<List<ProductDTO>> findAllProducts(@RequestParam String products, @RequestParam(value = "includeInactive", defaultValue = "false")
+            Boolean includeInactive){
+
+        List<ProductDTO>  productList = productService.findAllProducts(products,includeInactive);
+
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
@@ -55,13 +58,9 @@ public class ProductController {
     public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName,  @RequestParam(value="includeInactive", defaultValue = "false")
             Boolean includeInactive)
             throws EntityNotFoundException {
-        ProductDTO product;
-        if (includeInactive) {
-            product = productService.getProductByProductName(productName);
 
-        } else {
-            product = productService.getProductByProductNameInactive(productName);
-        }
+        ProductDTO  product = productService.getProductByProductName(productName,includeInactive);
+
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 

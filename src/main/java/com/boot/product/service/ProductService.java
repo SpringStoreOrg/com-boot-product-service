@@ -1,6 +1,5 @@
 package com.boot.product.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -61,37 +60,36 @@ public class ProductService {
 		return productEntityToDto(product);
 	}
 
-	public List<ProductDTO> findAllProducts(@NotNull String productParam) throws EntityNotFoundException {
+	public List<ProductDTO> findAllProducts(@NotNull String productParam, Boolean includeInactive){
 
 		log.info("findAllProducts - process started");
 
 		List<String> prodList = Stream.of(productParam.split(",", -1)).collect(Collectors.toList());
 
-		List<ProductDTO> productDTOList = new ArrayList<>();
+		List<Product> productList;
 
-		for (String product : prodList) {
-
-			productDTOList.add(getProductByProductName(product));
+		if (includeInactive) {
+			productList = productRepository.findByNameInAndStatus(prodList, ProductStatus.ACTIVE);
+		} else {
+			productList = productRepository.findByNameIn(prodList);
 		}
-		return productDTOList;
+
+		return productEntityToDtoList(productList);
 	}
 
-	public ProductDTO getProductByProductName(String productName) throws EntityNotFoundException {
+	public ProductDTO getProductByProductName(String productName, Boolean includeInactive) throws EntityNotFoundException {
+
+		log.info("getProductByProductName - process started");
 
 		if (!productValidator.isNamePresent(productName)) {
 			throw new EntityNotFoundException("Could not find any product in the database");
 		}
-		Product product = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
-
-		return productEntityToDto(product);
-	}
-
-	public ProductDTO getProductByProductNameInactive(String productName) throws EntityNotFoundException {
-
-		if (!productValidator.isNamePresent(productName)) {
-			throw new EntityNotFoundException("Could not find any product in the database");
+		Product product;
+		if (includeInactive) {
+			product = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
+		} else {
+			product = productRepository.findByName(productName);
 		}
-		Product product = productRepository.findByNameAndStatus(productName, ProductStatus.INACTIVE);
 
 		return productEntityToDto(product);
 	}

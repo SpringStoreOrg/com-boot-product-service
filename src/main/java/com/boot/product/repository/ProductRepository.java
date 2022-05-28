@@ -9,11 +9,13 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, String> {
 
     Product findByNameAndStatus(String name, ProductStatus status);
 
     Product findByName(String name);
 
-    List<Product> findByCategory(String category);
+    List<Product> findByNameInAndStatus(List<String> name,ProductStatus status);
+
+    List<Product> findByNameIn(List<String> name);
 }
