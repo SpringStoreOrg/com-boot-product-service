@@ -18,4 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     List<Product> findByNameInAndStatus(List<String> name,ProductStatus status);
 
     List<Product> findByNameIn(List<String> name);
+
+    List<Product> findByStatus(ProductStatus status);
+
+    List<Product> findByCategoryAndStatus(String category, ProductStatus status);
 }

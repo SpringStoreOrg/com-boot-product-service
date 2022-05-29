@@ -1,5 +1,6 @@
 package com.boot.product.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -78,6 +79,15 @@ public class ProductService {
 		return productEntityToDtoList(productList);
 	}
 
+	public List<ProductDTO> getAllProducts() {
+
+		log.info("getAllProducts - process started");
+
+		List<Product> prodList = productRepository.findByStatus(ProductStatus.ACTIVE);
+
+		return productEntityToDtoList(prodList);
+	}
+
 	public ProductDTO getProductByProductName(String productName, Boolean includeInactive) throws EntityNotFoundException {
 
 		log.info("getProductByProductName - process started");
@@ -88,6 +98,7 @@ public class ProductService {
 		Product product;
 		if (includeInactive) {
 			product = productRepository.findByName(productName);
+
 		} else {
 			product = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
 		}
@@ -118,5 +129,18 @@ public class ProductService {
 		productRepository.save(updateDtoToProductEntity(product, newProductDto));
 
 		return productEntityToDto(product);
+	}
+
+	public List<ProductDTO> findByCategoryAndStatus(String productCategory) {
+
+		log.info("findByCategoryAndStatus - process started");
+
+		List<Product> productList = productRepository.findByCategoryAndStatus(productCategory, ProductStatus.ACTIVE);
+
+		ArrayList<ProductDTO> productDTOList = new ArrayList<>();
+
+		productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
+
+		return productDTOList;
 	}
 }

@@ -3,17 +3,13 @@ package com.boot.product.controller;
 import java.util.List;
 
 import com.boot.product.dto.ProductDTO;
+import com.boot.product.enums.ProductStatus;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.boot.product.exception.EntityNotFoundException;
 import com.boot.product.exception.InvalidInputDataException;
@@ -36,30 +32,30 @@ public class ProductController {
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
     }
 
-    @PutMapping("/delete/{productName}")
+    @DeleteMapping("/{productName}")
     public ResponseEntity<ProductDTO> deleteProductByProductName(@Size(min = 2, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName)
             throws EntityNotFoundException {
-        ProductDTO product =  productService.deleteProductByProductName(productName);
+        ProductDTO product = productService.deleteProductByProductName(productName);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/details")
     @ResponseBody
-    public ResponseEntity<List<ProductDTO>> findAllProducts(@RequestParam String products, @RequestParam(value = "includeInactive", defaultValue = "false")
-            Boolean includeInactive){
+    public ResponseEntity<List<ProductDTO>> getProductDetailsByProductName(@RequestParam String productNames, @RequestParam(value = "includeInactive", defaultValue = "false")
+            Boolean includeInactive) {
 
-        List<ProductDTO>  productList = productService.findAllProducts(products,includeInactive);
+        List<ProductDTO> productList = productService.findAllProducts(productNames, includeInactive);
 
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
     @GetMapping("/{productName}")
     @ResponseBody
-    public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName,  @RequestParam(value="includeInactive", defaultValue = "false")
+    public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName, @RequestParam(value = "includeInactive", defaultValue = "false")
             Boolean includeInactive)
             throws EntityNotFoundException {
 
-        ProductDTO  product = productService.getProductByProductName(productName,includeInactive);
+        ProductDTO product = productService.getProductByProductName(productName, includeInactive);
 
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
@@ -69,5 +65,18 @@ public class ProductController {
                                                                  @Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName) throws InvalidInputDataException {
         ProductDTO productDTO = productService.updateProductByProductName(productName, product);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
+
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity<List<ProductDTO>> getProducts(@Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @RequestParam(required = false, value = "productCategory", defaultValue = "")
+                                                                String productCategory) {
+        List<ProductDTO> productList;
+        if (StringUtils.isEmpty(productCategory)) {
+            productList = productService.getAllProducts();
+        } else {
+            productList = productService.findByCategoryAndStatus(productCategory);
+        }
+        return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 }
