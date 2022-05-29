@@ -69,9 +69,10 @@ public class ProductService {
 		List<Product> productList;
 
 		if (includeInactive) {
-			productList = productRepository.findByNameInAndStatus(prodList, ProductStatus.ACTIVE);
-		} else {
 			productList = productRepository.findByNameIn(prodList);
+
+		} else {
+			productList = productRepository.findByNameInAndStatus(prodList, ProductStatus.ACTIVE);
 		}
 
 		return productEntityToDtoList(productList);
