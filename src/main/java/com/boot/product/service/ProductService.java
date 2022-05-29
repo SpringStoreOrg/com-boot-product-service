@@ -87,9 +87,9 @@ public class ProductService {
 		}
 		Product product;
 		if (includeInactive) {
-			product = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
-		} else {
 			product = productRepository.findByName(productName);
+		} else {
+			product = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
 		}
 
 		return productEntityToDto(product);
