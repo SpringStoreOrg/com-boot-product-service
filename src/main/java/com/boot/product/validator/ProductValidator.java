@@ -1,33 +1,21 @@
 
 package com.boot.product.validator;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.boot.product.repository.ProductRepository;
 
 @Service
+@AllArgsConstructor
 public class ProductValidator {
 
-    @Autowired
     private ProductRepository productRepository;
 
-    public boolean isProductNamePresent(String productName) {
+    public boolean isNamePresent(String name) {
 
-        if (productRepository.findByProductName(productName) == null)
-            return false;
-        return true;
+        return productRepository.findByName(name) != null;
     }
 
-    public boolean isIdPresent(long id) {
-        if (productRepository.getProductById(id) == null)
-            return false;
-        return true;
-    }
-
-    public boolean isProductDataSizeCorrect(String userData, int min, int max) {
-        if (userData == null || userData.length() < min || userData.length() > max)
-            return false;
-        return true;
-    }
 }
