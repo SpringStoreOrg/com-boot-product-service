@@ -3,7 +3,6 @@ package com.boot.product.controller;
 import java.util.List;
 
 import com.boot.product.dto.ProductDTO;
-import com.boot.product.enums.ProductStatus;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -39,19 +38,29 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/details")
+    @GetMapping
     @ResponseBody
-    public ResponseEntity<List<ProductDTO>> getProductDetailsByProductName(@RequestParam String productNames, @RequestParam(value = "includeInactive", defaultValue = "false")
-            Boolean includeInactive) {
+    public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(required = false) String productNames, @RequestParam(value = "includeInactive", defaultValue = "false")
+            Boolean includeInactive, @Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @RequestParam(value = "category", defaultValue = "")
+                                                               String category) {
+        List<ProductDTO> productList;
 
-        List<ProductDTO> productList = productService.findAllProducts(productNames, includeInactive);
+        if (StringUtils.isNotBlank(productNames)) {
+            productList = productService.findAllProducts(productNames, includeInactive);
+        } else {
+            if (category.isEmpty()) {
+                productList = productService.getAllProducts();
+            } else {
+                productList = productService.findByCategoryAndStatus(category);
+            }
+        }
 
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
     @GetMapping("/{productName}")
     @ResponseBody
-    public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName, @RequestParam(value = "includeInactive", defaultValue = "false")
+    public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName, @RequestParam(required = false, value = "includeInactive", defaultValue = "false")
             Boolean includeInactive)
             throws EntityNotFoundException {
 
@@ -65,18 +74,5 @@ public class ProductController {
                                                                  @Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName) throws InvalidInputDataException {
         ProductDTO productDTO = productService.updateProductByProductName(productName, product);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
-    }
-
-    @GetMapping
-    @ResponseBody
-    public ResponseEntity<List<ProductDTO>> getProducts(@Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @RequestParam(required = false, value = "productCategory", defaultValue = "")
-                                                                String productCategory) {
-        List<ProductDTO> productList;
-        if (StringUtils.isEmpty(productCategory)) {
-            productList = productService.getAllProducts();
-        } else {
-            productList = productService.findByCategoryAndStatus(productCategory);
-        }
-        return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 }

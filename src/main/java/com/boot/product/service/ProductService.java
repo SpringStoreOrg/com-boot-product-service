@@ -131,11 +131,11 @@ public class ProductService {
 		return productEntityToDto(product);
 	}
 
-	public List<ProductDTO> findByCategoryAndStatus(String productCategory) {
+	public List<ProductDTO> findByCategoryAndStatus(String category) {
 
 		log.info("findByCategoryAndStatus - process started");
 
-		List<Product> productList = productRepository.findByCategoryAndStatus(productCategory, ProductStatus.ACTIVE);
+		List<Product> productList = productRepository.findByCategoryAndStatus(category, ProductStatus.ACTIVE);
 
 		ArrayList<ProductDTO> productDTOList = new ArrayList<>();
 
