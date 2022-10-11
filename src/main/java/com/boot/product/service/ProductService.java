@@ -9,7 +9,6 @@ import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
 import com.boot.product.model.Product;
 import lombok.AllArgsConstructor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import com.boot.product.exception.EntityNotFoundException;
@@ -21,6 +20,8 @@ import com.boot.product.validator.ProductValidator;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.constraints.NotNull;
 
 import static com.boot.product.model.Product.*;
 
