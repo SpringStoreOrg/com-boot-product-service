@@ -6,12 +6,31 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
 
+
     <changeSet author="GeorgeT88" id="2022-11-15-16.01">
-        <createTable tableName="productTE">
-            <column name="id" type="INTEGER">
-                <constraints nullable="false" primaryKey="true" unique="true"/>
+
+        <preConditions onFail="HALT">
+            <not>
+                <tableExists schemaName="product" tableName="product"/>
+            </not>
+        </preConditions>
+
+        <createTable schemaName="product" tableName="product">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="VARCHAR(255)"/>
+            <column name="name" type="varchar(32)"/>
+            <column name="category" type="varchar(32)"/>
+            <column name="description" type="varchar(150)"/>
+            <column name="photo_link" type="varchar(150)"/>
+            <column name="price" type="bigint"/>
+            <column name="status" type="varchar(50)"/>
+            <column name="stock" type="bigint"/>
         </createTable>
+
+        <rollback>
+            <dropTable schemaName="product" tableName="product" />
+        </rollback>
+
     </changeSet>
 </databaseChangeLog>

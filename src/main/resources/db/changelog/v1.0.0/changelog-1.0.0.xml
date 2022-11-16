@@ -7,7 +7,7 @@
 
 
     <include file="1-create-product-table.xml" relativeToChangelogFile="true"/>
-    <include file="2-create-test-table.xml" relativeToChangelogFile="true"/>
-    <include file="3-create-testTest-table.xml" relativeToChangelogFile="true"/>
+    <include file="2-create-testData-chair-product.xml" relativeToChangelogFile="true"/>
+    <include file="3-create-testData-table-product.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
