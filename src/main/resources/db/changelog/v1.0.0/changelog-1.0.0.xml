@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+
+    <include file="1-create-product-table.xml" relativeToChangelogFile="true"/>
+    <include file="2-create-testData-chair-product.xml" relativeToChangelogFile="true"/>
+    <include file="3-create-testData-table-product.xml" relativeToChangelogFile="true"/>
+    <include file="4-create-testData-sofa-product.xml" relativeToChangelogFile="true"/>
+    <include file="5-create-testData-bedroom-product.xml" relativeToChangelogFile="true"/>
+    <include file="6-create-testData-bed-product.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

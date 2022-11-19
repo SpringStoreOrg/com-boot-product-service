@@ -66,22 +66,23 @@
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 
-		<!-- <dependency>
-             <groupId>org.springframework.cloud</groupId>
-              <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-         </dependency>-->
+		<!-- liquibase -->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>4.17.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-maven-plugin</artifactId>
+			<version>4.17.2</version>
+		</dependency>
 
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-			<version>4.13.2</version>
 		</dependency>
 
 		<!-- MySQL -->
@@ -90,12 +91,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
-		<!-- Datamodel DTO -->
-		<dependency>
-			<groupId>com.github.GeorgeT88</groupId>
-			<artifactId>commons-datamodel-dto</artifactId>
-			<version>release-2.2</version>
-		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator-cdi</artifactId>
