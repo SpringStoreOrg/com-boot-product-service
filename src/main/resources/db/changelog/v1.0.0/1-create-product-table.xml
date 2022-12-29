@@ -11,11 +11,11 @@
 
         <preConditions onFail="HALT">
             <not>
-                <tableExists schemaName="product" tableName="product"/>
+                <tableExists tableName="product"/>
             </not>
         </preConditions>
 
-        <createTable schemaName="product" tableName="product">
+        <createTable tableName="product">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
