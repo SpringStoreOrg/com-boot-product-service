@@ -43,7 +43,7 @@
         </createTable>
 
         <rollback>
-            <dropTable schemaName="product" tableName="product" />
+            <dropTable tableName="product" />
         </rollback>
 
     </changeSet>
