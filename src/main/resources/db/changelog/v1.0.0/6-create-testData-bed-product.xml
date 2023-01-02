@@ -12,7 +12,7 @@
             <column name="name" value="Yellow core wood bed"/>
             <column name="category" value="bed"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://source.unsplash.com/featured/?{bed yellow}"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/a6/17/TuR71xgY_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -22,7 +22,7 @@
             <column name="name" value="Black core wood bed"/>
             <column name="category" value="bed"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://source.unsplash.com/featured/?{bed black"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/11/ec/z2p8sO8N_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -32,7 +32,7 @@
             <column name="name" value="Orange core wood bed"/>
             <column name="category" value="bed"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://source.unsplash.com/featured/?{bed orange}"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/5c/10/pszIcCXu_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -42,7 +42,7 @@
             <column name="name" value="White core wood bed"/>
             <column name="category" value="bed"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://source.unsplash.com/featured/?{bed yellow}"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/10/1c/lNgf6KYW_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -52,7 +52,7 @@
             <column name="name" value="Red core wood bed"/>
             <column name="category" value="bed"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://source.unsplash.com/featured/?{bed red}"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/69/87/eLJSbXrg_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -62,7 +62,7 @@
             <column name="name" value="Blue core wood bed"/>
             <column name="category" value="bed"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://source.unsplash.com/featured/?{bed blue}"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/b6/5b/lQ0jmE2J_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
