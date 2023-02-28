@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.boot.command.OrderDTO;
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
 import com.boot.product.model.Product;
@@ -143,5 +144,47 @@ public class ProductService {
 		productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
 
 		return productDTOList;
+	}
+
+	@Transactional
+	public void reserveProducts(OrderDTO orderDTO) {
+		orderDTO.getEntryList()
+				.forEach(orderEntry -> {
+					Product product = productRepository.findByName(orderEntry.getProductName());
+					if (product == null) {
+						throw new EntityNotFoundException("Product " + orderEntry.getProductName() + " was not found");
+					}
+					if (orderEntry.getQuantity() > product.getReserved() || orderEntry.getQuantity() > product.getStock()) {
+						throw new InvalidInputDataException("Invalid requested value of " + orderEntry.getQuantity());
+					}
+					product.buyQuantity(orderEntry.getQuantity());
+				});
+	}
+
+	public void reserve(String productName, int quantity) {
+		Product product = productRepository.findByName(productName);
+		if (product == null) {
+			throw new EntityNotFoundException("Product with name " + productName + " was not found");
+		}
+		if (product.getAvailable() < quantity) {
+			throw new InvalidInputDataException("Invalid requested value of " + quantity);
+		}
+
+		product.reserve(quantity);
+		productRepository.save(product);
+	}
+
+	public void cancelReserve(String productName, int quantity){
+		Product product = productRepository.findByName(productName);
+		if (product == null) {
+			throw new EntityNotFoundException("Product with name " + productName + " was not found");
+		}
+
+		if (product.getReserved() < quantity) {
+			throw new InvalidInputDataException("Invalid requested value of " + quantity);
+		}
+
+		product.reverseReserve(quantity);
+		productRepository.save(product);
 	}
 }

@@ -3,6 +3,7 @@ package com.boot.product.controller;
 import java.util.List;
 
 import com.boot.product.dto.ProductDTO;
+import com.boot.product.dto.StockDTO;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -74,5 +75,27 @@ public class ProductController {
                                                                  @Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName) throws InvalidInputDataException {
         ProductDTO productDTO = productService.updateProductByProductName(productName, product);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/{productName}/reserve")
+    public ResponseEntity reserveProducts(@PathVariable("productName") String productName, @Valid @RequestBody StockDTO stockDTO){
+        productService.reserve(productName, stockDTO.getQuantity());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{productName}/reserve/revert")
+    public ResponseEntity revertReserveProducts(@PathVariable("productName") String productName, @Valid @RequestBody StockDTO stockDTO){
+        productService.cancelReserve(productName, stockDTO.getQuantity());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/reserve")
+    public ResponseEntity batchReserveProducts(@Valid @RequestBody StockDTO stockDTO){
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/reserve/revert")
+    public ResponseEntity batchRevertReserveProducts(@Valid @RequestBody StockDTO stockDTO){
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

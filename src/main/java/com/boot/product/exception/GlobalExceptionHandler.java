@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(InvalidInputDataException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ResponseEntity<ApiError> invalidImputData(
+	public ResponseEntity<ApiError> invalidInputData(
 		InvalidInputDataException invalidInputDataException)
 	{
 		return createResponseEntity(HttpStatus.BAD_REQUEST,
