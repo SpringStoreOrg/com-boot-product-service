@@ -7,10 +7,11 @@
 
 
     <include file="1-create-product-table.xml" relativeToChangelogFile="true"/>
-    <include file="2-create-testData-chair-product.xml" relativeToChangelogFile="true"/>
-    <include file="3-create-testData-table-product.xml" relativeToChangelogFile="true"/>
+    <include file="2-create-photo_link_entry-table.xml" relativeToChangelogFile="true"/>
+    <include file="3-create-testData-chair-product.xml" relativeToChangelogFile="true"/>
     <include file="4-create-testData-sofa-product.xml" relativeToChangelogFile="true"/>
     <include file="5-create-testData-bedroom-product.xml" relativeToChangelogFile="true"/>
     <include file="6-create-testData-bed-product.xml" relativeToChangelogFile="true"/>
+    <include file="7-create-testData-table-product.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
