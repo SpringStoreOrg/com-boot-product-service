@@ -76,14 +76,18 @@ public class Product implements Serializable {
 	}
 
 	public static Product dtoToProductEntity(ProductDTO productDto) {
-		return new Product().setId(productDto.getId())
+		 Product product = new Product();
+
+		 product.setId(productDto.getId())
 				.setName(productDto.getName())
 				.setDescription(productDto.getDescription())
 				.setPrice(productDto.getPrice())
-				.setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks()))
+				.setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks(), product))
 				.setCategory(productDto.getCategory())
 				.setStock(productDto.getStock())
 				.setStatus(productDto.getStatus());
+
+		return product;
 	}
 
 	public static Product updateDtoToProductEntity(Product product, ProductDTO productDto) {
@@ -91,7 +95,7 @@ public class Product implements Serializable {
 				.setName(productDto.getName())
 				.setDescription(productDto.getDescription())
 				.setPrice(productDto.getPrice())
-				.setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks()))
+				.setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks(), product))
 				.setCategory(productDto.getCategory())
 				.setStock(productDto.getStock())
 				.setStatus(productDto.getStatus());
@@ -107,18 +111,15 @@ public class Product implements Serializable {
 		return productDTOList;
 	}
 
-	public static List<PhotoLinkEntry> productPhotoLinksToEntries(List<String> photoLinks) {
+	public static List<PhotoLinkEntry> productPhotoLinksToEntries(List<String> photoLinks, Product product) {
 
 		List<PhotoLinkEntry> photoLinkEntries = new ArrayList<>();
 
-		photoLinks.forEach(p -> photoLinkEntries.add(photoLinkToEntry(p)));
+		photoLinks.forEach(photoLink -> photoLinkEntries.add(new PhotoLinkEntry().setPhotoLink(photoLink).setProduct(product)));
 
 		return photoLinkEntries;
 	}
 
-	public static PhotoLinkEntry photoLinkToEntry(String photoLink) {
-		return new PhotoLinkEntry().setPhotoLink(photoLink);
-	}
 
 }
 
