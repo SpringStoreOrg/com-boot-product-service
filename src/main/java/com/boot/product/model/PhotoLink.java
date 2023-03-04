@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @Entity
-@Table(name = "photo_link_entry")
-public class PhotoLinkEntry implements Serializable {
+@Table(name = "photo_link")
+public class PhotoLink implements Serializable {
 
     /**
      *
