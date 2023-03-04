@@ -3,7 +3,6 @@ package com.boot.product.model;
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
 
-import com.boot.product.repository.ProductRepository;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -46,7 +45,7 @@ public class Product implements Serializable {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY,  cascade = { CascadeType.ALL} )
-	private List<PhotoLink> entries;
+	private List<PhotoLinkEntry> entries;
 
 	@Column
 	@Size(min = 3, max = 30)
@@ -76,23 +75,23 @@ public class Product implements Serializable {
 				.setStatus(product.getStatus());
 	}
 
-	public static Product dtoToProductEntity(ProductDTO productDto, List<PhotoLink> entries) {
+	public static Product dtoToProductEntity(ProductDTO productDto) {
 		return new Product().setId(productDto.getId())
 				.setName(productDto.getName())
 				.setDescription(productDto.getDescription())
 				.setPrice(productDto.getPrice())
-				.setEntries(entries)
+				.setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks()))
 				.setCategory(productDto.getCategory())
 				.setStock(productDto.getStock())
 				.setStatus(productDto.getStatus());
 	}
 
-	public static Product updateDtoToProductEntity(Product product, ProductDTO productDto, List<PhotoLink> entries) {
+	public static Product updateDtoToProductEntity(Product product, ProductDTO productDto) {
 		return product.setId(productDto.getId())
 				.setName(productDto.getName())
 				.setDescription(productDto.getDescription())
 				.setPrice(productDto.getPrice())
-				.setEntries(entries)
+				.setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks()))
 				.setCategory(productDto.getCategory())
 				.setStock(productDto.getStock())
 				.setStatus(productDto.getStatus());
@@ -108,6 +107,18 @@ public class Product implements Serializable {
 		return productDTOList;
 	}
 
+	public static List<PhotoLinkEntry> productPhotoLinksToEntries(List<String> photoLinks) {
+
+		List<PhotoLinkEntry> photoLinkEntries = new ArrayList<>();
+
+		photoLinks.forEach(p -> photoLinkEntries.add(photoLinkToEntry(p)));
+
+		return photoLinkEntries;
+	}
+
+	public static PhotoLinkEntry photoLinkToEntry(String photoLink) {
+		return new PhotoLinkEntry().setPhotoLink(photoLink);
+	}
 
 }
 

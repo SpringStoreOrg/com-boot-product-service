@@ -7,9 +7,7 @@ import java.util.stream.Stream;
 
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
-import com.boot.product.model.PhotoLink;
 import com.boot.product.model.Product;
-import com.boot.product.repository.PhotoLinkRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +36,6 @@ public class ProductService {
 
 	private ProductRepository productRepository;
 
-	private PhotoLinkRepository photoLinkRepository;
-
 	public ProductDTO addProduct(ProductDTO productDTO) throws InvalidInputDataException {
 		log.info("addProduct - process started");
 
@@ -48,13 +44,7 @@ public class ProductService {
 		}
 		productDTO.setStatus(ProductStatus.ACTIVE);
 
-		List<PhotoLink> entries = new ArrayList<>();
-
-		productDTO.getPhotoLinks().forEach(photoLink -> {
-			entries.add(photoLinkRepository.findByPhotoLink(photoLink));
-		});
-
-		Product product = productRepository.save(dtoToProductEntity(productDTO, entries));
+		Product product = productRepository.save(dtoToProductEntity(productDTO));
 
 		return productEntityToDto(product);
 	}
@@ -129,12 +119,7 @@ public class ProductService {
 		} else if (productValidator.isNamePresent(productDTO.getName())) {
 			throw new InvalidInputDataException("The Selected Product name is already used!");
 		}
-
-		List<PhotoLink> entries = new ArrayList<>();
-
-		productDTO.getPhotoLinks().forEach(photoLink -> {
-			entries.add(photoLinkRepository.findByPhotoLink(photoLink));
-		});
+		newProductDto.setPhotoLinks(productDTO.getPhotoLinks());
 
 		newProductDto.setPrice(productDTO.getPrice());
 
@@ -142,7 +127,7 @@ public class ProductService {
 
 		newProductDto.setStock(productDTO.getStock());
 
-		productRepository.save(updateDtoToProductEntity(product, newProductDto, entries));
+		productRepository.save(updateDtoToProductEntity(product, newProductDto));
 
 		return productEntityToDto(product);
 	}
