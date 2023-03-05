@@ -12,7 +12,7 @@
             <column name="name" value="Yellow core wood table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/04/f6/jTjRb0G3_t.png"/>
+            <!--  <column name="photo_link" value="https://thumbs2.imgbox.com/04/f6/jTjRb0G3_t.png"/>-->
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -22,7 +22,7 @@
             <column name="name" value="Black core wood table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/3c/fa/Nw5akIoV_t.png"/>
+            <!-- <column name="photo_link" value="https://thumbs2.imgbox.com/3c/fa/Nw5akIoV_t.png"/>-->
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -32,7 +32,7 @@
             <column name="name" value="Orange core wood table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/29/46/m3aBjmib_t.png"/>
+            <!--  <column name="photo_link" value="https://thumbs2.imgbox.com/29/46/m3aBjmib_t.png"/>-->
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -42,7 +42,7 @@
             <column name="name" value="White core wood table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/69/7c/15CJTElX_t.png"/>
+            <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/69/7c/15CJTElX_t.png"/>-->
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -52,7 +52,7 @@
             <column name="name" value="Red core wood table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/65/74/gFl2DejY_t.png"/>
+            <!--  <column name="photo_link" value="https://thumbs2.imgbox.com/65/74/gFl2DejY_t.png"/>-->
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
@@ -62,7 +62,7 @@
             <column name="name" value="Blue core wood table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/dc/08/cSKiJ9Wj_t.png"/>
+            <!-- <column name="photo_link" value="https://thumbs2.imgbox.com/dc/08/cSKiJ9Wj_t.png"/>-->
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>

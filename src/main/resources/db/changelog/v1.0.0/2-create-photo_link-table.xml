@@ -9,25 +9,29 @@
 
         <preConditions onFail="HALT">
             <not>
-                <tableExists tableName="photo_link_entry"/>
+                <tableExists tableName="photo"/>
             </not>
         </preConditions>
 
-        <createTable tableName="photo_link_entry">
+        <createTable tableName="photo">
             <column name="id" type="bigint" autoIncrement="true" >
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="photoLink" type="varchar(100)">
+            <column name="photo_link" type="varchar(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="photo_link_entry"
+                baseTableName="photo"
                 baseColumnNames="product_id"
                 constraintName="product_entry_f1"
                 referencedTableName="product"
-                referencedColumnNames="id"/>
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
 
     </changeSet>
 </databaseChangeLog>

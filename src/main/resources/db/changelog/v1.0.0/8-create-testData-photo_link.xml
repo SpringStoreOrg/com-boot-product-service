@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet author="GeorgeT88" id="2023-03-04-19.01">
+
+        <insert tableName="photo">
+            <column name="product_id" valueComputed="(select id from product where name = 'Yellow core wood chair')"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/04/f6/jTjRb0G3_t.png"/>
+        </insert>
+        <insert tableName="photo">
+            <column name="product_id" valueComputed="(select id from product where name = 'Yellow core wood chair')"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/1b/d2/Gl8DzjQk_t.png"/>
+        </insert>
+        <insert tableName="photo">
+            <column name="product_id" valueComputed="(select id from product where name = 'Yellow core wood chair')"/>
+            <column name="photo_link" value="https://thumbs2.imgbox.com/36/4d/yXsMCG7m_t.jpg"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

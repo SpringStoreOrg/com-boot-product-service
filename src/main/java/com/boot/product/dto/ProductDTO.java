@@ -33,7 +33,7 @@ public class ProductDTO {
 	@Positive(message = "Product price should be positive number!")
 	private long price;
 
-	private List<String> photoLinks;
+	private List<PhotoDTO> photoLinks;
 
 	@Size(min = 3, message = "Min category name size is 3 characters!")
 	@Size(max = 30, message = "Max category name size is 30 characters!")
