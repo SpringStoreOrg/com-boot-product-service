@@ -1,8 +1,7 @@
 package com.boot.product.config;
 
-import com.boot.product.service.ProductCommandHandler;
-import io.eventuate.tram.commands.consumer.CommandDispatcher;
-import io.eventuate.tram.sagas.participant.SagaCommandDispatcherFactory;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +20,10 @@ public class AppConfig {
     }
 
     @Bean
-    public CommandDispatcher consumerCommandDispatcher(ProductCommandHandler target,
-                                                       SagaCommandDispatcherFactory sagaCommandDispatcherFactory) {
-        return sagaCommandDispatcherFactory.make("customerCommandDispatcher", target.commandHandlerDefinitions());
+    public XStream xStream() {
+        XStream xStream = new XStream();
+        xStream.addPermission(AnyTypePermission.ANY);
+
+        return xStream;
     }
 }

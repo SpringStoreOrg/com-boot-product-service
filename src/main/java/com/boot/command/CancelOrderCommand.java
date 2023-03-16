@@ -4,20 +4,19 @@ import lombok.Builder;
 import lombok.Getter;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
-import java.util.List;
 import java.util.UUID;
 
 @Builder
 @Getter
-public class ReserveProductsCommand {
+public class CancelOrderCommand {
     private UUID orderId;
     private String email;
     private long userId;
-    private List<OrderEntryDTO> entries;
+    private String rejectionReason;
 
     @Override
     @TargetAggregateIdentifier
     public String toString() {
-        return orderId + "-product";
+        return orderId + "-order";
     }
 }

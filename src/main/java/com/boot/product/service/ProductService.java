@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.boot.command.OrderDTO;
+import com.boot.command.CancelOrderCommand;
+import com.boot.command.CompleteOrderCommand;
+import com.boot.event.ReserveProductsEvent;
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
 import com.boot.product.model.Product;
 import lombok.AllArgsConstructor;
+import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.axonframework.eventhandling.EventHandler;
 import org.springframework.stereotype.Service;
 
 import com.boot.product.exception.EntityNotFoundException;
@@ -36,6 +40,7 @@ public class ProductService {
 	private ProductValidator productValidator;
 
 	private ProductRepository productRepository;
+	private CommandGateway commandGateway;
 
 	public ProductDTO addProduct(ProductDTO productDTO) throws InvalidInputDataException {
 		log.info("addProduct - process started");
@@ -146,21 +151,6 @@ public class ProductService {
 		return productDTOList;
 	}
 
-	@Transactional
-	public void reserveProducts(OrderDTO orderDTO) {
-		orderDTO.getEntryList()
-				.forEach(orderEntry -> {
-					Product product = productRepository.findByName(orderEntry.getProductName());
-					if (product == null) {
-						throw new EntityNotFoundException("Product " + orderEntry.getProductName() + " was not found");
-					}
-					if (orderEntry.getQuantity() > product.getReserved() || orderEntry.getQuantity() > product.getStock()) {
-						throw new InvalidInputDataException("Invalid requested value of " + orderEntry.getQuantity());
-					}
-					product.buyQuantity(orderEntry.getQuantity());
-				});
-	}
-
 	public void reserve(String productName, int quantity) {
 		Product product = productRepository.findByName(productName);
 		if (product == null) {
@@ -186,5 +176,42 @@ public class ProductService {
 
 		product.reverseReserve(quantity);
 		productRepository.save(product);
+	}
+
+	@EventHandler
+	@Transactional
+	public void on(ReserveProductsEvent event) {
+		log.info("{} ReserveProductsEvent started", event.getOrderId());
+		event.getEntries()
+				.forEach(orderEntry -> {
+					Product product = productRepository.findByName(orderEntry.getProductName());
+					if (product == null) {
+						String message = "Product " + orderEntry.getProductName() + " was not found";
+						commandGateway.send(CancelOrderCommand.builder()
+								.email(event.getEmail())
+								.userId(event.getUserId())
+								.orderId(event.getOrderId())
+								.rejectionReason(message)
+						.build());
+						throw new EntityNotFoundException(message);
+					}
+					if (orderEntry.getQuantity() > product.getReserved() || orderEntry.getQuantity() > product.getStock()) {
+						String message = "Invalid requested value of " + orderEntry.getQuantity();
+						commandGateway.send(CancelOrderCommand.builder()
+								.email(event.getEmail())
+								.userId(event.getUserId())
+								.orderId(event.getOrderId())
+								.rejectionReason(message)
+						.build());
+						throw new InvalidInputDataException(message);
+					}
+					product.buyQuantity(orderEntry.getQuantity());
+				});
+		commandGateway.send(CompleteOrderCommand.builder()
+				.email(event.getEmail())
+				.userId(event.getUserId())
+				.orderId(event.getOrderId())
+		.build());
+		log.info("{} ReserveProductsEvent completed", event.getOrderId());
 	}
 }
