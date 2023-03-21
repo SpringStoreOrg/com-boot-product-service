@@ -5,14 +5,17 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
-
     <include file="1-create-product-table.xml" relativeToChangelogFile="true"/>
     <include file="2-create-photo_link-table.xml" relativeToChangelogFile="true"/>
     <include file="3-create-testData-chair-product.xml" relativeToChangelogFile="true"/>
-    <include file="4-create-testData-sofa-product.xml" relativeToChangelogFile="true"/>
-    <include file="5-create-testData-bedroom-product.xml" relativeToChangelogFile="true"/>
-    <include file="6-create-testData-bed-product.xml" relativeToChangelogFile="true"/>
-    <include file="7-create-testData-table-product.xml" relativeToChangelogFile="true"/>
-    <include file="8-create-testData-photo_link.xml" relativeToChangelogFile="true"/>
+    <include file="4-create-testData-chair-photo_link.xml" relativeToChangelogFile="true"/>
+    <include file="5-create-testData-sofa-product.xml" relativeToChangelogFile="true"/>
+    <include file="6-create-testData-sofa-photo_link.xml" relativeToChangelogFile="true"/>
+    <include file="7-create-testData-bedroom-product.xml" relativeToChangelogFile="true"/>
+    <include file="8-create-testData-bedroom-photo_link.xml" relativeToChangelogFile="true"/>
+    <include file="9-create-testData-bed-product.xml" relativeToChangelogFile="true"/>
+    <include file="10-create-testData-bed-photo_link.xml" relativeToChangelogFile="true"/>
+    <include file="11-create-testData-table-product.xml" relativeToChangelogFile="true"/>
+    <include file="12-create-testData-table-photo_link.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -11,63 +11,69 @@
         <insert tableName="product">
             <column name="name" value="Yellow core wood chair"/>
             <column name="category" value="chair"/>
-            <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
+            <column name="description"
+                    value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <!--  <column name="photo_link" value="https://thumbs2.imgbox.com/41/30/b0z3yMrU_t.png"/> -->
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
         </insert>
 
-                 <insert tableName="product">
-                     <column name="name" value="Black core wood chair"/>
-                     <column name="category" value="chair"/>
-                     <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-                     <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/1b/d2/Gl8DzjQk_t.png"/> -->
-                        <column name="price" value="10000"/>
-                        <column name="status" value="ACTIVE"/>
-                        <column name="stock" value="30"/>
-                    </insert>
+        <insert tableName="product">
+            <column name="name" value="Black core wood chair"/>
+            <column name="category" value="chair"/>
+            <column name="description"
+                    value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
+            <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/1b/d2/Gl8DzjQk_t.png"/> -->
+            <column name="price" value="10000"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="stock" value="30"/>
+        </insert>
 
-                    <insert tableName="product">
-                        <column name="name" value="Orange core wood chair"/>
-                        <column name="category" value="chair"/>
-                        <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-                        <!--    <column name="photo_link" value="https://thumbs2.imgbox.com/36/4d/yXsMCG7m_t.jpg"/> -->
-                            <column name="price" value="10000"/>
-                            <column name="status" value="ACTIVE"/>
-                            <column name="stock" value="30"/>
-                        </insert>
+        <insert tableName="product">
+            <column name="name" value="Orange core wood chair"/>
+            <column name="category" value="chair"/>
+            <column name="description"
+                    value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
+            <!--    <column name="photo_link" value="https://thumbs2.imgbox.com/36/4d/yXsMCG7m_t.jpg"/> -->
+            <column name="price" value="10000"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="stock" value="30"/>
+        </insert>
 
-                        <insert tableName="product">
-                            <column name="name" value="White core wood chair"/>
-                            <column name="category" value="chair"/>
-                            <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-                            <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/3e/cf/ferQl0VT_t.png"/> -->
-                               <column name="price" value="10000"/>
-                               <column name="status" value="ACTIVE"/>
-                               <column name="stock" value="30"/>
-                           </insert>
+        <insert tableName="product">
+            <column name="name" value="White core wood chair"/>
+            <column name="category" value="chair"/>
+            <column name="description"
+                    value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
+            <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/3e/cf/ferQl0VT_t.png"/> -->
+            <column name="price" value="10000"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="stock" value="30"/>
+        </insert>
 
-                           <insert tableName="product">
-                               <column name="name" value="Red core wood chair"/>
-                               <column name="category" value="chair"/>
-                               <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-                            <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/01/b7/KQL82u0H_t.jpg"/>-->
-                               <column name="price" value="10000"/>
-                               <column name="status" value="ACTIVE"/>
-                               <column name="stock" value="30"/>
-                           </insert>
+        <insert tableName="product">
+            <column name="name" value="Red core wood chair"/>
+            <column name="category" value="chair"/>
+            <column name="description"
+                    value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
+            <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/01/b7/KQL82u0H_t.jpg"/>-->
+            <column name="price" value="10000"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="stock" value="30"/>
+        </insert>
 
-                           <insert tableName="product">
-                               <column name="name" value="Blue core wood chair"/>
-                               <column name="category" value="chair"/>
-                               <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-                            <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/6e/da/ZodBB1Tz_t.png"/>-->
-                               <column name="price" value="10000"/>
-                               <column name="status" value="ACTIVE"/>
-                               <column name="stock" value="30"/>
-                           </insert>
+        <insert tableName="product">
+            <column name="name" value="Blue core wood chair"/>
+            <column name="category" value="chair"/>
+            <column name="description"
+                    value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
+            <!--   <column name="photo_link" value="https://thumbs2.imgbox.com/6e/da/ZodBB1Tz_t.png"/>-->
+            <column name="price" value="10000"/>
+            <column name="status" value="ACTIVE"/>
+            <column name="stock" value="30"/>
+        </insert>
 
-                           <rollback/>
-                       </changeSet>
-                   </databaseChangeLog>
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>
