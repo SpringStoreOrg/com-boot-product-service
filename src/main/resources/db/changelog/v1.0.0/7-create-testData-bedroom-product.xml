@@ -6,63 +6,57 @@
       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
 
-    <changeSet author="GeorgeT88" id="2022-11-17-15.05">
+    <changeSet author="GeorgeT88" id="2022-11-17-15.04">
 
         <insert tableName="product">
-            <column name="name" value="Yellow core wood bed"/>
-            <column name="category" value="bed"/>
+            <column name="name" value="Yellow bedroom furniture"/>
+            <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/a6/17/TuR71xgY_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
         </insert>
 
         <insert tableName="product">
-            <column name="name" value="Black core wood bed"/>
-            <column name="category" value="bed"/>
+            <column name="name" value="Black bedroom furniture"/>
+            <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/11/ec/z2p8sO8N_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
         </insert>
 
         <insert tableName="product">
-            <column name="name" value="Orange core wood bed"/>
-            <column name="category" value="bed"/>
+            <column name="name" value="Orange bedroom furniture"/>
+            <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/5c/10/pszIcCXu_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
         </insert>
 
         <insert tableName="product">
-            <column name="name" value="White core wood bed"/>
-            <column name="category" value="bed"/>
+            <column name="name" value="White bedroom furniture"/>
+            <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/10/1c/lNgf6KYW_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
         </insert>
 
         <insert tableName="product">
-            <column name="name" value="Red core wood bed"/>
-            <column name="category" value="bed"/>
+            <column name="name" value="Red bedroom furniture"/>
+            <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/69/87/eLJSbXrg_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
         </insert>
 
         <insert tableName="product">
-            <column name="name" value="Blue core wood bed"/>
-            <column name="category" value="bed"/>
+            <column name="name" value="Blue bedroom furniture"/>
+            <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/b6/5b/lQ0jmE2J_t.png"/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>

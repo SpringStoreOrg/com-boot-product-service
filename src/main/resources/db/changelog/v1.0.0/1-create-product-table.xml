@@ -28,9 +28,6 @@
             <column name="description" type="varchar(500)">
                 <constraints nullable="false"/>
             </column>
-            <column name="photo_link" type="varchar(200)">
-                <constraints nullable="false"/>
-            </column>
             <column name="price" type="bigint">
                 <constraints nullable="false"/>
             </column>
