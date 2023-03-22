@@ -46,7 +46,7 @@ public class Product implements Serializable {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    private List<PhotoLinkEntry> entries;
+    private List<Photo> entries;
 
     @Column
     @Size(min = 3, max = 30)
@@ -67,7 +67,7 @@ public class Product implements Serializable {
                 .setPrice(product.getPrice())
                 .setPhotoLinks(product.getEntries() != null
                         ? product.getEntries().stream()
-                        .map(p -> new PhotoDTO().setImage(p.getPhotoLink()))
+                        .map(p -> new PhotoDTO().setImage(p.getLink()))
                         .collect(Collectors.toList())
                         : List.of())
                 .setCategory(product.getCategory())
@@ -115,11 +115,11 @@ public class Product implements Serializable {
         return productDTOList;
     }
 
-    public static List<PhotoLinkEntry> productPhotoLinksToEntries(List<String> photoLinks, Product product) {
+    public static List<Photo> productPhotoLinksToEntries(List<String> photoLinks, Product product) {
 
-        List<PhotoLinkEntry> photoLinkEntries = new ArrayList<>();
+        List<Photo> photoLinkEntries = new ArrayList<>();
 
-        photoLinks.forEach(photoLink -> photoLinkEntries.add(new PhotoLinkEntry().setPhotoLink(photoLink).setProduct(product)));
+        photoLinks.forEach(photoLink -> photoLinkEntries.add(new Photo().setLink(photoLink).setProduct(product)));
 
         return photoLinkEntries;
     }

@@ -10,109 +10,109 @@
         <comment>Photo links for Yellow core wood bed product</comment>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Yellow core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/d0/bd/DbIJBTHa_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/d0/bd/DbIJBTHa_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Yellow core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/f8/e1/xgyWbEgy_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/f8/e1/xgyWbEgy_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Yellow core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/c8/20/ZXL4OX6w_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/c8/20/ZXL4OX6w_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Yellow core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/31/67/wBFSaixV_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/31/67/wBFSaixV_t.png"/>
         </insert>
 
         <comment>Photo links for Black core wood bed product</comment>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Black core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/7c/34/0DIl63zr_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/7c/34/0DIl63zr_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Black core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/74/53/LxpyXrTF_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/74/53/LxpyXrTF_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Black core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/df/64/kywT7zUK_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/df/64/kywT7zUK_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Black core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/21/a3/A9t5DYP3_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/21/a3/A9t5DYP3_t.png"/>
         </insert>
 
         <comment>Photo links for Orange core wood bed product</comment>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Orange core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/e3/1e/4ePEjw8S_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/e3/1e/4ePEjw8S_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Orange core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/0b/0a/jzepiIOI_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/0b/0a/jzepiIOI_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Orange core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/5b/21/fHc0EgB9_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/5b/21/fHc0EgB9_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Orange core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/b5/e7/HgaOzL08_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/b5/e7/HgaOzL08_t.png"/>
         </insert>
 
         <comment>Photo links for White core wood bed product</comment>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'White core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/40/93/IWoqFl5T_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/40/93/IWoqFl5T_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'White core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/ad/7c/tYE7hmmS_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/ad/7c/tYE7hmmS_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'White core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/ec/85/VK3iPtXD_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/ec/85/VK3iPtXD_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'White core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/37/87/ENjfuPkA_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/37/87/ENjfuPkA_t.png"/>
         </insert>
 
         <comment>Photo links for Red core wood bed product</comment>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Red core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/22/9a/1A2xj4Fu_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/22/9a/1A2xj4Fu_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Red core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/5a/07/0HD6JPMa_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/5a/07/0HD6JPMa_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Red core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/23/0c/uQwHjLHn_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/23/0c/uQwHjLHn_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Red core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/4a/02/1VvPKfE5_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/4a/02/1VvPKfE5_t.png"/>
         </insert>
 
         <comment>Photo links for Blue core wood bed product</comment>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Blue core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/5b/52/ciATV2hD_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/5b/52/ciATV2hD_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Blue core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/55/46/05cbE6bw_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/55/46/05cbE6bw_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Blue core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/53/f4/12U9coed_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/53/f4/12U9coed_t.png"/>
         </insert>
         <insert tableName="photo">
             <column name="product_id" valueComputed="(select id from product where name = 'Blue core wood bed')"/>
-            <column name="photo_link" value="https://thumbs2.imgbox.com/73/e5/VAGlqbfo_t.png"/>
+            <column name="link" value="https://thumbs2.imgbox.com/73/e5/VAGlqbfo_t.png"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

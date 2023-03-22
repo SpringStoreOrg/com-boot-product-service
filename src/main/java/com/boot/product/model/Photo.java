@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @Entity
 @Table(name = "photo")
-public class PhotoLinkEntry implements Serializable {
+public class Photo implements Serializable {
 
     /**
      *
@@ -24,7 +24,7 @@ public class PhotoLinkEntry implements Serializable {
     private Long id;
 
     @Column
-    private String photoLink;
+    private String link;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
