@@ -3,10 +3,12 @@ package com.boot.product;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
-@EnableEurekaClient
+//@EnableEurekaClient
+@EnableDiscoveryClient
 @EntityScan(basePackages = {"com.boot.product.model",
         "org.axonframework.modelling.saga.repository.jpa",
         "org.axonframework.eventhandling.tokenstore.jpa",

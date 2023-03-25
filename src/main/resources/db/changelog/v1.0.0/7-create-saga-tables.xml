@@ -130,7 +130,7 @@
             </not>
         </preConditions>
         <createTable tableName="domain_event_entry">
-            <column name="global_index" type="bigint">
+            <column name="global_index" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" primaryKeyName="snapshot_event_entry_pk"/>
             </column>
             <column name="event_identifier" type="varchar(255)">
