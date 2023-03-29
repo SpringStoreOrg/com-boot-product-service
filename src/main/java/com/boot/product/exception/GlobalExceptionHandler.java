@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -47,13 +49,22 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(InvalidInputDataException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ResponseEntity<ApiError> invalidImputData(
+	public ResponseEntity<ApiError> invalidInputData(
 		InvalidInputDataException invalidInputDataException)
 	{
 		return createResponseEntity(HttpStatus.BAD_REQUEST,
 			invalidInputDataException);
 	}
-	
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResponseEntity<ApiError> constraintViolationException(
+			ConstraintViolationException constraintViolationException)
+	{
+		return createResponseEntity(HttpStatus.BAD_REQUEST,
+				constraintViolationException);
+	}
+
 	@ExceptionHandler(DuplicateEntryException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
 	public ResponseEntity<ApiError> duplicateEntry(

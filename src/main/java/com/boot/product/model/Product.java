@@ -55,9 +55,29 @@ public class Product implements Serializable {
     @Column
     private int stock;
 
+    @Column
+    private int reserved;
+
     @Enumerated(EnumType.STRING)
     @Column
     private ProductStatus status;
+
+    public int getAvailable(){
+        return stock - reserved;
+    }
+
+    public void buyQuantity(int quantity){
+        this.reserved = this.reserved - quantity;
+        this.stock = this.stock - quantity;
+    }
+
+    public void reserve(int quantity){
+        this.reserved = this.reserved + quantity;
+    }
+
+    public void reverseRelease(int quantity){
+        this.reserved = this.reserved - quantity;
+    }
 
     public static ProductDTO productEntityToDto(Product product) {
         return new ProductDTO()

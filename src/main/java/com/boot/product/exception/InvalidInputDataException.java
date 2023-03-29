@@ -1,6 +1,6 @@
 package com.boot.product.exception;
 
-public class InvalidInputDataException extends Exception {
+public class InvalidInputDataException extends RuntimeException{
     /**
 	 * 
 	 */

@@ -37,6 +37,9 @@
             <column name="stock" type="bigint">
                 <constraints nullable="false"/>
             </column>
+            <column name="reserved" type="bigint" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <rollback>

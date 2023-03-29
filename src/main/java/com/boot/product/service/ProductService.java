@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.boot.product.dto.BatchUpdateDTO;
+import com.boot.product.dto.Operation;
 import com.boot.product.dto.ProductDTO;
+import com.boot.product.dto.ProductPriceDTO;
 import com.boot.product.enums.ProductStatus;
 import com.boot.product.model.Product;
 import lombok.AllArgsConstructor;
@@ -36,7 +39,7 @@ public class ProductService {
 
 	private ProductRepository productRepository;
 
-	public ProductDTO addProduct(ProductDTO productDTO) throws InvalidInputDataException {
+	public ProductDTO addProduct(ProductDTO productDTO){
 		log.info("addProduct - process started");
 
 		if (productValidator.isNamePresent(productDTO.getName())) {
@@ -49,7 +52,7 @@ public class ProductService {
 		return productEntityToDto(product);
 	}
 
-	public ProductDTO deleteProductByProductName(String productName) throws EntityNotFoundException {
+	public ProductDTO deleteProductByProductName(String productName){
 		if (!productValidator.isNamePresent(productName)) {
 			throw new EntityNotFoundException(
 					"Product with Product Name: " + productName + " not found in the Database!");
@@ -89,7 +92,7 @@ public class ProductService {
 		return productEntityToDtoList(prodList);
 	}
 
-	public ProductDTO getProductByProductName(String productName, Boolean includeInactive) throws EntityNotFoundException {
+	public ProductDTO getProductByProductName(String productName, Boolean includeInactive){
 
 		log.info("getProductByProductName - process started");
 
@@ -143,5 +146,65 @@ public class ProductService {
 		productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
 
 		return productDTOList;
+	}
+
+	public List<ProductPriceDTO> getProductPrices(){
+		return productRepository.getAllActiveProductsPrices();
+	}
+
+	public void reserve(String productName, int quantity) {
+		Product product = productRepository.findByName(productName);
+		if (product == null) {
+			throw new EntityNotFoundException("Product with name " + productName + " was not found");
+		}
+		if (product.getAvailable() < quantity) {
+			throw new InvalidInputDataException("Invalid requested value of " + quantity);
+		}
+
+		product.reserve(quantity);
+		productRepository.save(product);
+	}
+
+	public void reserveRelease(String productName, int quantity){
+		Product product = productRepository.findByName(productName);
+		if (product == null) {
+			throw new EntityNotFoundException("Product with name " + productName + " was not found");
+		}
+
+		product.reverseRelease(quantity);
+		productRepository.save(product);
+	}
+
+	@Transactional
+	public void batchReserve(List<BatchUpdateDTO> batchUpdate) {
+		batchUpdate
+				.forEach(entry -> {
+					Product product = productRepository.findByName(entry.getProductName());
+					if (product == null) {
+						throw new EntityNotFoundException("Product " + entry.getProductName() + " was not found");
+					}
+					if(entry.getOperation().equals(Operation.SUBTRACT)){
+						if (entry.getQuantity() > product.getAvailable()) {
+							throw new InvalidInputDataException("Invalid requested value of " + entry.getQuantity());
+						}
+						product.reserve(entry.getQuantity());
+					}else{
+						product.reverseRelease(entry.getQuantity());
+					}
+					productRepository.save(product);
+				});
+	}
+
+	@Transactional
+	public void batchReserveRelease(List<BatchUpdateDTO> batchUpdate) {
+		batchUpdate
+				.forEach(entry -> {
+					Product product = productRepository.findByName(entry.getProductName());
+					if (product == null) {
+						throw new EntityNotFoundException("Product " + entry.getProductName() + " was not found");
+					}
+					product.buyQuantity(entry.getQuantity());
+					productRepository.save(product);
+				});
 	}
 }
