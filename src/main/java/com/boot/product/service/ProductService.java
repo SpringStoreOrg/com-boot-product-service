@@ -203,7 +203,7 @@ public class ProductService {
 					if (product == null) {
 						throw new EntityNotFoundException("Product " + entry.getProductName() + " was not found");
 					}
-					product.buyQuantity(entry.getQuantity());
+					product.reverseRelease(entry.getQuantity());
 					productRepository.save(product);
 				});
 	}
