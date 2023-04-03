@@ -1,30 +1,24 @@
 package com.boot.product.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import com.boot.product.dto.BatchUpdateDTO;
-import com.boot.product.dto.Operation;
 import com.boot.product.dto.ProductDTO;
-import com.boot.product.dto.ProductPriceDTO;
+import com.boot.product.dto.ProductInfoDTO;
 import com.boot.product.enums.ProductStatus;
-import com.boot.product.model.Product;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import com.boot.product.exception.EntityNotFoundException;
 import com.boot.product.exception.InvalidInputDataException;
+import com.boot.product.model.Product;
 import com.boot.product.repository.ProductRepository;
 import com.boot.product.validator.ProductValidator;
-
-
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.boot.product.model.Product.*;
 
@@ -148,63 +142,13 @@ public class ProductService {
 		return productDTOList;
 	}
 
-	public List<ProductPriceDTO> getProductPrices(){
-		return productRepository.getAllActiveProductsPrices();
+	public ProductInfoDTO getProductInfoByName(String productName){
+		return productRepository.getActiveProductInfo(productName);
 	}
 
-	public void reserve(String productName, int quantity) {
-		Product product = productRepository.findByName(productName);
-		if (product == null) {
-			throw new EntityNotFoundException("Product with name " + productName + " was not found");
-		}
-		if (product.getAvailable() < quantity) {
-			throw new InvalidInputDataException("Invalid requested value of " + quantity);
-		}
-
-		product.reserve(quantity);
-		productRepository.save(product);
-	}
-
-	public void reserveRelease(String productName, int quantity){
-		Product product = productRepository.findByName(productName);
-		if (product == null) {
-			throw new EntityNotFoundException("Product with name " + productName + " was not found");
-		}
-
-		product.reverseRelease(quantity);
-		productRepository.save(product);
-	}
-
-	@Transactional
-	public void batchReserve(List<BatchUpdateDTO> batchUpdate) {
-		batchUpdate
-				.forEach(entry -> {
-					Product product = productRepository.findByName(entry.getProductName());
-					if (product == null) {
-						throw new EntityNotFoundException("Product " + entry.getProductName() + " was not found");
-					}
-					if(entry.getOperation().equals(Operation.SUBTRACT)){
-						if (entry.getQuantity() > product.getAvailable()) {
-							throw new InvalidInputDataException("Invalid requested value of " + entry.getQuantity());
-						}
-						product.reserve(entry.getQuantity());
-					}else{
-						product.reverseRelease(entry.getQuantity());
-					}
-					productRepository.save(product);
-				});
-	}
-
-	@Transactional
-	public void batchReserveRelease(List<BatchUpdateDTO> batchUpdate) {
-		batchUpdate
-				.forEach(entry -> {
-					Product product = productRepository.findByName(entry.getProductName());
-					if (product == null) {
-						throw new EntityNotFoundException("Product " + entry.getProductName() + " was not found");
-					}
-					product.reverseRelease(entry.getQuantity());
-					productRepository.save(product);
-				});
+	public List<ProductInfoDTO> getProductsInfo(String productNames){
+		return productRepository.getActiveProductsInfo(
+				Arrays.stream(productNames.split(","))
+				.collect(Collectors.toList()));
 	}
 }

@@ -1,26 +1,20 @@
 package com.boot.product.controller;
 
-import java.util.List;
-
-import com.boot.product.dto.BatchUpdateDTO;
 import com.boot.product.dto.ProductDTO;
-import com.boot.product.dto.ProductPriceDTO;
-import com.boot.product.dto.ReserveDTO;
+import com.boot.product.dto.ProductInfoDTO;
+import com.boot.product.exception.EntityNotFoundException;
+import com.boot.product.exception.InvalidInputDataException;
+import com.boot.product.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import com.boot.product.exception.EntityNotFoundException;
-import com.boot.product.exception.InvalidInputDataException;
-import com.boot.product.service.ProductService;
-
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -62,10 +56,10 @@ public class ProductController {
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
-    @GetMapping("/prices")
+    @GetMapping("/info")
     @ResponseBody
-    public List<ProductPriceDTO> getProductPrices() {
-        return productService.getProductPrices();
+    public List<ProductInfoDTO> getProductInfo(@RequestParam String productNames) {
+        return productService.getProductsInfo(productNames);
     }
 
     @GetMapping("/{productName}")
@@ -79,35 +73,17 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
+    @GetMapping("/{productName}/info")
+    @ResponseBody
+    public ProductInfoDTO getProductInfoByProductName(@PathVariable("productName") String productName)
+            throws EntityNotFoundException {
+        return productService.getProductInfoByName(productName);
+    }
+
     @PutMapping("/{productName}")
     public ResponseEntity<ProductDTO> updateProductByProductName(@Valid @RequestBody ProductDTO product,
                                                                  @Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName) throws InvalidInputDataException {
         ProductDTO productDTO = productService.updateProductByProductName(productName, product);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
-    }
-
-    @PutMapping("/{productName}/reserve")
-    public ResponseEntity reserve(@PathVariable("productName") String productName, @Valid @RequestBody ReserveDTO reserveDTO){
-        productService.reserve(productName, reserveDTO.getQuantity());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PutMapping("/{productName}/reserve/release")
-    public ResponseEntity reserveRelease(@PathVariable("productName") String productName, @Valid @RequestBody ReserveDTO stockDTO){
-        productService.reserveRelease(productName, stockDTO.getQuantity());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PutMapping("/batch/reserve")
-    @Validated
-    public ResponseEntity batchReserve(@Valid @RequestBody List<BatchUpdateDTO> reserveDTO){
-        productService.batchReserve(reserveDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PutMapping("/batch/reserve/release")
-    public ResponseEntity batchReserveRelease(@Valid @RequestBody List<BatchUpdateDTO> reserveDTO){
-        productService.batchReserveRelease(reserveDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

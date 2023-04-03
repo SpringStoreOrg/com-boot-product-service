@@ -9,7 +9,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductPriceDTO {
+public class ProductInfoDTO {
     private String name;
     private long price;
+    private int quantity;
 }
