@@ -1,8 +1,10 @@
 package com.boot.product.controller;
 
-import java.util.List;
-
 import com.boot.product.dto.ProductDTO;
+import com.boot.product.dto.ProductInfoDTO;
+import com.boot.product.exception.EntityNotFoundException;
+import com.boot.product.exception.InvalidInputDataException;
+import com.boot.product.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -10,13 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import com.boot.product.exception.EntityNotFoundException;
-import com.boot.product.exception.InvalidInputDataException;
-import com.boot.product.service.ProductService;
-
-
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -58,6 +56,12 @@ public class ProductController {
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
 
+    @GetMapping("/info")
+    @ResponseBody
+    public List<ProductInfoDTO> getProductInfo(@RequestParam String productNames) {
+        return productService.getProductsInfo(productNames);
+    }
+
     @GetMapping("/{productName}")
     @ResponseBody
     public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName, @RequestParam(required = false, value = "includeInactive", defaultValue = "false")
@@ -67,6 +71,13 @@ public class ProductController {
         ProductDTO product = productService.getProductByProductName(productName, includeInactive);
 
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    @GetMapping("/{productName}/info")
+    @ResponseBody
+    public ProductInfoDTO getProductInfoByProductName(@PathVariable("productName") String productName)
+            throws EntityNotFoundException {
+        return productService.getProductInfoByName(productName);
     }
 
     @PutMapping("/{productName}")

@@ -1,27 +1,24 @@
 package com.boot.product.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.boot.product.dto.ProductDTO;
+import com.boot.product.dto.ProductInfoDTO;
 import com.boot.product.enums.ProductStatus;
-import com.boot.product.model.Product;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import com.boot.product.exception.EntityNotFoundException;
 import com.boot.product.exception.InvalidInputDataException;
+import com.boot.product.model.Product;
 import com.boot.product.repository.ProductRepository;
 import com.boot.product.validator.ProductValidator;
-
-
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.boot.product.model.Product.*;
 
@@ -36,7 +33,7 @@ public class ProductService {
 
 	private ProductRepository productRepository;
 
-	public ProductDTO addProduct(ProductDTO productDTO) throws InvalidInputDataException {
+	public ProductDTO addProduct(ProductDTO productDTO){
 		log.info("addProduct - process started");
 
 		if (productValidator.isNamePresent(productDTO.getName())) {
@@ -49,7 +46,7 @@ public class ProductService {
 		return productEntityToDto(product);
 	}
 
-	public ProductDTO deleteProductByProductName(String productName) throws EntityNotFoundException {
+	public ProductDTO deleteProductByProductName(String productName){
 		if (!productValidator.isNamePresent(productName)) {
 			throw new EntityNotFoundException(
 					"Product with Product Name: " + productName + " not found in the Database!");
@@ -89,7 +86,7 @@ public class ProductService {
 		return productEntityToDtoList(prodList);
 	}
 
-	public ProductDTO getProductByProductName(String productName, Boolean includeInactive) throws EntityNotFoundException {
+	public ProductDTO getProductByProductName(String productName, Boolean includeInactive){
 
 		log.info("getProductByProductName - process started");
 
@@ -143,5 +140,15 @@ public class ProductService {
 		productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
 
 		return productDTOList;
+	}
+
+	public ProductInfoDTO getProductInfoByName(String productName){
+		return productRepository.getActiveProductInfo(productName);
+	}
+
+	public List<ProductInfoDTO> getProductsInfo(String productNames){
+		return productRepository.getActiveProductsInfo(
+				Arrays.stream(productNames.split(","))
+				.collect(Collectors.toList()));
 	}
 }

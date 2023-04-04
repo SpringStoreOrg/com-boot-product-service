@@ -1,6 +1,5 @@
 package com.boot.product.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +9,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductInCartDTO {
-
-	private ProductDTO productDto;
-
-	private int quantity;
-	
-	private long totalPrice;
+public class ProductInfoDTO {
+    private String name;
+    private long price;
+    private int quantity;
 }
