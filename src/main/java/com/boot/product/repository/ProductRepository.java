@@ -31,4 +31,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select new com.boot.product.dto.ProductInfoDTO(name, price, stock) from Product where status ='ACTIVE' and name = :name")
     ProductInfoDTO getActiveProductInfo(@Param("name") String productName);
+
+    @Query("select new com.boot.product.dto.ProductInfoDTO(name, price, stock) from Product where  name in (:names)")
+    List<ProductInfoDTO> getProductsInfo(@Param("names") List<String> productNames);
 }

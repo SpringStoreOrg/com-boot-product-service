@@ -59,6 +59,14 @@ public class Product implements Serializable {
     @Column
     private ProductStatus status;
 
+    public void subtractItems(int quantity){
+        this.stock-=quantity;
+    }
+
+    public void addItems(int quantity){
+        this.stock+=quantity;
+    }
+
     public static ProductDTO productEntityToDto(Product product) {
         return new ProductDTO()
                 .setId(product.getId())
