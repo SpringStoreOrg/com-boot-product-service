@@ -23,7 +23,9 @@ public class StockService {
 
     @Transactional
     public void subtractProducts(List<StockDTO> stockList) {
-        log.info("Subtracting products");
+        log.info("Subtracting products:{}", stockList.stream()
+                .map(item->"name:"+ item.getProductName()+" quantity:"+item.getQuantity())
+                .collect(Collectors.joining(";")));
         Set<String> productNames = stockList.stream().map(StockDTO::getProductName).collect(Collectors.toSet());
         Map<String, ProductInfoDTO> productInfos = productRepository.getActiveProductsInfo(new ArrayList<>(productNames))
                 .stream().collect(Collectors.toMap(ProductInfoDTO::getName, item -> item));
@@ -53,11 +55,16 @@ public class StockService {
             product.subtractItems(item.getQuantity());
             productRepository.save(product);
         });
-        log.info("Subtracting products finished");
+        log.info("Subtracting products finished:{}", stockList.stream()
+                .map(item->"name:"+ item.getProductName()+" quantity:"+item.getQuantity())
+                .collect(Collectors.joining(";")));
     }
 
     @Transactional
     public void addProducts(List<StockDTO> stockList) {
+        log.info("Adding products:{}", stockList.stream()
+                .map(item->"name:"+ item.getProductName()+" quantity:"+item.getQuantity())
+                .collect(Collectors.joining(";")));
         Set<String> productNames = stockList.stream().map(StockDTO::getProductName).collect(Collectors.toSet());
         Map<String, ProductInfoDTO> productInfos = productRepository.getProductsInfo(new ArrayList<>(productNames))
                 .stream().collect(Collectors.toMap(ProductInfoDTO::getName, item -> item));
@@ -73,5 +80,8 @@ public class StockService {
             product.addItems(item.getQuantity());
             productRepository.save(product);
         });
+        log.info("Adding products finished:{}", stockList.stream()
+                .map(item->"name:"+ item.getProductName()+" quantity:"+item.getQuantity())
+                .collect(Collectors.joining(";")));
     }
 }

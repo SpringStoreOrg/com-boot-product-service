@@ -1,6 +1,5 @@
 package com.boot.product.model;
 
-import com.boot.product.dto.PhotoDTO;
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -71,13 +70,15 @@ public class Product implements Serializable {
         return new ProductDTO()
                 .setId(product.getId())
                 .setName(product.getName())
+                .setSlug(product.getName().toLowerCase().replace(" ","-"))
                 .setDescription(product.getDescription())
                 .setPrice(product.getPrice())
-                .setPhotoLinks(product.getEntries() != null
+                .setImages(product.getEntries() != null
                         ? product.getEntries().stream()
-                        .map(p -> new PhotoDTO().setImage(p.getLink()))
+                        .map(Photo::getLink)
                         .collect(Collectors.toList())
                         : List.of())
+                .setThumbnail(product.getEntries().stream().findFirst().get().getLink())
                 .setCategory(product.getCategory())
                 .setStock(product.getStock())
                 .setStatus(product.getStatus());
@@ -90,9 +91,7 @@ public class Product implements Serializable {
                 .setName(productDto.getName())
                 .setDescription(productDto.getDescription())
                 .setPrice(productDto.getPrice())
-                .setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks()
-                        .stream().map(photo -> photo.getImage())
-                        .collect(Collectors.toList()), product))
+                .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
                 .setCategory(productDto.getCategory())
                 .setStock(productDto.getStock())
                 .setStatus(productDto.getStatus());
@@ -105,9 +104,7 @@ public class Product implements Serializable {
                 .setName(productDto.getName())
                 .setDescription(productDto.getDescription())
                 .setPrice(productDto.getPrice())
-                .setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks()
-                        .stream().map(photo -> photo.getImage())
-                        .collect(Collectors.toList()), product))
+                .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
                 .setCategory(productDto.getCategory())
                 .setStock(productDto.getStock())
                 .setStatus(productDto.getStatus());

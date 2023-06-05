@@ -26,6 +26,8 @@ public class ProductDTO {
 	@Size(max = 30, message = "Max Product name size is 30 characters!")
 	private String name;
 
+	private String slug;
+
 	@Size(min = 3,message = "Min Product description size is 3 characters!")
 	@Size(max = 600,message = "Max Product description size is 600 characters!")
 	private String description;
@@ -33,7 +35,9 @@ public class ProductDTO {
 	@Positive(message = "Product price should be positive number!")
 	private long price;
 
-	private List<PhotoDTO> photoLinks;
+	private List<String> images;
+
+	private String thumbnail;
 
 	@Size(min = 3, message = "Min category name size is 3 characters!")
 	@Size(max = 30, message = "Max category name size is 30 characters!")

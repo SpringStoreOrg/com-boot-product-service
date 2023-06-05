@@ -116,7 +116,7 @@ public class ProductService {
 		} else if (productValidator.isNamePresent(productDTO.getName())) {
 			throw new InvalidInputDataException("The Selected Product name is already used!");
 		}
-		newProductDto.setPhotoLinks(productDTO.getPhotoLinks());
+		newProductDto.setImages(productDTO.getImages());
 
 		newProductDto.setPrice(productDTO.getPrice());
 
