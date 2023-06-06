@@ -10,6 +10,7 @@
 
         <insert tableName="product">
             <column name="name" value="Yellow core wood sofa"/>
+            <column name="slug" value="yellow-core-wood-sofa"/>
             <column name="category" value="sofa"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -19,6 +20,7 @@
 
         <insert tableName="product">
             <column name="name" value="Black core wood sofa"/>
+            <column name="slug" value="black-core-wood-sofa"/>
             <column name="category" value="sofa"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -28,6 +30,7 @@
 
         <insert tableName="product">
             <column name="name" value="Orange core wood sofa"/>
+            <column name="slug" value="orange-core-wood-sofa"/>
             <column name="category" value="sofa"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -37,6 +40,7 @@
 
         <insert tableName="product">
             <column name="name" value="White core wood sofa"/>
+            <column name="slug" value="white-core-wood-sofa"/>
             <column name="category" value="sofa"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -46,6 +50,7 @@
 
         <insert tableName="product">
             <column name="name" value="Red core wood sofa"/>
+            <column name="slug" value="red-core-wood-sofa"/>
             <column name="category" value="sofa"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -55,6 +60,7 @@
 
         <insert tableName="product">
             <column name="name" value="Blue core wood sofa"/>
+            <column name="slug" value="blue-core-wood-sofa"/>
             <column name="category" value="sofa"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>

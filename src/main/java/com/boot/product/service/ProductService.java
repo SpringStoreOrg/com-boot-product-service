@@ -86,19 +86,18 @@ public class ProductService {
 		return productEntityToDtoList(prodList);
 	}
 
-	public ProductDTO getProductByProductName(String productName, Boolean includeInactive){
+	public ProductDTO getProductBySlug(String slug, Boolean includeInactive) {
 
 		log.info("getProductByProductName - process started");
-
-		if (!productValidator.isNamePresent(productName)) {
-			throw new EntityNotFoundException("Could not find any product in the database");
-		}
 		Product product;
 		if (includeInactive) {
-			product = productRepository.findByName(productName);
-
+			product = productRepository.findBySlug(slug);
 		} else {
-			product = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
+			product = productRepository.findBySlugAndStatus(slug, ProductStatus.ACTIVE);
+		}
+
+		if (product == null) {
+			throw new EntityNotFoundException("Could not find any product in the database");
 		}
 
 		return productEntityToDto(product);

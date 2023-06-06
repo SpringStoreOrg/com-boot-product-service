@@ -5,6 +5,7 @@ import com.boot.product.dto.ProductInfoDTO;
 import com.boot.product.exception.EntityNotFoundException;
 import com.boot.product.exception.InvalidInputDataException;
 import com.boot.product.service.ProductService;
+import com.boot.product.util.ProductUtil;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -62,13 +63,13 @@ public class ProductController {
         return productService.getProductsInfo(productNames);
     }
 
-    @GetMapping("/{productName}")
+    @GetMapping("/{slug}")
     @ResponseBody
-    public ResponseEntity<ProductDTO> findProductByProductName(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName, @RequestParam(required = false, value = "includeInactive", defaultValue = "false")
+    public ResponseEntity<ProductDTO> findProductBySlug(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("slug") String productName, @RequestParam(required = false, value = "includeInactive", defaultValue = "false")
             Boolean includeInactive)
             throws EntityNotFoundException {
 
-        ProductDTO product = productService.getProductByProductName(productName, includeInactive);
+        ProductDTO product = productService.getProductBySlug(ProductUtil.getSlugIfName(productName), includeInactive);
 
         return new ResponseEntity<>(product, HttpStatus.OK);
     }

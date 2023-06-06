@@ -10,6 +10,7 @@
 
         <insert tableName="product">
             <column name="name" value="Yellow bedroom furniture"/>
+            <column name="slug" value="yellow-bedroom-furniture"/>
             <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -19,6 +20,7 @@
 
         <insert tableName="product">
             <column name="name" value="Black bedroom furniture"/>
+            <column name="slug" value="black-bedroom-furniture"/>
             <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -28,6 +30,7 @@
 
         <insert tableName="product">
             <column name="name" value="Orange bedroom furniture"/>
+            <column name="slug" value="orange-bedroom-furniture"/>
             <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -37,6 +40,7 @@
 
         <insert tableName="product">
             <column name="name" value="White bedroom furniture"/>
+            <column name="slug" value="white-bedroom-furniture"/>
             <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -46,6 +50,7 @@
 
         <insert tableName="product">
             <column name="name" value="Red bedroom furniture"/>
+            <column name="slug" value="red-bedroom-furniture"/>
             <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
@@ -55,6 +60,7 @@
 
         <insert tableName="product">
             <column name="name" value="Blue bedroom furniture"/>
+            <column name="slug" value="blue-bedroom-furniture"/>
             <column name="category" value="bedroom"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>

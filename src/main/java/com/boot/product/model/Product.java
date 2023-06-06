@@ -2,6 +2,7 @@ package com.boot.product.model;
 
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
+import com.boot.product.util.ProductUtil;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -32,30 +33,34 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true)
-    @Size(min = 3, max = 30)
+    @Column(nullable = false, unique = true)
+    @Size(min = 3, max = 50)
     private String name;
 
-    @Column
+    @Column(nullable = false, unique = true)
+    @Size(min = 3, max = 50)
+    private String slug;
+
+    @Column(nullable = false)
     @Size(min = 3, max = 600)
     private String description;
 
-    @Column
+    @Column(nullable = false)
     private long price;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Photo> entries;
 
-    @Column
+    @Column(nullable = false)
     @Size(min = 3, max = 30)
     private String category;
 
-    @Column
+    @Column(nullable = false)
     private int stock;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private ProductStatus status;
 
     public void subtractItems(int quantity){
@@ -70,7 +75,7 @@ public class Product implements Serializable {
         return new ProductDTO()
                 .setId(product.getId())
                 .setName(product.getName())
-                .setSlug(product.getName().toLowerCase().replace(" ","-"))
+                .setSlug(product.getSlug())
                 .setDescription(product.getDescription())
                 .setPrice(product.getPrice())
                 .setImages(product.getEntries() != null
@@ -89,6 +94,7 @@ public class Product implements Serializable {
 
         product.setId(productDto.getId())
                 .setName(productDto.getName())
+                .setSlug(ProductUtil.getSlug(productDto.getName()))
                 .setDescription(productDto.getDescription())
                 .setPrice(productDto.getPrice())
                 .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
@@ -102,6 +108,7 @@ public class Product implements Serializable {
     public static Product updateDtoToProductEntity(Product product, ProductDTO productDto) {
         return product.setId(productDto.getId())
                 .setName(productDto.getName())
+                .setSlug(ProductUtil.getSlug(productDto.getName()))
                 .setDescription(productDto.getDescription())
                 .setPrice(productDto.getPrice())
                 .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
