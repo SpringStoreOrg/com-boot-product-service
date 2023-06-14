@@ -8,6 +8,9 @@ import com.boot.product.service.ProductService;
 import com.boot.product.util.ProductUtil;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -39,18 +42,19 @@ public class ProductController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(required = false) String productNames, @RequestParam(value = "includeInactive", defaultValue = "false")
-            Boolean includeInactive, @Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @RequestParam(value = "category", defaultValue = "")
-                                                               String category) {
+    public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(required = false) String productNames,
+                                                        @RequestParam(value = "includeInactive", defaultValue = "false") Boolean includeInactive,
+                                                        @Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @RequestParam(value = "category", defaultValue = "") String category,
+                                                        @PageableDefault(size = 10, direction = Sort.Direction.ASC, sort = {"name"}) Pageable pageable) {
         List<ProductDTO> productList;
 
         if (StringUtils.isNotBlank(productNames)) {
-            productList = productService.findAllProducts(productNames, includeInactive);
+            productList = productService.findAllProducts(productNames, includeInactive, pageable);
         } else {
             if (category.isEmpty()) {
-                productList = productService.getAllProducts();
+                productList = productService.getAllProducts(pageable);
             } else {
-                productList = productService.findByCategoryAndStatus(category);
+                productList = productService.findByCategoryAndStatus(category, pageable);
             }
         }
 

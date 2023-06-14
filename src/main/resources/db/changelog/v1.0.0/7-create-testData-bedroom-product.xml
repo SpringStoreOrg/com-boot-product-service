@@ -16,6 +16,7 @@
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-01T11:14:15"/>
         </insert>
 
         <insert tableName="product">
@@ -26,6 +27,7 @@
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-02T11:14:15"/>
         </insert>
 
         <insert tableName="product">
@@ -36,6 +38,7 @@
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-03T11:14:15"/>
         </insert>
 
         <insert tableName="product">
@@ -46,6 +49,7 @@
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-04T11:14:15"/>
         </insert>
 
         <insert tableName="product">
@@ -56,6 +60,7 @@
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-05T11:14:15"/>
         </insert>
 
         <insert tableName="product">
@@ -66,6 +71,7 @@
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-06T11:14:15"/>
         </insert>
 
         <rollback/>
