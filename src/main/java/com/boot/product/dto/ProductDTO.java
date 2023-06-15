@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -49,4 +50,8 @@ public class ProductDTO {
 	@Enumerated(EnumType.STRING)
 	@Column
 	private ProductStatus status;
+	private String state;
+
+	private LocalDateTime createdOn;
+	private LocalDateTime lastUpdatedOn;
 }

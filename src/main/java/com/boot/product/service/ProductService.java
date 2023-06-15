@@ -10,6 +10,7 @@ import com.boot.product.repository.ProductRepository;
 import com.boot.product.validator.ProductValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,7 +60,7 @@ public class ProductService {
 		return productEntityToDto(product);
 	}
 
-	public List<ProductDTO> findAllProducts(@NotNull String productParam, Boolean includeInactive){
+	public List<ProductDTO> findAllProducts(@NotNull String productParam, Boolean includeInactive, Pageable pageable){
 
 		log.info("findAllProducts - process started");
 
@@ -68,20 +69,20 @@ public class ProductService {
 		List<Product> productList;
 
 		if (includeInactive) {
-			productList = productRepository.findByNameIn(prodList);
+			productList = productRepository.findByNameIn(prodList, pageable);
 
 		} else {
-			productList = productRepository.findByNameInAndStatus(prodList, ProductStatus.ACTIVE);
+			productList = productRepository.findByNameInAndStatus(prodList, ProductStatus.ACTIVE, pageable);
 		}
 
 		return productEntityToDtoList(productList);
 	}
 
-	public List<ProductDTO> getAllProducts() {
+	public List<ProductDTO> getAllProducts(Pageable pageable) {
 
 		log.info("getAllProducts - process started");
 
-		List<Product> prodList = productRepository.findByStatus(ProductStatus.ACTIVE);
+		List<Product> prodList = productRepository.findByStatus(ProductStatus.ACTIVE, pageable);
 
 		return productEntityToDtoList(prodList);
 	}
@@ -128,11 +129,11 @@ public class ProductService {
 		return productEntityToDto(product);
 	}
 
-	public List<ProductDTO> findByCategoryAndStatus(String category) {
+	public List<ProductDTO> findByCategoryAndStatus(String category, Pageable pageable) {
 
 		log.info("findByCategoryAndStatus - process started");
 
-		List<Product> productList = productRepository.findByCategoryAndStatus(category, ProductStatus.ACTIVE);
+		List<Product> productList = productRepository.findByCategoryAndStatus(category, ProductStatus.ACTIVE, pageable);
 
 		ArrayList<ProductDTO> productDTOList = new ArrayList<>();
 

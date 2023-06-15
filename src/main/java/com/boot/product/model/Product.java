@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,6 +64,12 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private ProductStatus status;
 
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdOn;
+
+    @Column
+    private LocalDateTime lastUpdatedOn;
+
     public void subtractItems(int quantity){
         this.stock-=quantity;
     }
@@ -86,7 +93,10 @@ public class Product implements Serializable {
                 .setThumbnail(product.getEntries().stream().findFirst().get().getLink())
                 .setCategory(product.getCategory())
                 .setStock(product.getStock())
-                .setStatus(product.getStatus());
+                .setStatus(product.getStatus())
+                .setState(product.getState())
+                .setCreatedOn(product.getCreatedOn())
+                .setLastUpdatedOn(product.getLastUpdatedOn());
     }
 
     public static Product dtoToProductEntity(ProductDTO productDto) {
@@ -134,6 +144,24 @@ public class Product implements Serializable {
         photoLinks.forEach(photoLink -> photoLinkEntries.add(new Photo().setLink(photoLink).setProduct(product)));
 
         return photoLinkEntries;
+    }
+
+    private String getState() {
+        if (this.getCreatedOn().isAfter(LocalDateTime.now().minusDays(10))) {
+            return "New";
+        }
+
+        return null;
+    }
+
+    @PrePersist
+    public void beforeInsert(){
+        this.createdOn = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void beforeUpdate(){
+        this.lastUpdatedOn = LocalDateTime.now();
     }
 
 }
