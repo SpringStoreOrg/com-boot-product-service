@@ -1,5 +1,6 @@
 package com.boot.product.controller;
 
+import com.boot.product.dto.PagedResponseDTO;
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.dto.ProductInfoDTO;
 import com.boot.product.exception.EntityNotFoundException;
@@ -42,23 +43,28 @@ public class ProductController {
 
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<ProductDTO>> getProducts(@RequestParam(required = false) String productNames,
+    public ResponseEntity<PagedResponseDTO> getProducts(@RequestParam(required = false) String productNames,
                                                         @RequestParam(value = "includeInactive", defaultValue = "false") Boolean includeInactive,
                                                         @Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @RequestParam(value = "category", defaultValue = "") String category,
                                                         @PageableDefault(size = 10, direction = Sort.Direction.ASC, sort = {"name"}) Pageable pageable) {
-        List<ProductDTO> productList;
+        PagedResponseDTO pagedResponse = new PagedResponseDTO();
+        pagedResponse.setCurrentPage(pageable.getPageNumber());
 
         if (StringUtils.isNotBlank(productNames)) {
-            productList = productService.findAllProducts(productNames, includeInactive, pageable);
+            pagedResponse.setProducts(productService.findAllProducts(productNames, includeInactive, pageable));
+            pagedResponse.setTotalItems(productService.getAllProductsCount(productNames, includeInactive));
         } else {
             if (category.isEmpty()) {
-                productList = productService.getAllProducts(pageable);
+                pagedResponse.setProducts(productService.getAllProducts(pageable));
+                pagedResponse.setTotalItems(productService.getAllProductsCount());
             } else {
-                productList = productService.findByCategoryAndStatus(category, pageable);
+                pagedResponse.setProducts(productService.findByCategoryAndStatus(category, pageable));
+                pagedResponse.setTotalItems(productService.getByCategoryAndStatusCount(category));
             }
         }
+        pagedResponse.setTotalPages(getPagesCount(pagedResponse.getTotalItems(), pageable.getPageSize()));
 
-        return new ResponseEntity<>(productList, HttpStatus.OK);
+        return new ResponseEntity<>(pagedResponse, HttpStatus.OK);
     }
 
     @GetMapping("/info")
@@ -90,5 +96,9 @@ public class ProductController {
                                                                  @Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName) throws InvalidInputDataException {
         ProductDTO productDTO = productService.updateProductByProductName(productName, product);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
+    }
+
+    private int getPagesCount(int totalItems, int pageSize) {
+        return (totalItems / pageSize) + (totalItems % pageSize > 0 ? 1 : 0);
     }
 }

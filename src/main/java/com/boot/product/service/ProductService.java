@@ -30,125 +30,143 @@ import static com.boot.product.model.Product.*;
 @AllArgsConstructor
 public class ProductService {
 
-	private ProductValidator productValidator;
+    private ProductValidator productValidator;
 
-	private ProductRepository productRepository;
+    private ProductRepository productRepository;
 
-	public ProductDTO addProduct(ProductDTO productDTO){
-		log.info("addProduct - process started");
+    public ProductDTO addProduct(ProductDTO productDTO) {
+        log.info("addProduct - process started");
 
-		if (productValidator.isNamePresent(productDTO.getName())) {
-			throw new InvalidInputDataException("The Selected Product name is already used!");
-		}
-		productDTO.setStatus(ProductStatus.ACTIVE);
+        if (productValidator.isNamePresent(productDTO.getName())) {
+            throw new InvalidInputDataException("The Selected Product name is already used!");
+        }
+        productDTO.setStatus(ProductStatus.ACTIVE);
 
-		Product product = productRepository.save(dtoToProductEntity(productDTO));
+        Product product = productRepository.save(dtoToProductEntity(productDTO));
 
-		return productEntityToDto(product);
-	}
+        return productEntityToDto(product);
+    }
 
-	public ProductDTO deleteProductByProductName(String productName){
-		if (!productValidator.isNamePresent(productName)) {
-			throw new EntityNotFoundException(
-					"Product with Product Name: " + productName + " not found in the Database!");
-		}
-		Product product = productRepository.findByNameAndStatus(productName,ProductStatus.ACTIVE);
-		product.setStatus(ProductStatus.INACTIVE);
-		productRepository.save(product);
+    public ProductDTO deleteProductByProductName(String productName) {
+        if (!productValidator.isNamePresent(productName)) {
+            throw new EntityNotFoundException(
+                    "Product with Product Name: " + productName + " not found in the Database!");
+        }
+        Product product = productRepository.findByNameAndStatus(productName, ProductStatus.ACTIVE);
+        product.setStatus(ProductStatus.INACTIVE);
+        productRepository.save(product);
 
-		log.info("{} - successfully set as INACTIVE", productName);
-		return productEntityToDto(product);
-	}
+        log.info("{} - successfully set as INACTIVE", productName);
+        return productEntityToDto(product);
+    }
 
-	public List<ProductDTO> findAllProducts(@NotNull String productParam, Boolean includeInactive, Pageable pageable){
+    public List<ProductDTO> findAllProducts(@NotNull String productParam, Boolean includeInactive, Pageable pageable) {
 
-		log.info("findAllProducts - process started");
+        log.info("findAllProducts - process started");
 
-		List<String> prodList = Stream.of(productParam.split(",", -1)).collect(Collectors.toList());
+        List<String> prodList = Stream.of(productParam.split(",", -1)).collect(Collectors.toList());
 
-		List<Product> productList;
+        List<Product> productList;
 
-		if (includeInactive) {
-			productList = productRepository.findByNameIn(prodList, pageable);
+        if (includeInactive) {
+            productList = productRepository.findByNameIn(prodList, pageable);
 
-		} else {
-			productList = productRepository.findByNameInAndStatus(prodList, ProductStatus.ACTIVE, pageable);
-		}
+        } else {
+            productList = productRepository.findByNameInAndStatus(prodList, ProductStatus.ACTIVE, pageable);
+        }
 
-		return productEntityToDtoList(productList);
-	}
+        return productEntityToDtoList(productList);
+    }
 
-	public List<ProductDTO> getAllProducts(Pageable pageable) {
+    public int getAllProductsCount(@NotNull String productParam, Boolean includeInactive) {
 
-		log.info("getAllProducts - process started");
+        List<String> prodList = Stream.of(productParam.split(",", -1)).collect(Collectors.toList());
+        if (includeInactive) {
+            return productRepository.countAllByNameIn(prodList);
+        } else {
+            return productRepository.countAllByNameInAndStatus(prodList, ProductStatus.ACTIVE);
+        }
+    }
 
-		List<Product> prodList = productRepository.findByStatus(ProductStatus.ACTIVE, pageable);
+    public List<ProductDTO> getAllProducts(Pageable pageable) {
 
-		return productEntityToDtoList(prodList);
-	}
+        log.info("getAllProducts - process started");
 
-	public ProductDTO getProductBySlug(String slug, Boolean includeInactive) {
+        List<Product> prodList = productRepository.findByStatus(ProductStatus.ACTIVE, pageable);
 
-		log.info("getProductByProductName - process started");
-		Product product;
-		if (includeInactive) {
-			product = productRepository.findBySlug(slug);
-		} else {
-			product = productRepository.findBySlugAndStatus(slug, ProductStatus.ACTIVE);
-		}
+        return productEntityToDtoList(prodList);
+    }
 
-		if (product == null) {
-			throw new EntityNotFoundException("Could not find any product in the database");
-		}
+    public int getAllProductsCount() {
+        return productRepository.countAllByStatus(ProductStatus.ACTIVE);
+    }
 
-		return productEntityToDto(product);
-	}
+    public ProductDTO getProductBySlug(String slug, Boolean includeInactive) {
 
-	public ProductDTO updateProductByProductName(String productName, ProductDTO productDTO)
-			throws InvalidInputDataException {
+        log.info("getProductByProductName - process started");
+        Product product;
+        if (includeInactive) {
+            product = productRepository.findBySlug(slug);
+        } else {
+            product = productRepository.findBySlugAndStatus(slug, ProductStatus.ACTIVE);
+        }
 
-		Product product = productRepository.findByName(productName);
+        if (product == null) {
+            throw new EntityNotFoundException("Could not find any product in the database");
+        }
 
-		ProductDTO newProductDto = productEntityToDto(product);
+        return productEntityToDto(product);
+    }
 
-		if (product.getName().matches(productName)) {
-			newProductDto.setName(productDTO.getName());
-		} else if (productValidator.isNamePresent(productDTO.getName())) {
-			throw new InvalidInputDataException("The Selected Product name is already used!");
-		}
-		newProductDto.setImages(productDTO.getImages());
+    public ProductDTO updateProductByProductName(String productName, ProductDTO productDTO)
+            throws InvalidInputDataException {
 
-		newProductDto.setPrice(productDTO.getPrice());
+        Product product = productRepository.findByName(productName);
 
-		newProductDto.setCategory(productDTO.getCategory());
+        ProductDTO newProductDto = productEntityToDto(product);
 
-		newProductDto.setStock(productDTO.getStock());
+        if (product.getName().matches(productName)) {
+            newProductDto.setName(productDTO.getName());
+        } else if (productValidator.isNamePresent(productDTO.getName())) {
+            throw new InvalidInputDataException("The Selected Product name is already used!");
+        }
+        newProductDto.setImages(productDTO.getImages());
 
-		productRepository.save(updateDtoToProductEntity(product, newProductDto));
+        newProductDto.setPrice(productDTO.getPrice());
 
-		return productEntityToDto(product);
-	}
+        newProductDto.setCategory(productDTO.getCategory());
 
-	public List<ProductDTO> findByCategoryAndStatus(String category, Pageable pageable) {
+        newProductDto.setStock(productDTO.getStock());
 
-		log.info("findByCategoryAndStatus - process started");
+        productRepository.save(updateDtoToProductEntity(product, newProductDto));
 
-		List<Product> productList = productRepository.findByCategoryAndStatus(category, ProductStatus.ACTIVE, pageable);
+        return productEntityToDto(product);
+    }
 
-		ArrayList<ProductDTO> productDTOList = new ArrayList<>();
+    public List<ProductDTO> findByCategoryAndStatus(String category, Pageable pageable) {
 
-		productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
+        log.info("findByCategoryAndStatus - process started");
 
-		return productDTOList;
-	}
+        List<Product> productList = productRepository.findByCategoryAndStatus(category, ProductStatus.ACTIVE, pageable);
 
-	public ProductInfoDTO getProductInfoByName(String productName){
-		return productRepository.getActiveProductInfo(productName);
-	}
+        ArrayList<ProductDTO> productDTOList = new ArrayList<>();
 
-	public List<ProductInfoDTO> getProductsInfo(String productNames){
-		return productRepository.getActiveProductsInfo(
-				Arrays.stream(productNames.split(","))
-				.collect(Collectors.toList()));
-	}
+        productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
+
+        return productDTOList;
+    }
+
+    public int getByCategoryAndStatusCount(String category) {
+        return productRepository.countAllByCategoryAndStatus(category, ProductStatus.ACTIVE);
+    }
+
+    public ProductInfoDTO getProductInfoByName(String productName) {
+        return productRepository.getActiveProductInfo(productName);
+    }
+
+    public List<ProductInfoDTO> getProductsInfo(String productNames) {
+        return productRepository.getActiveProductsInfo(
+                Arrays.stream(productNames.split(","))
+                        .collect(Collectors.toList()));
+    }
 }

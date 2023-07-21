@@ -25,11 +25,19 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByNameInAndStatus(List<String> name,ProductStatus status, Pageable pageable);
 
+    int countAllByNameInAndStatus(List<String> name,ProductStatus status);
+
     List<Product> findByNameIn(List<String> name, Pageable pageable);
+
+    int countAllByNameIn(List<String> name);
 
     List<Product> findByStatus(ProductStatus status, Pageable pageable);
 
+    int countAllByStatus(ProductStatus status);
+
     List<Product> findByCategoryAndStatus(String category, ProductStatus status, Pageable pageable);
+
+    int countAllByCategoryAndStatus(String category, ProductStatus status);
 
     @Query("select new com.boot.product.dto.ProductInfoDTO(name, price, stock) from Product where status ='ACTIVE' and name in (:names)")
     List<ProductInfoDTO> getActiveProductsInfo(@Param("names") List<String> productNames);
