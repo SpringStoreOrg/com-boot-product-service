@@ -21,6 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Product findBySlug(String slug);
 
+    List<Product> findByNameContainingIgnoreCase(String name);
+
     Product findBySlugAndStatus(String slug, ProductStatus status);
 
     List<Product> findByNameInAndStatus(List<String> name,ProductStatus status, Pageable pageable);

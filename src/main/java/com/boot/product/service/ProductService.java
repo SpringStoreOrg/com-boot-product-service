@@ -118,6 +118,14 @@ public class ProductService {
         return productEntityToDto(product);
     }
 
+    public List<String> getProductsByPartialName(String name) {
+
+        log.info("getProductsByPartialText - process started");
+
+        return productRepository.findByNameContainingIgnoreCase(name).stream().map(Product::getName)
+                .collect(Collectors.toList()).stream().limit(8).collect(Collectors.toList());
+    }
+
     public ProductDTO updateProductByProductName(String productName, ProductDTO productDTO)
             throws InvalidInputDataException {
 
