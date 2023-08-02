@@ -121,7 +121,7 @@ public class ProductService {
     public List<String> getProductsByPartialName(String name, Pageable pageable) {
 
         log.info("getProductsByPartialText - process started");
-        return productRepository.findByNameContainingIgnoreCase(name, pageable);
+        return productRepository.findByNameContainingIgnoreCase("%"+name.toLowerCase()+"%", pageable);
     }
 
     public ProductDTO updateProductByProductName(String productName, ProductDTO productDTO)
