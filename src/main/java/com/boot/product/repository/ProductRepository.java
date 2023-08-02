@@ -21,8 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Product findBySlug(String slug);
 
-    List<Product> findByNameContainingIgnoreCase(String name);
-
     Product findBySlugAndStatus(String slug, ProductStatus status);
 
     List<Product> findByNameInAndStatus(List<String> name,ProductStatus status, Pageable pageable);
@@ -40,6 +38,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategoryAndStatus(String category, ProductStatus status, Pageable pageable);
 
     int countAllByCategoryAndStatus(String category, ProductStatus status);
+
+    @Query("select name from Product where name like '%:name%'")
+    List<String> findByNameContainingIgnoreCase(@Param("name") String productName, Pageable pageable);
 
     @Query("select new com.boot.product.dto.ProductInfoDTO(name, price, stock) from Product where status ='ACTIVE' and name in (:names)")
     List<ProductInfoDTO> getActiveProductsInfo(@Param("names") List<String> productNames);

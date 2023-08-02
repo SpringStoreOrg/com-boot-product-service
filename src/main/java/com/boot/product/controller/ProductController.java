@@ -9,6 +9,7 @@ import com.boot.product.service.ProductService;
 import com.boot.product.util.ProductUtil;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -84,12 +85,13 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/partialName/{partialName}")
+    @GetMapping("/partialName")
     @ResponseBody
-    public ResponseEntity<List<String>> findProductsByPartialName(@Size(min = 3, max = 30, message = "Product Name size has to be between 3 and 30 characters!") @PathVariable("partialName") String partialName)
-            throws EntityNotFoundException {
+    public ResponseEntity<List<String>> findProductsByPartialName(@Size(min = 3, max = 30, message = "Product Name size has to be between 3 and 30 characters!") @RequestParam String partialName,
+                                                                  @RequestParam("size") int size) throws EntityNotFoundException {
+        Pageable pageable = PageRequest.of(0, size, Sort.Direction.ASC, "name");
 
-        List<String> products =  productService.getProductsByPartialName(partialName);
+        List<String> products = productService.getProductsByPartialName(partialName, pageable);
 
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
