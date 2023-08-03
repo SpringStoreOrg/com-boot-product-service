@@ -39,6 +39,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     int countAllByCategoryAndStatus(String category, ProductStatus status);
 
+    @Query("select name from Product where lower(name) like :name")
+    List<String> findByNameContainingIgnoreCase(@Param("name") String productName, Pageable pageable);
+
     @Query("select new com.boot.product.dto.ProductInfoDTO(name, price, stock) from Product where status ='ACTIVE' and name in (:names)")
     List<ProductInfoDTO> getActiveProductsInfo(@Param("names") List<String> productNames);
 

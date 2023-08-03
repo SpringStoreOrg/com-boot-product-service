@@ -9,6 +9,7 @@ import com.boot.product.service.ProductService;
 import com.boot.product.util.ProductUtil;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -45,7 +46,7 @@ public class ProductController {
     @ResponseBody
     public ResponseEntity<PagedResponseDTO> getProducts(@RequestParam(required = false) String productNames,
                                                         @RequestParam(value = "includeInactive", defaultValue = "false") Boolean includeInactive,
-                                                        @Size(min = 3, max = 30, message = "Product Category size has to be between 2 and 30 characters!") @RequestParam(value = "category", defaultValue = "") String category,
+                                                        @Size(min = 3, max = 30, message = "Product Category size has to be between 3 and 30 characters!") @RequestParam(value = "category", defaultValue = "") String category,
                                                         @PageableDefault(size = 10, direction = Sort.Direction.ASC, sort = {"name"}) Pageable pageable) {
         PagedResponseDTO pagedResponse = new PagedResponseDTO();
         pagedResponse.setCurrentPage(pageable.getPageNumber());
@@ -75,13 +76,24 @@ public class ProductController {
 
     @GetMapping("/{slug}")
     @ResponseBody
-    public ResponseEntity<ProductDTO> findProductBySlug(@Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("slug") String productName, @RequestParam(required = false, value = "includeInactive", defaultValue = "false")
+    public ResponseEntity<ProductDTO> findProductBySlug(@Size(min = 3, max = 30, message = "Product Name size has to be between 3 and 30 characters!") @PathVariable("slug") String productName, @RequestParam(required = false, value = "includeInactive", defaultValue = "false")
             Boolean includeInactive)
             throws EntityNotFoundException {
 
         ProductDTO product = productService.getProductBySlug(ProductUtil.getSlugIfName(productName), includeInactive);
 
         return new ResponseEntity<>(product, HttpStatus.OK);
+    }
+
+    @GetMapping("/partialName")
+    @ResponseBody
+    public ResponseEntity<List<String>> findProductsByPartialName(@Size(min = 3, max = 30, message = "Product Name size has to be between 3 and 30 characters!") @RequestParam String partialName,
+                                                                  @RequestParam("size") int size) throws EntityNotFoundException {
+        Pageable pageable = PageRequest.of(0, size, Sort.Direction.ASC, "name");
+
+        List<String> products = productService.getProductsByPartialName(partialName, pageable);
+
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @GetMapping("/{productName}/info")
@@ -93,7 +105,7 @@ public class ProductController {
 
     @PutMapping("/{productName}")
     public ResponseEntity<ProductDTO> updateProductByProductName(@Valid @RequestBody ProductDTO product,
-                                                                 @Size(min = 3, max = 30, message = "Product Name size has to be between 2 and 30 characters!") @PathVariable("productName") String productName) throws InvalidInputDataException {
+                                                                 @Size(min = 3, max = 30, message = "Product Name size has to be between 3 and 30 characters!") @PathVariable("productName") String productName) throws InvalidInputDataException {
         ProductDTO productDTO = productService.updateProductByProductName(productName, product);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
