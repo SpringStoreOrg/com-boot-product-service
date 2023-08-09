@@ -162,8 +162,25 @@ public class ProductService {
         return productDTOList;
     }
 
+    public List<ProductDTO> findByPartialNameAndStatus(String partialName, Pageable pageable) {
+
+        log.info("findByPartialNameAndStatus - process started");
+
+        List<Product> productList = productRepository.findByPartialNameAndStatus("%" + partialName.toLowerCase() + "%", ProductStatus.ACTIVE, pageable);
+
+        ArrayList<ProductDTO> productDTOList = new ArrayList<>();
+
+        productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
+
+        return productDTOList;
+    }
+
     public int getByCategoryAndStatusCount(String category) {
         return productRepository.countAllByCategoryAndStatus(category, ProductStatus.ACTIVE);
+    }
+
+    public int getByPartialNameAndStatusCount(String partialName) {
+        return productRepository.countByPartialNameAndStatus("%" + partialName.toLowerCase() + "%", ProductStatus.ACTIVE);
     }
 
     public ProductInfoDTO getProductInfoByName(String productName) {

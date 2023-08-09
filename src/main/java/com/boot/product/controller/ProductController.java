@@ -47,6 +47,7 @@ public class ProductController {
     public ResponseEntity<PagedResponseDTO> getProducts(@RequestParam(required = false) String productNames,
                                                         @RequestParam(value = "includeInactive", defaultValue = "false") Boolean includeInactive,
                                                         @Size(min = 3, max = 30, message = "Product Category size has to be between 3 and 30 characters!") @RequestParam(value = "category", defaultValue = "") String category,
+                                                        @Size(min = 3, max = 30, message = "Product Name size has to be between 3 and 30 characters!") @RequestParam(value = "partialName", defaultValue = "") String partialName,
                                                         @PageableDefault(size = 10, direction = Sort.Direction.ASC, sort = {"name"}) Pageable pageable) {
         PagedResponseDTO pagedResponse = new PagedResponseDTO();
         pagedResponse.setCurrentPage(pageable.getPageNumber());
@@ -55,12 +56,15 @@ public class ProductController {
             pagedResponse.setProducts(productService.findAllProducts(productNames, includeInactive, pageable));
             pagedResponse.setTotalItems(productService.getAllProductsCount(productNames, includeInactive));
         } else {
-            if (category.isEmpty()) {
-                pagedResponse.setProducts(productService.getAllProducts(pageable));
-                pagedResponse.setTotalItems(productService.getAllProductsCount());
-            } else {
+            if (!category.isEmpty()) {
                 pagedResponse.setProducts(productService.findByCategoryAndStatus(category, pageable));
                 pagedResponse.setTotalItems(productService.getByCategoryAndStatusCount(category));
+            } else if (!partialName.isEmpty()) {
+                pagedResponse.setProducts(productService.findByPartialNameAndStatus(partialName, pageable));
+                pagedResponse.setTotalItems(productService.getByPartialNameAndStatusCount(partialName));
+            } else {
+                pagedResponse.setProducts(productService.getAllProducts(pageable));
+                pagedResponse.setTotalItems(productService.getAllProductsCount());
             }
         }
         pagedResponse.setTotalPages(getPagesCount(pagedResponse.getTotalItems(), pageable.getPageSize()));
