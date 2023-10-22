@@ -25,9 +25,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByNameInAndStatus(List<String> name,ProductStatus status, Pageable pageable);
 
+    List<Product> findBySlugInAndStatus(List<String> name,ProductStatus status, Pageable pageable);
+
     int countAllByNameInAndStatus(List<String> name,ProductStatus status);
 
     List<Product> findByNameIn(List<String> name, Pageable pageable);
+
+    List<Product> findBySlugIn(List<String> name, Pageable pageable);
 
     int countAllByNameIn(List<String> name);
 
