@@ -1,8 +1,8 @@
 package com.boot.product.model;
 
-import com.boot.product.dto.PhotoDTO;
 import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
+import com.boot.product.util.ProductUtil;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,31 +34,41 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true)
-    @Size(min = 3, max = 30)
+    @Column(nullable = false, unique = true)
+    @Size(min = 3, max = 50)
     private String name;
 
-    @Column
+    @Column(nullable = false, unique = true)
+    @Size(min = 3, max = 50)
+    private String slug;
+
+    @Column(nullable = false)
     @Size(min = 3, max = 600)
     private String description;
 
-    @Column
+    @Column(nullable = false)
     private long price;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Photo> entries;
 
-    @Column
+    @Column(nullable = false)
     @Size(min = 3, max = 30)
     private String category;
 
-    @Column
+    @Column(nullable = false)
     private int stock;
 
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private ProductStatus status;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdOn;
+
+    @Column
+    private LocalDateTime lastUpdatedOn;
 
     public void subtractItems(int quantity){
         this.stock-=quantity;
@@ -71,16 +82,21 @@ public class Product implements Serializable {
         return new ProductDTO()
                 .setId(product.getId())
                 .setName(product.getName())
+                .setSlug(product.getSlug())
                 .setDescription(product.getDescription())
                 .setPrice(product.getPrice())
-                .setPhotoLinks(product.getEntries() != null
+                .setImages(product.getEntries() != null
                         ? product.getEntries().stream()
-                        .map(p -> new PhotoDTO().setImage(p.getLink()))
+                        .map(Photo::getLink)
                         .collect(Collectors.toList())
                         : List.of())
+                .setThumbnail(product.getEntries().stream().findFirst().get().getLink())
                 .setCategory(product.getCategory())
                 .setStock(product.getStock())
-                .setStatus(product.getStatus());
+                .setStatus(product.getStatus())
+                .setState(product.getState())
+                .setCreatedOn(product.getCreatedOn())
+                .setLastUpdatedOn(product.getLastUpdatedOn());
     }
 
     public static Product dtoToProductEntity(ProductDTO productDto) {
@@ -88,11 +104,10 @@ public class Product implements Serializable {
 
         product.setId(productDto.getId())
                 .setName(productDto.getName())
+                .setSlug(ProductUtil.getSlug(productDto.getName()))
                 .setDescription(productDto.getDescription())
                 .setPrice(productDto.getPrice())
-                .setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks()
-                        .stream().map(photo -> photo.getImage())
-                        .collect(Collectors.toList()), product))
+                .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
                 .setCategory(productDto.getCategory())
                 .setStock(productDto.getStock())
                 .setStatus(productDto.getStatus());
@@ -103,11 +118,10 @@ public class Product implements Serializable {
     public static Product updateDtoToProductEntity(Product product, ProductDTO productDto) {
         return product.setId(productDto.getId())
                 .setName(productDto.getName())
+                .setSlug(ProductUtil.getSlug(productDto.getName()))
                 .setDescription(productDto.getDescription())
                 .setPrice(productDto.getPrice())
-                .setEntries(productPhotoLinksToEntries(productDto.getPhotoLinks()
-                        .stream().map(photo -> photo.getImage())
-                        .collect(Collectors.toList()), product))
+                .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
                 .setCategory(productDto.getCategory())
                 .setStock(productDto.getStock())
                 .setStatus(productDto.getStatus());
@@ -130,6 +144,24 @@ public class Product implements Serializable {
         photoLinks.forEach(photoLink -> photoLinkEntries.add(new Photo().setLink(photoLink).setProduct(product)));
 
         return photoLinkEntries;
+    }
+
+    private String getState() {
+        if (this.getCreatedOn().isAfter(LocalDateTime.now().minusDays(10))) {
+            return "New";
+        }
+
+        return null;
+    }
+
+    @PrePersist
+    public void beforeInsert(){
+        this.createdOn = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void beforeUpdate(){
+        this.lastUpdatedOn = LocalDateTime.now();
     }
 
 }

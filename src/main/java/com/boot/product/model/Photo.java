@@ -23,7 +23,7 @@ public class Photo implements Serializable {
     @Column
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String link;
 
     @ManyToOne

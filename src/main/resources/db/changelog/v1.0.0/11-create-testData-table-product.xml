@@ -10,56 +10,68 @@
 
         <insert tableName="product">
             <column name="name" value="Yellow core wood table"/>
+            <column name="slug" value="yellow-core-wood-table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-01T14:14:15"/>
         </insert>
 
         <insert tableName="product">
             <column name="name" value="Black core wood table"/>
+            <column name="slug" value="black-core-wood-table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-02T14:14:15"/>
         </insert>
 
         <insert tableName="product">
             <column name="name" value="Orange core wood table"/>
+            <column name="slug" value="orange-core-wood-table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-03T14:14:15"/>
         </insert>
 
         <insert tableName="product">
             <column name="name" value="White core wood table"/>
+            <column name="slug" value="white-core-wood-table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-04T14:14:15"/>
         </insert>
 
         <insert tableName="product">
             <column name="name" value="Red core wood table"/>
+            <column name="slug" value="red-core-wood-table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-05T14:14:15"/>
         </insert>
 
         <insert tableName="product">
             <column name="name" value="Blue core wood table"/>
+            <column name="slug" value="blue-core-wood-table"/>
             <column name="category" value="table"/>
             <column name="description" value="Lorem Ipsum comes from a latin text written in 45BC by Marcus Tullius Cicero."/>
             <column name="price" value="10000"/>
             <column name="status" value="ACTIVE"/>
             <column name="stock" value="30"/>
+            <column name="created_on" valueDate="2023-06-06T14:14:15"/>
         </insert>
 
         <rollback/>
