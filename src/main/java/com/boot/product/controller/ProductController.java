@@ -100,11 +100,11 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/{productName}/info")
+    @GetMapping("/{productSlug}/info")
     @ResponseBody
-    public ProductInfoDTO getProductInfoByProductName(@PathVariable("productName") String productName)
+    public ProductInfoDTO getProductInfoByProductSlug(@PathVariable("productSlug") String productSlug)
             throws EntityNotFoundException {
-        return productService.getProductInfoByName(productName);
+        return productService.getProductInfoBySlug(productSlug);
     }
 
     @PutMapping("/{productName}")

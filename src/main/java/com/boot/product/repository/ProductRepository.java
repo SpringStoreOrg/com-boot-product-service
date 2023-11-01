@@ -52,12 +52,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select name from Product where lower(name) like :name")
     List<String> findByNameContainingIgnoreCase(@Param("name") String productName, Pageable pageable);
 
-    @Query("select new com.boot.product.dto.ProductInfoDTO(name, price, stock) from Product where status ='ACTIVE' and name in (:names)")
-    List<ProductInfoDTO> getActiveProductsInfo(@Param("names") List<String> productNames);
+    @Query("select new com.boot.product.dto.ProductInfoDTO(slug, name, price, stock) from Product where status ='ACTIVE' and slug in (:slugs)")
+    List<ProductInfoDTO> getActiveProductsInfo(@Param("slugs") List<String> productSlugs);
 
-    @Query("select new com.boot.product.dto.ProductInfoDTO(name, price, stock) from Product where status ='ACTIVE' and name = :name")
-    ProductInfoDTO getActiveProductInfo(@Param("name") String productName);
+    @Query("select new com.boot.product.dto.ProductInfoDTO(slug, name, price, stock) from Product where status ='ACTIVE' and slug = :slug")
+    ProductInfoDTO getActiveProductInfo(@Param("slug") String productSlug);
 
-    @Query("select new com.boot.product.dto.ProductInfoDTO(name, price, stock) from Product where  name in (:names)")
-    List<ProductInfoDTO> getProductsInfo(@Param("names") List<String> productNames);
+    @Query("select new com.boot.product.dto.ProductInfoDTO(slug, name, price, stock) from Product where slug in (:slugs)")
+    List<ProductInfoDTO> getProductsInfo(@Param("slugs") List<String> productSlugs);
 }

@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductInfoDTO {
+    private String slug;
     private String name;
     private long price;
     private int quantity;

@@ -183,13 +183,13 @@ public class ProductService {
         return productRepository.countByPartialNameAndStatus("%" + partialName.toLowerCase() + "%", ProductStatus.ACTIVE);
     }
 
-    public ProductInfoDTO getProductInfoByName(String productName) {
-        return productRepository.getActiveProductInfo(productName);
+    public ProductInfoDTO getProductInfoBySlug(String productSlug) {
+        return productRepository.getActiveProductInfo(productSlug);
     }
 
-    public List<ProductInfoDTO> getProductsInfo(String productNames) {
+    public List<ProductInfoDTO> getProductsInfo(String productSlugs) {
         return productRepository.getActiveProductsInfo(
-                Arrays.stream(productNames.split(","))
+                Arrays.stream(productSlugs.split(","))
                         .collect(Collectors.toList()));
     }
 }
