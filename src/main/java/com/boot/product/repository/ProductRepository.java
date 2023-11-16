@@ -7,6 +7,7 @@ import com.boot.product.enums.ProductStatus;
 import com.boot.product.model.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -60,4 +61,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select new com.boot.product.dto.ProductInfoDTO(slug, name, price, stock) from Product where slug in (:slugs)")
     List<ProductInfoDTO> getProductsInfo(@Param("slugs") List<String> productSlugs);
+
+    @Modifying
+    @Query("update Product p set p.stock = :stock where p.slug = :slug")
+    int updateStock(@Param("slug") String productSlug, @Param("stock") int stock);
 }

@@ -22,66 +22,70 @@ public class StockService {
     private ProductRepository productRepository;
 
     @Transactional
-    public void subtractProducts(List<StockDTO> stockList) {
-        log.info("Subtracting products:{}", stockList.stream()
-                .map(item->"name:"+ item.getProductName()+" quantity:"+item.getQuantity())
+    public List<StockDTO> reserveProducts(List<StockDTO> stockList) {
+        log.info("Reserving products:{}", stockList.stream()
+                .map(item -> String.format(" slug:%s quantity:%s", item.getProductSlug(), item.getQuantity()))
                 .collect(Collectors.joining(";")));
-        Set<String> productNames = stockList.stream().map(StockDTO::getProductName).collect(Collectors.toSet());
-        Map<String, ProductInfoDTO> productInfos = productRepository.getActiveProductsInfo(new ArrayList<>(productNames))
-                .stream().collect(Collectors.toMap(ProductInfoDTO::getName, item -> item));
+        Set<String> productSlugs = stockList.stream().map(StockDTO::getProductSlug).collect(Collectors.toSet());
+        Map<String, ProductInfoDTO> productInfos = productRepository.getActiveProductsInfo(new ArrayList<>(productSlugs))
+                .stream().collect(Collectors.toMap(ProductInfoDTO::getSlug, item -> item));
         //check for products existence
-        if (productNames.size() > productInfos.keySet().size()) {
-            productNames.removeAll(productInfos.keySet());
-            log.warn(StringUtils.join(productNames, ",") + " where not found");
-            throw new EntityNotFoundException(StringUtils.join(productNames, ",") + " where not found");
+        if (productSlugs.size() > productInfos.keySet().size()) {
+            productSlugs.removeAll(productInfos.keySet());
+            log.warn(StringUtils.join(productSlugs, ",") + " where not found");
+            throw new EntityNotFoundException(StringUtils.join(productSlugs, ",") + " where not found");
         }
 
-        //check for stocks availability
-        List<String> quantityFails = new ArrayList<>();
+        List<StockDTO> result = new ArrayList<>();
         stockList.forEach(item -> {
-            ProductInfoDTO productInfo = productInfos.get(item.getProductName());
+            ProductInfoDTO productInfo = productInfos.get(item.getProductSlug());
+            int notInStock = 0;
+            int newStock = 0;
             if (item.getQuantity() > productInfo.getQuantity()) {
-                log.warn("{} has only {} in stock", item.getProductName(), productInfo.getQuantity());
-                quantityFails.add(String.format("{} has only {} in stock", item.getProductName(), productInfo.getQuantity()));
+                notInStock = item.getQuantity() - productInfo.getQuantity();
+            } else {
+                newStock = productInfo.getQuantity() - item.getQuantity();
             }
+            productRepository.updateStock(productInfo.getSlug(), newStock);
+            result.add(new StockDTO()
+                    .setProductSlug(item.getProductSlug())
+                    .setQuantity(item.getQuantity())
+                    .setNotInStock(notInStock));
         });
-        if (quantityFails.size() > 0) {
-            throw new InvalidInputDataException(StringUtils.join(quantityFails, ";"));
-        }
 
-        //persist stock changes
-        stockList.forEach(item -> {
-            Product product = productRepository.findByName(item.getProductName());
-            product.subtractItems(item.getQuantity());
-            productRepository.save(product);
-        });
-        log.info("Subtracting products finished:{}", stockList.stream()
-                .map(item->"name:"+ item.getProductName()+" quantity:"+item.getQuantity())
+        log.info("Reserving products finished:{}", result.stream()
+                .map(item -> String.format(" slug:%s quantity:%s", item.getProductSlug(), item.getQuantity()))
                 .collect(Collectors.joining(";")));
+
+        return result;
     }
 
     @Transactional
-    public void addProducts(List<StockDTO> stockList) {
-        log.info("Adding products:{}", stockList.stream()
-                .map(item->"name:"+ item.getProductName()+" quantity:"+item.getQuantity())
+    public void releaseProducts(List<StockDTO> stockList) {
+        log.info("Releasing products:{}", stockList.stream()
+                .map(item->String.format(" slug:%s quantity:%s", item.getProductSlug(), item.getQuantity()))
                 .collect(Collectors.joining(";")));
-        Set<String> productNames = stockList.stream().map(StockDTO::getProductName).collect(Collectors.toSet());
+        Set<String> productNames = stockList.stream().map(StockDTO::getProductSlug).collect(Collectors.toSet());
         Map<String, ProductInfoDTO> productInfos = productRepository.getProductsInfo(new ArrayList<>(productNames))
-                .stream().collect(Collectors.toMap(ProductInfoDTO::getName, item -> item));
+                .stream().collect(Collectors.toMap(ProductInfoDTO::getSlug, item -> item));
         //check for products existence
-        if (productNames.size() > productInfos.keySet().size()) {
-            productNames.removeAll(productInfos.keySet());
+        if (productNames.size() > productInfos.size()) {
+            Set<String> slugs = productInfos.values().stream()
+                    .map(ProductInfoDTO::getSlug)
+                    .collect(Collectors.toSet());
+            productNames.removeAll(slugs);
             throw new EntityNotFoundException(StringUtils.join(productNames, ",") + " where not found");
         }
 
         //persist stock changes
         stockList.forEach(item -> {
-            Product product = productRepository.findByName(item.getProductName());
-            product.addItems(item.getQuantity());
-            productRepository.save(product);
+            if (productInfos.get(item.getProductSlug()) != null) {
+                int currentStock = productInfos.get(item.getProductSlug()).getQuantity();
+                productRepository.updateStock(item.getProductSlug(), currentStock + item.getQuantity());
+            }
         });
-        log.info("Adding products finished:{}", stockList.stream()
-                .map(item->"name:"+ item.getProductName()+" quantity:"+item.getQuantity())
+        log.info("Releasing products finished:{}", stockList.stream()
+                .map(item->String.format(" slug:%s quantity:%s", item.getProductSlug(), item.getQuantity()))
                 .collect(Collectors.joining(";")));
     }
 }

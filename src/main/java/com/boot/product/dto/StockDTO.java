@@ -16,7 +16,9 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StockDTO {
     @NotNull
-    private String productName;
+    private String productSlug;
     @Min(1)
     private int quantity;
+
+    private int notInStock;
 }
