@@ -2,6 +2,7 @@ package com.boot.product.dto;
 
 
 import com.boot.product.enums.ProductStatus;
+import com.boot.product.model.Characteristics;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,6 +47,8 @@ public class ProductDTO {
 
 	@Positive(message = "Product stock should be positive number!")
 	private int stock;
+
+	private CharacteristicsDTO characteristics;
 
 	@Enumerated(EnumType.STRING)
 	@Column
