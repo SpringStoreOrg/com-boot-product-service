@@ -2,6 +2,7 @@ package com.boot.product.dto;
 
 
 import com.boot.product.enums.ProductStatus;
+import com.boot.product.model.Characteristics;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,8 @@ import lombok.experimental.Accessors;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -46,6 +49,10 @@ public class ProductDTO {
 
 	@Positive(message = "Product stock should be positive number!")
 	private int stock;
+
+	@Valid
+	@NotNull
+	private CharacteristicsDTO characteristics;
 
 	@Enumerated(EnumType.STRING)
 	@Column

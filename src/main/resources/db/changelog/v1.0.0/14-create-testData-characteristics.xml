@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+
+    <changeSet author="GeorgeT88" id="2023-10-16-09.22">
+
+        <comment>Characteristics for chairs</comment>
+
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'yellow-core-wood-chair')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'black-core-wood-chair')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'orange-core-wood-chair')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'white-core-wood-chair')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'red-core-wood-chair')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'blue-core-wood-chair')"/>
+        </insert>
+
+        <comment>Characteristics for sofas</comment>
+
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'yellow-core-wood-sofa')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'black-core-wood-sofa')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'orange-core-wood-sofa')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'white-core-wood-sofa')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'red-core-wood-sofa')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'blue-core-wood-sofa')"/>
+        </insert>
+
+        <comment>Characteristics for bedroom furniture</comment>
+
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'yellow-bedroom-furniture')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'black-bedroom-furniture')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'orange-bedroom-furniture')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'white-bedroom-furniture')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'red-bedroom-furniture')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'blue-bedroom-furniture')"/>
+        </insert>
+
+        <comment>Characteristics for bed</comment>
+
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'yellow-core-wood-bed')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'black-core-wood-bed')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'orange-core-wood-bed')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'white-core-wood-bed')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'red-core-wood-bed')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'blue-core-wood-bed')"/>
+        </insert>
+
+        <comment>Characteristics for table</comment>
+
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'yellow-core-wood-table')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'black-core-wood-table')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'orange-core-wood-table')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'white-core-wood-table')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'red-core-wood-table')"/>
+        </insert>
+        <insert tableName="characteristics">
+            <column name="shape" value="Dreptunghi"/>
+            <column name="material" value="Lemn"/>
+            <column name="wood_essence" value="Nuc"/>
+            <column name="length" value="22.0 cm"/>
+            <column name="width" value="26.0 cm"/>
+            <column name="weight" value="730 g"/>
+            <column name="characteristic" value="Set de 3 tocatoare de bucatarie Fractal potrivite pentru a acoperi toate nevoile dintr-o bucatarie. Manerele sunt ergonomice, invelite in cauciuc si pot fi folosite pe post de agatator. Tocatoarele pot fi spalate manual"/>
+            <column name="product_id" valueComputed="(select id from product where slug = 'blue-core-wood-table')"/>
+        </insert>
+
+        <rollback/>
+    </changeSet>
+</databaseChangeLog>

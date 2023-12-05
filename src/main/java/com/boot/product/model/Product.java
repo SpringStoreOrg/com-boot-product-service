@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -70,17 +71,21 @@ public class Product implements Serializable {
     @Column
     private LocalDateTime lastUpdatedOn;
 
-    public void subtractItems(int quantity){
-        this.stock-=quantity;
+    @OneToOne(mappedBy = "product")
+    private Characteristics characteristics;
+
+    public void subtractItems(int quantity) {
+        this.stock -= quantity;
     }
 
-    public void addItems(int quantity){
-        this.stock+=quantity;
+    public void addItems(int quantity) {
+        this.stock += quantity;
     }
 
     public static ProductDTO productEntityToDto(Product product) {
-        return new ProductDTO()
-                .setId(product.getId())
+
+        ProductDTO productDto = new ProductDTO();
+        productDto.setId(product.getId())
                 .setName(product.getName())
                 .setSlug(product.getSlug())
                 .setDescription(product.getDescription())
@@ -96,7 +101,10 @@ public class Product implements Serializable {
                 .setStatus(product.getStatus())
                 .setState(product.getState())
                 .setCreatedOn(product.getCreatedOn())
-                .setLastUpdatedOn(product.getLastUpdatedOn());
+                .setLastUpdatedOn(product.getLastUpdatedOn())
+                .setCharacteristics(Characteristics.characteristicsEntityToDto(product.getCharacteristics()));
+
+        return productDto;
     }
 
     public static Product dtoToProductEntity(ProductDTO productDto) {
@@ -110,13 +118,15 @@ public class Product implements Serializable {
                 .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
                 .setCategory(productDto.getCategory())
                 .setStock(productDto.getStock())
-                .setStatus(productDto.getStatus());
+                .setStatus(productDto.getStatus())
+                .setCharacteristics(Characteristics.dtoToCharacteristicsEntity(productDto.getCharacteristics()));
 
         return product;
     }
 
     public static Product updateDtoToProductEntity(Product product, ProductDTO productDto) {
-        return product.setId(productDto.getId())
+
+        product.setId(productDto.getId())
                 .setName(productDto.getName())
                 .setSlug(ProductUtil.getSlug(productDto.getName()))
                 .setDescription(productDto.getDescription())
@@ -124,7 +134,10 @@ public class Product implements Serializable {
                 .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
                 .setCategory(productDto.getCategory())
                 .setStock(productDto.getStock())
-                .setStatus(productDto.getStatus());
+                .setStatus(productDto.getStatus())
+                .setCharacteristics(Characteristics.dtoToCharacteristicsEntity(productDto.getCharacteristics()));
+
+        return product;
     }
 
 
@@ -155,12 +168,12 @@ public class Product implements Serializable {
     }
 
     @PrePersist
-    public void beforeInsert(){
+    public void beforeInsert() {
         this.createdOn = LocalDateTime.now();
     }
 
     @PreUpdate
-    public void beforeUpdate(){
+    public void beforeUpdate() {
         this.lastUpdatedOn = LocalDateTime.now();
     }
 

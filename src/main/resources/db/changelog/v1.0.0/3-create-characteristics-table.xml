@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet author="GeorgeT88" id="2023-11-30-10.14">
+
+        <preConditions onFail="HALT">
+            <not>
+                <tableExists tableName="characteristics"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="characteristics">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="shape" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="material" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wood_essence" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="length" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="width" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="characteristic" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="characteristics"
+                baseColumnNames="product_id"
+                constraintName="characteristics_f1"
+                referencedTableName="product"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+</databaseChangeLog>
