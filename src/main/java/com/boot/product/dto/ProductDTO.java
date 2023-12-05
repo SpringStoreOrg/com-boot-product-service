@@ -11,6 +11,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -49,6 +50,7 @@ public class ProductDTO {
 	@Positive(message = "Product stock should be positive number!")
 	private int stock;
 
+	@Valid
 	@NotNull
 	private CharacteristicsDTO characteristics;
 
