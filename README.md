@@ -1,4 +1,8 @@
-# Microservices with Spring Boot
-The source code for personal (learning) project using Microservices with Spring Boot. 
+# Development
 
-Thanks.
+```bash
+mvn package
+docker build . -t fractalwoodstories/product-service:latest
+docker push fractalwoodstories/product-service:latest
+helm upgrade --install product-service ./helm/product-service
+```
