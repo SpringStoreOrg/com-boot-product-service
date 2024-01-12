@@ -2,7 +2,6 @@ package com.boot.product.model;
 
 
 import com.boot.product.dto.CharacteristicsDTO;
-import com.boot.product.dto.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
@@ -10,8 +9,6 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @Accessors(chain = true)

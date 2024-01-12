@@ -1,29 +1,18 @@
 package com.boot.product.model;
 
-import com.boot.product.dto.ProductDTO;
 import com.boot.product.enums.ProductStatus;
-import com.boot.product.util.ProductUtil;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
-import lombok.experimental.Accessors;
-import org.apache.commons.lang.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Data
-@Accessors(chain = true)
 @Entity
 @Table(name = "product")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product implements Serializable {
 
     /**
@@ -50,9 +39,8 @@ public class Product implements Serializable {
     @Column(nullable = false)
     private long price;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    private List<Photo> entries;
+    private List<Image> images;
 
     @Column(nullable = false)
     @Size(min = 3, max = 30)
@@ -80,83 +68,6 @@ public class Product implements Serializable {
 
     public void addItems(int quantity) {
         this.stock += quantity;
-    }
-
-    public static ProductDTO productEntityToDto(Product product) {
-
-        ProductDTO productDto = new ProductDTO();
-        productDto.setId(product.getId())
-                .setName(product.getName())
-                .setSlug(product.getSlug())
-                .setDescription(product.getDescription())
-                .setPrice(product.getPrice())
-                .setImages(product.getEntries() != null
-                        ? product.getEntries().stream()
-                        .map(Photo::getLink)
-                        .collect(Collectors.toList())
-                        : List.of())
-                .setThumbnail(product.getEntries().stream().findFirst().get().getLink())
-                .setCategory(product.getCategory())
-                .setStock(product.getStock())
-                .setStatus(product.getStatus())
-                .setState(product.getState())
-                .setCreatedOn(product.getCreatedOn())
-                .setLastUpdatedOn(product.getLastUpdatedOn())
-                .setCharacteristics(Characteristics.characteristicsEntityToDto(product.getCharacteristics()));
-
-        return productDto;
-    }
-
-    public static Product dtoToProductEntity(ProductDTO productDto) {
-        Product product = new Product();
-
-        product.setId(productDto.getId())
-                .setName(productDto.getName())
-                .setSlug(ProductUtil.getSlug(productDto.getName()))
-                .setDescription(productDto.getDescription())
-                .setPrice(productDto.getPrice())
-                .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
-                .setCategory(productDto.getCategory())
-                .setStock(productDto.getStock())
-                .setStatus(productDto.getStatus())
-                .setCharacteristics(Characteristics.dtoToCharacteristicsEntity(productDto.getCharacteristics()));
-
-        return product;
-    }
-
-    public static Product updateDtoToProductEntity(Product product, ProductDTO productDto) {
-
-        product.setId(productDto.getId())
-                .setName(productDto.getName())
-                .setSlug(ProductUtil.getSlug(productDto.getName()))
-                .setDescription(productDto.getDescription())
-                .setPrice(productDto.getPrice())
-                .setEntries(productPhotoLinksToEntries(productDto.getImages(), product))
-                .setCategory(productDto.getCategory())
-                .setStock(productDto.getStock())
-                .setStatus(productDto.getStatus())
-                .setCharacteristics(Characteristics.dtoToCharacteristicsEntity(productDto.getCharacteristics()));
-
-        return product;
-    }
-
-
-    public static List<ProductDTO> productEntityToDtoList(List<Product> productList) {
-
-        List<ProductDTO> productDTOList = new ArrayList<>();
-
-        productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
-
-        return productDTOList;
-    }
-
-    public static List<Photo> productPhotoLinksToEntries(List<String> photoLinks, Product product) {
-
-        List<Photo> photoLinkEntries = new ArrayList<>();
-
-        photoLinks.forEach(photoLink -> photoLinkEntries.add(new Photo().setLink(photoLink).setProduct(product)));
-
-        return photoLinkEntries;
     }
 
     private String getState() {

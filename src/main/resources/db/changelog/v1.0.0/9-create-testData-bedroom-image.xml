@@ -8,111 +8,135 @@
     <changeSet author="GeorgeT88" id="2023-03-08-17.35">
 
         <comment>Photo links for Yellow bedroom furniture</comment>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Yellow bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/9a/48/AAZiYd9U_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/9a/48/AAZiYd9U_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Yellow bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/2f/83/BnOkm9jr_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/2f/83/BnOkm9jr_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Yellow bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/ff/fa/q4BNKMPN_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/ff/fa/q4BNKMPN_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Yellow bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/50/31/Sk0KJNEi_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/50/31/Sk0KJNEi_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
 
         <comment>Photo links for Black bedroom furniture</comment>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Black bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/07/7e/orLNonEG_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/07/7e/orLNonEG_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Black bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/f6/cd/07A2tVGc_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/f6/cd/07A2tVGc_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Black bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/2a/1a/BdEJHJx9_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/2a/1a/BdEJHJx9_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Black bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/ad/50/floHo0PX_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/ad/50/floHo0PX_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
 
         <comment>Photo links for Orange bedroom furniture</comment>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Orange bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/9e/ac/pZzUqgNV_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/9e/ac/pZzUqgNV_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Orange bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/ea/5e/GukpTLcC_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/ea/5e/GukpTLcC_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Orange bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/68/73/sqmjv4lo_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/68/73/sqmjv4lo_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Orange bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/79/7d/HJSqRuDZ_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/79/7d/HJSqRuDZ_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
 
         <comment>Photo links for White bedroom furniture</comment>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'White bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/a3/c3/EZIpC6QN_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/a3/c3/EZIpC6QN_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'White bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/34/46/w0ou42ky_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/34/46/w0ou42ky_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'White bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/d4/58/sI4QHEVg_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/d4/58/sI4QHEVg_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'White bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/4d/a4/NXAcoug2_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/4d/a4/NXAcoug2_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
 
         <comment>Photo links for Red bedroom furniture</comment>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Red bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/93/04/nrJ1mvAu_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/93/04/nrJ1mvAu_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Red bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/db/99/AZfKED0t_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/db/99/AZfKED0t_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Red bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/49/f4/ZId70EB5_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/49/f4/ZId70EB5_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Red bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/9a/a6/GX5VLj0d_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/9a/a6/GX5VLj0d_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
 
         <comment>Photo links for Blue bedroom furniture</comment>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Blue bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/6f/58/KPJhpzdK_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/6f/58/KPJhpzdK_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Blue bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/da/72/BYI9ssZe_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/da/72/BYI9ssZe_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Blue bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/49/ca/upehUOvH_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/49/ca/upehUOvH_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
-        <insert tableName="photo">
+        <insert tableName="image">
             <column name="product_id" valueComputed="(select id from product where name = 'Blue bedroom furniture')"/>
-            <column name="link" value="https://thumbs2.imgbox.com/b7/16/UWKNg8Ji_t.png"/>
+            <column name="name" value="https://thumbs2.imgbox.com/b7/16/UWKNg8Ji_t.png"/>
+            <column name="type" value="FULL"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

@@ -1,6 +1,8 @@
 package com.boot.product.service;
 
+import com.boot.product.dto.CreateProductDTO;
 import com.boot.product.dto.ProductDTO;
+import com.boot.product.dto.ProductDetailsDTO;
 import com.boot.product.dto.ProductInfoDTO;
 import com.boot.product.enums.ProductStatus;
 import com.boot.product.exception.EntityNotFoundException;
@@ -10,18 +12,16 @@ import com.boot.product.repository.ProductRepository;
 import com.boot.product.validator.ProductValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.boot.product.model.Product.*;
 
 
 @Slf4j
@@ -34,7 +34,9 @@ public class ProductService {
 
     private ProductRepository productRepository;
 
-    public ProductDTO addProduct(ProductDTO productDTO) {
+    private ModelMapper modelMapper;
+
+    public ProductDetailsDTO addProduct(CreateProductDTO productDTO) {
         log.info("addProduct - process started");
 
         if (productValidator.isNamePresent(productDTO.getName())) {
@@ -42,12 +44,13 @@ public class ProductService {
         }
         productDTO.setStatus(ProductStatus.ACTIVE);
 
-        Product product = productRepository.save(dtoToProductEntity(productDTO));
 
-        return productEntityToDto(product);
+        Product product = productRepository.save(modelMapper.map(productDTO, Product.class));
+
+        return modelMapper.map(product, ProductDetailsDTO.class);
     }
 
-    public ProductDTO deleteProductByProductName(String productName) {
+    public ProductDetailsDTO deleteProductByProductName(String productName) {
         if (!productValidator.isNamePresent(productName)) {
             throw new EntityNotFoundException(
                     "Product with Product Name: " + productName + " not found in the Database!");
@@ -57,7 +60,7 @@ public class ProductService {
         productRepository.save(product);
 
         log.info("{} - successfully set as INACTIVE", productName);
-        return productEntityToDto(product);
+        return modelMapper.map(product, ProductDetailsDTO.class);
     }
 
     public List<ProductDTO> findAllProducts(@NotNull String productParam, Boolean includeInactive, Pageable pageable) {
@@ -75,7 +78,9 @@ public class ProductService {
             productList = productRepository.findBySlugInAndStatus(prodList, ProductStatus.ACTIVE, pageable);
         }
 
-        return productEntityToDtoList(productList);
+        return prodList.stream()
+                .map(item->modelMapper.map(item, ProductDTO.class))
+                .collect(Collectors.toList());
     }
 
     public int getAllProductsCount(@NotNull String productParam, Boolean includeInactive) {
@@ -94,14 +99,16 @@ public class ProductService {
 
         List<Product> prodList = productRepository.findByStatus(ProductStatus.ACTIVE, pageable);
 
-        return productEntityToDtoList(prodList);
+        return prodList.stream()
+                .map(item->modelMapper.map(item, ProductDTO.class))
+                .collect(Collectors.toList());
     }
 
     public int getAllProductsCount() {
         return productRepository.countAllByStatus(ProductStatus.ACTIVE);
     }
 
-    public ProductDTO getProductBySlug(String slug, Boolean includeInactive) {
+    public ProductDetailsDTO getProductBySlug(String slug, Boolean includeInactive) {
 
         log.info("getProductByProductName - process started");
         Product product;
@@ -115,7 +122,7 @@ public class ProductService {
             throw new EntityNotFoundException("Could not find any product in the database");
         }
 
-        return productEntityToDto(product);
+        return modelMapper.map(product, ProductDetailsDTO.class);
     }
 
     public List<String> getProductsByPartialName(String name, Pageable pageable) {
@@ -124,29 +131,27 @@ public class ProductService {
         return productRepository.findByNameContainingIgnoreCase("%"+name.toLowerCase()+"%", pageable);
     }
 
-    public ProductDTO updateProductByProductName(String productName, ProductDTO productDTO)
+    public ProductDetailsDTO updateProductByProductName(String productName, CreateProductDTO productDTO)
             throws InvalidInputDataException {
 
         Product product = productRepository.findByName(productName);
 
-        ProductDTO newProductDto = productEntityToDto(product);
-
         if (product.getName().matches(productName)) {
-            newProductDto.setName(productDTO.getName());
+            product.setName(productDTO.getName());
         } else if (productValidator.isNamePresent(productDTO.getName())) {
             throw new InvalidInputDataException("The Selected Product name is already used!");
         }
-        newProductDto.setImages(productDTO.getImages());
+        //product.setImages(productDTO.getImages());
 
-        newProductDto.setPrice(productDTO.getPrice());
+        product.setPrice(productDTO.getPrice());
 
-        newProductDto.setCategory(productDTO.getCategory());
+        product.setCategory(productDTO.getCategory());
 
-        newProductDto.setStock(productDTO.getStock());
+        product.setStock(productDTO.getStock());
 
-        productRepository.save(updateDtoToProductEntity(product, newProductDto));
+        productRepository.save(product);
 
-        return productEntityToDto(product);
+        return modelMapper.map(product, ProductDetailsDTO.class);
     }
 
     public List<ProductDTO> findByCategoryAndStatus(String category, Pageable pageable) {
@@ -155,11 +160,9 @@ public class ProductService {
 
         List<Product> productList = productRepository.findByCategoryAndStatus(category, ProductStatus.ACTIVE, pageable);
 
-        ArrayList<ProductDTO> productDTOList = new ArrayList<>();
-
-        productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
-
-        return productDTOList;
+        return productList.stream()
+                .map(item->modelMapper.map(item, ProductDTO.class))
+                .collect(Collectors.toList());
     }
 
     public List<ProductDTO> findByPartialNameAndStatus(String partialName, Pageable pageable) {
@@ -168,11 +171,9 @@ public class ProductService {
 
         List<Product> productList = productRepository.findByPartialNameAndStatus("%" + partialName.toLowerCase() + "%", ProductStatus.ACTIVE, pageable);
 
-        ArrayList<ProductDTO> productDTOList = new ArrayList<>();
-
-        productList.forEach(p -> productDTOList.add(productEntityToDto(p)));
-
-        return productDTOList;
+        return productList.stream()
+                .map(item->modelMapper.map(item, ProductDTO.class))
+                .collect(Collectors.toList());
     }
 
     public int getByCategoryAndStatusCount(String category) {
