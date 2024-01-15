@@ -4,6 +4,7 @@ import com.boot.product.exception.EntityNotFoundException;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,19 @@ public class ImageService {
             return FileUtils.readFileToByteArray(image);
         } catch (IOException e) {
             throw new EntityNotFoundException("Image" + imageName + " does not exist");
+        }
+    }
+
+    public void saveImage(String directory, MultipartFile inputFile) {
+        File productImages = new File(imageDirectory, directory);
+        if (!productImages.isDirectory()) {
+            productImages.mkdir();
+        }
+        try {
+            File image = new File(productImages, inputFile.getOriginalFilename());
+            FileUtils.writeByteArrayToFile(image, inputFile.getBytes());
+        } catch (IOException e) {
+            throw new EntityNotFoundException("Image" + inputFile.getOriginalFilename() + " could not be written");
         }
     }
 }

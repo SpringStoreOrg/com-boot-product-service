@@ -78,7 +78,7 @@ public class ProductService {
             productList = productRepository.findBySlugInAndStatus(prodList, ProductStatus.ACTIVE, pageable);
         }
 
-        return prodList.stream()
+        return productList.stream()
                 .map(item->modelMapper.map(item, ProductDTO.class))
                 .collect(Collectors.toList());
     }

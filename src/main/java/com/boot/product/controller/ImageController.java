@@ -1,22 +1,23 @@
 package com.boot.product.controller;
 
 import com.boot.product.service.ImageService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ImageController {
-
-    private ImageService imageService;
+    private final ImageService imageService;
+    @Value("${product.service.url}")
+    private String productServiceUrl;
 
     @GetMapping(value = "/{slug}/image/{imageName}")
     @ResponseBody
@@ -25,6 +26,14 @@ public class ImageController {
         return ResponseEntity.ok()
                 .contentType(mediaType)
                 .body(imageService.getImage(productSlug, imageName));
+    }
+
+    @PostMapping(value = "/{slug}/image")
+    @ResponseBody
+    public ResponseEntity<String> saveImage(@PathVariable("slug") String productSlug, @RequestParam("image") MultipartFile file) {
+        imageService.saveImage(productSlug, file);
+        return ResponseEntity.ok()
+                .body(String.format("%s/%s/image/%s", productServiceUrl, productSlug, file.getOriginalFilename()));
     }
 
     private MediaType getMimeType(String imageName) {
