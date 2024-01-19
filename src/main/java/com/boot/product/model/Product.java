@@ -33,7 +33,7 @@ public class Product implements Serializable {
     private String slug;
 
     @Column(nullable = false)
-    @Size(min = 3, max = 600)
+    @Size(min = 3, max = 1000)
     private String description;
 
     @Column(nullable = false)
