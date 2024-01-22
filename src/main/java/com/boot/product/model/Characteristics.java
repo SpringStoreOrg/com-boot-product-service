@@ -14,7 +14,6 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @Entity
 @Table(name = "characteristics")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Characteristics implements Serializable {
 
     /**

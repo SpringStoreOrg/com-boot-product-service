@@ -6,13 +6,16 @@ import com.boot.product.dto.ProductDetailsDTO;
 import com.boot.product.model.Image;
 import com.boot.product.model.ImageType;
 import com.boot.product.model.Product;
+import org.modelmapper.Condition;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -24,28 +27,30 @@ public class AppConfig {
         ModelMapper modelMapper = new ModelMapper();
 
         modelMapper.typeMap(CreateProductDTO.class, Product.class);
+        Condition notNull = ctx -> ctx.getSource() != null;
         Converter<List<Image>, List<String>> imagesToList = list -> list.getSource().stream()
                 .filter(item -> ImageType.FULL.equals(item.getType()))
-                .map(image -> getImageFromUrl(image))
+                .map(this::getImageFromUrl)
                 .collect(Collectors.toList());
         Converter<List<Image>, String> imagesToThumbnail = list -> list.getSource().stream()
                 .filter(item -> ImageType.THUMBNAIL.equals(item.getType()))
-                .map(image -> getImageFromUrl(image))
+                .map(this::getImageFromUrl)
                 .findFirst().orElse(
                         list.getSource().stream()
-                                .map(image -> getImageFromUrl(image))
+                                .filter(Objects::nonNull)
+                                .map(this::getImageFromUrl)
                                 .findFirst()
                                 .orElse(null));
         modelMapper.typeMap(Product.class, ProductDetailsDTO.class)
                 .addMappings(
-                        mapper -> mapper.using(imagesToList).map(Product::getImages, ProductDetailsDTO::setImages)
+                        mapper -> mapper.when(notNull).using(imagesToList).map(Product::getImages, ProductDetailsDTO::setImages)
                 )
                 .addMappings(
-                        mapper -> mapper.using(imagesToThumbnail).map(Product::getImages, ProductDetailsDTO::setThumbnail)
+                        mapper -> mapper.when(notNull).using(imagesToThumbnail).map(Product::getImages, ProductDetailsDTO::setThumbnail)
                 );
         modelMapper.typeMap(Product.class, ProductDTO.class)
                 .addMappings(
-                        mapper -> mapper.using(imagesToThumbnail).map(Product::getImages, ProductDTO::setThumbnail)
+                        mapper -> mapper.when(notNull).using(imagesToThumbnail).map(Product::getImages, ProductDTO::setThumbnail)
                 );
 
         return modelMapper;

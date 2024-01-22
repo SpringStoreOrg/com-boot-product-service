@@ -8,6 +8,7 @@ import com.boot.product.enums.ProductStatus;
 import com.boot.product.exception.EntityNotFoundException;
 import com.boot.product.exception.InvalidInputDataException;
 import com.boot.product.model.Product;
+import com.boot.product.repository.CharacteristicsRepository;
 import com.boot.product.repository.ProductRepository;
 import com.boot.product.validator.ProductValidator;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,8 @@ public class ProductService {
 
     private ProductRepository productRepository;
 
+    private CharacteristicsRepository characteristicsRepository;
+
     private ModelMapper modelMapper;
 
     public ProductDetailsDTO addProduct(CreateProductDTO productDTO) {
@@ -44,10 +47,13 @@ public class ProductService {
         }
         productDTO.setStatus(ProductStatus.ACTIVE);
 
+        Product product = modelMapper.map(productDTO, Product.class);
+        Product persistedProduct = productRepository.save(product);
 
-        Product product = productRepository.save(modelMapper.map(productDTO, Product.class));
+        product.getCharacteristics().setProduct(persistedProduct);
+        characteristicsRepository.save(persistedProduct.getCharacteristics());
 
-        return modelMapper.map(product, ProductDetailsDTO.class);
+        return modelMapper.map(persistedProduct, ProductDetailsDTO.class);
     }
 
     public ProductDetailsDTO deleteProductByProductName(String productName) {

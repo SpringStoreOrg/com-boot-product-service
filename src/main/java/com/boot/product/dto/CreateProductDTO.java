@@ -25,16 +25,19 @@ public class CreateProductDTO {
 
 	private long id;
 
+	@NotNull
 	@Size(min = 3, message = "Min Product name size is 3 characters!")
 	@Size(max = 50, message = "Max Product name size is 50 characters!")
 	private String name;
 
 	private String slug;
 
+	@NotNull
 	@Size(min = 3,message = "Min Product description size is 3 characters!")
 	@Size(max = 1000,message = "Max Product description size is 600 characters!")
 	private String description;
 
+	@NotNull
 	@Positive(message = "Product price should be positive number!")
 	private long price;
 
@@ -42,6 +45,7 @@ public class CreateProductDTO {
 
 	private String thumbnail;
 
+	@NotNull
 	@Size(min = 3, message = "Min category name size is 3 characters!")
 	@Size(max = 30, message = "Max category name size is 30 characters!")
 	private String category;

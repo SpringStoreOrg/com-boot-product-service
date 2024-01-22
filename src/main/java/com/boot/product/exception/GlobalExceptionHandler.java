@@ -4,15 +4,20 @@ package com.boot.product.exception;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.ConstraintViolationException;
+import java.util.ArrayList;
+import java.util.List;
 
 @ControllerAdvice
+@Log4j2
 public class GlobalExceptionHandler {
 
 	@Data
@@ -37,6 +42,16 @@ public class GlobalExceptionHandler {
 	{
 		return new ResponseEntity<>(new ApiError(httpStatus, e.getMessage()),
 			httpStatus);
+	}
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ErrorResponse> methodArgumentNotValidException(MethodArgumentNotValidException exception) {
+		log.error(exception.getMessage(), exception);
+		ErrorResponse error = new ErrorResponse();
+		exception.getBindingResult().getFieldErrors().stream().forEach(item -> {
+			error.messages.add(new ErrorMessage(item.getField(), item.getDefaultMessage()));
+		});
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(EntityNotFoundException.class)
@@ -81,6 +96,20 @@ public class GlobalExceptionHandler {
 	{
 		return createResponseEntity(HttpStatus.BAD_REQUEST,
 				unableToModifyDataException);
+	}
+
+	class ErrorResponse {
+		public List<ErrorMessage> messages = new ArrayList<>();
+	}
+
+	class ErrorMessage {
+		public String fieldKey;
+		public String message;
+
+		public ErrorMessage(String fieldKey, String message) {
+			this.fieldKey = fieldKey;
+			this.message = message;
+		}
 	}
 
 }
