@@ -102,6 +102,12 @@
 			<artifactId>hibernate-validator-cdi</artifactId>
 			<version>7.0.2.Final</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.opentracing.contrib</groupId>
+			<artifactId>opentracing-spring-jaeger-starter</artifactId>
+			<version>3.3.1</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
