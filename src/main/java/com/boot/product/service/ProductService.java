@@ -13,6 +13,7 @@ import com.boot.product.repository.ProductRepository;
 import com.boot.product.validator.ProductValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -48,6 +49,9 @@ public class ProductService {
         productDTO.setStatus(ProductStatus.ACTIVE);
 
         Product product = modelMapper.map(productDTO, Product.class);
+        if(CollectionUtils.isNotEmpty(product.getImages())){
+            product.getImages().forEach(image -> image.setProduct(product));
+        }
         Product persistedProduct = productRepository.save(product);
 
         product.getCharacteristics().setProduct(persistedProduct);

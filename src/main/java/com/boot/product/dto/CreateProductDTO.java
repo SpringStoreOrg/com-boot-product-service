@@ -14,7 +14,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -30,6 +29,9 @@ public class CreateProductDTO {
 	@Size(max = 50, message = "Max Product name size is 50 characters!")
 	private String name;
 
+	@NotNull
+	@Size(min = 3, message = "Min Slug size is 3 characters!")
+	@Size(max = 50, message = "Max Slug size is 50 characters!")
 	private String slug;
 
 	@NotNull
@@ -61,7 +63,4 @@ public class CreateProductDTO {
 	@Column
 	private ProductStatus status;
 	private String state;
-
-	private LocalDateTime createdOn;
-	private LocalDateTime lastUpdatedOn;
 }

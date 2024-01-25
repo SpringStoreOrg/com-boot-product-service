@@ -25,9 +25,15 @@ public class AppConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-
-        modelMapper.typeMap(CreateProductDTO.class, Product.class);
         Condition notNull = ctx -> ctx.getSource() != null;
+        Converter<List<String>, List<Image>> stringToImageList = list -> list.getSource().stream()
+                .map(this::getUrlToImage)
+                .collect(Collectors.toList());
+
+        modelMapper.typeMap(CreateProductDTO.class, Product.class)
+                .addMappings(
+                        mapper -> mapper.when(notNull).using(stringToImageList).map(CreateProductDTO::getImages, Product::setImages)
+                );
         Converter<List<Image>, List<String>> imagesToList = list -> list.getSource().stream()
                 .filter(item -> ImageType.FULL.equals(item.getType()))
                 .map(this::getImageFromUrl)
@@ -61,5 +67,12 @@ public class AppConfig {
             return image.getName();
         }
         return String.format("%s/%s/image/%s", productServiceUrl, image.getProduct().getSlug(), image.getName());
+    }
+
+    private Image getUrlToImage(String url){
+        Image image = new Image();
+        image.setType(ImageType.FULL);
+        image.setName(url);
+        return image;
     }
 }
