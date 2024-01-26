@@ -47,8 +47,15 @@ spec:
                 #              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: "/usr/local/images"
+              name: fractalwoodstories-product-service-images
           env:
             {{ toYaml .Values.env | nindent 12 }}
+      volumes:
+        - name: fractalwoodstories-product-service-images
+          persistentVolumeClaim:
+            claimName: fractalwoodstories-product-service-images-pvc
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
