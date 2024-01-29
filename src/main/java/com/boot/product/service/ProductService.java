@@ -203,4 +203,8 @@ public class ProductService {
                 Arrays.stream(productSlugs.split(","))
                         .collect(Collectors.toList()));
     }
+
+    public boolean isAvailable(String productSlug){
+        return !productRepository.existsBySlug(productSlug);
+    }
 }

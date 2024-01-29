@@ -22,6 +22,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Product findBySlug(String slug);
 
+    boolean existsBySlug(String slug);
+
     Product findBySlugAndStatus(String slug, ProductStatus status);
 
     List<Product> findByNameInAndStatus(List<String> name,ProductStatus status, Pageable pageable);

@@ -112,6 +112,15 @@ public class ProductController {
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/{productSlug}/available")
+    @ResponseBody
+    public ResponseEntity getProductAvailability(@PathVariable("productSlug") String productSlug) {
+        if(productService.isAvailable(productSlug)){
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
     private int getPagesCount(int totalItems, int pageSize) {
         return (totalItems / pageSize) + (totalItems % pageSize > 0 ? 1 : 0);
     }
