@@ -67,4 +67,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query("update Product p set p.stock = :stock where p.slug = :slug")
     int updateStock(@Param("slug") String productSlug, @Param("stock") int stock);
+
+
 }

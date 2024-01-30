@@ -28,6 +28,12 @@ public class ImageController {
                 .body(imageService.getImage(productSlug, imageName));
     }
 
+    @DeleteMapping(value = "/{slug}/image/{imageName}")
+    public ResponseEntity deleteImage(@PathVariable("slug") String productSlug, @PathVariable("imageName") String imageName) {
+        imageService.deleteImage(productSlug, imageName);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping(value = "/{slug}/image")
     @ResponseBody
     public ResponseEntity<String> saveImage(@PathVariable("slug") String productSlug, @RequestParam("image") MultipartFile file) {
