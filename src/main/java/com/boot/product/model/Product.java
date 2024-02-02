@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,7 +41,7 @@ public class Product implements Serializable {
     private long price;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
     @Column(nullable = false)
     @Size(min = 3, max = 30)

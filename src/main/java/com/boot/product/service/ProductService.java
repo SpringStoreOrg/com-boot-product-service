@@ -7,19 +7,29 @@ import com.boot.product.dto.ProductInfoDTO;
 import com.boot.product.enums.ProductStatus;
 import com.boot.product.exception.EntityNotFoundException;
 import com.boot.product.exception.InvalidInputDataException;
+import com.boot.product.model.Image;
+import com.boot.product.model.ImageType;
 import com.boot.product.model.Product;
 import com.boot.product.repository.CharacteristicsRepository;
 import com.boot.product.repository.ProductRepository;
 import com.boot.product.validator.ProductValidator;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.StringUtils;
+import org.imgscalr.Scalr;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
 import javax.validation.constraints.NotNull;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,16 +39,17 @@ import java.util.stream.Stream;
 @Slf4j
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ProductService {
+    private final ProductValidator productValidator;
+    private final ProductRepository productRepository;
+    private final CharacteristicsRepository characteristicsRepository;
+    private final ModelMapper modelMapper;
 
-    private ProductValidator productValidator;
-
-    private ProductRepository productRepository;
-
-    private CharacteristicsRepository characteristicsRepository;
-
-    private ModelMapper modelMapper;
+    @Value("${image.directory}")
+    private String imageDirectory;
+    @Value("${thumbnail.image.size}")
+    private int thumbnailSize;
 
     public ProductDetailsDTO addProduct(CreateProductDTO productDTO) {
         log.info("addProduct - process started");
@@ -47,9 +58,20 @@ public class ProductService {
             throw new InvalidInputDataException("The Selected Product name is already used!");
         }
         productDTO.setStatus(ProductStatus.ACTIVE);
-
         Product product = modelMapper.map(productDTO, Product.class);
-        if(CollectionUtils.isNotEmpty(product.getImages())){
+        if (StringUtils.isNotEmpty(productDTO.getThumbnail())) {
+            try {
+                String thumbnailImage = generateThumbnail(new File(imageDirectory, product.getSlug()), productDTO.getThumbnail());
+                if (StringUtils.isNotEmpty(thumbnailImage)) {
+                    Image image = new Image();
+                    image.setType(ImageType.THUMBNAIL);
+                    image.setName(thumbnailImage);
+                    product.getImages().add(image);
+                }
+            } catch (IOException e) {
+            }
+        }
+        if (CollectionUtils.isNotEmpty(product.getImages())) {
             product.getImages().forEach(image -> image.setProduct(product));
         }
         Product persistedProduct = productRepository.save(product);
@@ -206,5 +228,19 @@ public class ProductService {
 
     public boolean isAvailable(String productSlug){
         return !productRepository.existsBySlug(productSlug);
+    }
+
+    private String generateThumbnail(File productImages, String originalImageName) throws IOException {
+        File originalImage = new File(productImages, originalImageName);
+        if(originalImage.exists()){
+            String finalFileName = String.format("%s_thumb.%s", FilenameUtils.getBaseName(originalImageName), FilenameUtils.getExtension(originalImageName));
+            BufferedImage originalImageBuffered = ImageIO.read(originalImage);
+            BufferedImage thumbnail = Scalr.resize(originalImageBuffered, thumbnailSize);
+            ImageIO.write(thumbnail, FilenameUtils.getExtension(originalImageName), new File(productImages, finalFileName));
+
+            return finalFileName;
+        }
+
+        return StringUtils.EMPTY;
     }
 }

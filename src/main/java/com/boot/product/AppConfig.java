@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -62,14 +61,14 @@ public class AppConfig {
         return modelMapper;
     }
 
-    private String getImageFromUrl(Image image){
-        if(image.getName().startsWith("https://")){
+    private String getImageFromUrl(Image image) {
+        if (image.getName().startsWith("https://")) {
             return image.getName();
         }
         return String.format("%s/%s/image/%s", productServiceUrl, image.getProduct().getSlug(), image.getName());
     }
 
-    private Image getUrlToImage(String url){
+    private Image getUrlToImage(String url) {
         Image image = new Image();
         image.setType(ImageType.FULL);
         image.setName(url);
